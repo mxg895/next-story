@@ -1,6 +1,28 @@
 # NextStory
 ## Project Description: 
 Write 3-5 sentences on your project topic. (try to address all points below)
+- Who is it for?
+  - people who want to find their next movie or book
+
+- What will it do?
+  - search for movie or books to watch/read
+  - get recommendations
+  - add stories for future reading
+
+- What type of data will it store?
+  - user profile
+  - book / movie information
+  - reviews/ratings for books/movies
+
+- What will users be able to do with this data?
+  - search for movie or books to watch/read
+  - get recommendations
+  - get information about books/movies
+  - update their own profiles
+  - write reviews for books/movies
+
+- What is some additional functionality you can add/remove based on time constraints?
+  - Users should be able to see information of 'friends' on the app
 
 
 ## Project task requirements:
