@@ -27,7 +27,8 @@ Write 3-5 sentences on your project topic. (try to address all points below)
 
 ## Project task requirements:
 - 3-5 minimal requirements (will definitely complete)
-  1. Users should be able to register for, log in to & log out of a regular user/admin account and have/be able to update a profileUsers should be able to search & filter books & movies of interest
+  1. Users should be able to register for, log in to & log out of a regular user/admin account and have/be able to update a profile
+  1. Users should be able to search & filter books & movies of interest
   1. Users should be able to see a Home page (see 2-5 smaller requirements)
   1. Each book/movie should have a media page that displays more details about it
   1. Set up a database
