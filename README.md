@@ -51,7 +51,7 @@ Write 3-5 sentences on your project topic. (try to address all points below)
   - Show a user's Favourite section for books & Movies
   - A display of the total number of books/movies read/watched
 
-1. Home page
+2. Home page
   - Login/Registration button
   - Trending books or movies
   - Search bar for books
