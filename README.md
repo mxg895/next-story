@@ -57,3 +57,11 @@ Write 3-5 sentences on your project topic. (try to address all points below)
   - Search bar for books
   - Button to see your selected books
   - Profile pic
+  
+  
+## Prototypes
+#### Home page:
+![](./HomePNG.png)
+
+#### Profile page:
+![](./ProfilePNG.png)
