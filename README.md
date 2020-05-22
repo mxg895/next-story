@@ -1,28 +1,13 @@
 # NextStory
 ## Project Description: 
 Write 3-5 sentences on your project topic. (try to address all points below)
-- Who is it for?
-  - people who want to find their next movie or book
-
-- What will it do?
-  - search for movie or books to watch/read
-  - get recommendations
-  - add stories for future reading
-
-- What type of data will it store?
-  - user profile
-  - book / movie information
-  - reviews/ratings for books/movies
-
-- What will users be able to do with this data?
-  - search for movie or books to watch/read
-  - get recommendations
-  - get information about books/movies
-  - update their own profiles
-  - write reviews for books/movies
-
-- What is some additional functionality you can add/remove based on time constraints?
-  - Users should be able to see information of 'friends' on the app
+- The project is for anyone who wants to get good recommendations for their 
+next book or movie, and who wants a robust way to filter stories using tags and genres. 
+It will store user data such as profile data, favorite books/movies, favorite genres, 
+and personal ratings. It will also store reviews for books/movies. Using this data, users 
+will be able to view their favorite books and ratings, as well as get personalized recommendations 
+through them, and update their profiles. Additional functionality might include finding theaters 
+for movies, seeing ‘friend’ information, or add books/movies to a ‘Watch later’ list.
 
 
 ## Project task requirements:
@@ -36,7 +21,7 @@ Write 3-5 sentences on your project topic. (try to address all points below)
 - 3-7 "standard" requirements (will most likely complete)
   1. Admins should be able to add new book/movie manually
   1. The website should be able to update its book/movie list via external API endpoints
-  1. Allow (regular?) users to add a review & ratings (out of 5 starts) for a book/movie
+  1. Allow users to add a review & ratings (out of 5 starts) for a book/movie
   1. Users should be able to add a book or movie to a personal 'Watch later' list
 
 - 2-3 stretch requirements (plan to complete 1!)
