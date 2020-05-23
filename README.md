@@ -50,3 +50,16 @@ for movies, seeing ‘friend’ information, or add books/movies to a ‘Watch l
 
 #### Profile page:
 ![](./ProfilePNG.png)
+
+
+## Cycle 1 Scrum Updates:
+#### May i9y9a: 
+What did you work on this past iteration?
+ - As a team we decided on what our project would and our project requirements.
+
+What were any major issues/challenges you ran into?
+ - Figma was a little tricky to use at first when making the prototypes.
+
+What do you plan to work on for this coming iteration?
+ - With the team, figure out what styling library to use and start building the main components and pages, and select a movie and book database api
+ - Individually, start building some components, and maybe hook up a database api
