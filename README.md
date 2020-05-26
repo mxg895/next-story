@@ -46,7 +46,7 @@ for movies, seeing ‘friend’ information, or add books/movies to a ‘Watch l
   
 ## Prototypes
 #### Home page:
-![](./HomePNG.png)
+![](./prototypes/HomePNG.png)
 
 #### Profile page:
-![](./ProfilePNG.png)
+![](./prototypes/ProfilePNG.png)
