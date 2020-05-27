@@ -1,10 +1,11 @@
 // https://medium.com/@feralamillo/create-react-app-typescript-eslint-and-prettier-699277b0b913
 
 // wip -- might add/change more later on.
-module.exports = {
-    parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint"],
-    extends: ["react-app"],
+// module.exports = {
+  {
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": ["react-app"],
     "parserOptions": {
       "project": "./tsconfig.json"
     },
@@ -16,15 +17,23 @@ module.exports = {
       }
     },
     "rules": {
+      // line endings
+      "eol-last": 2,
+      "no-trailing-spaces": "error",
+      "no-multiple-empty-lines": ["error", {
+        "max": 2,
+        "maxEOF": 0,
+        "maxBOF": 0
+      }],
       // arrow functions:
       "arrow-parens": ["error", "always"],
       // promises -- this one requires another plugin:
-    //   "no-floating-promises": ["error"],
+      //   "no-floating-promises": ["error"],
       // single quotes:
       "jsx-quotes": ["error", "prefer-single"],
       "@typescript-eslint/quotes": ["error", "single", {
         "allowTemplateLiterals": true,
-        "avoidEscape": true,
+        "avoidEscape": true
       }],
       "semi": ["error", "always"],
     //   "object-curly-spacing": ["warn", "always"],
