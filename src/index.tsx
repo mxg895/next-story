@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -8,14 +9,12 @@ import { createStore } from 'redux';
 import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
 
-/* eslint-disable no-underscore-dangle */
 const store = createStore(
-    // add root reducer here,
+    (state) => state, // TODO: reducer placeholder for reducer; replace this line with the actual reducer once we have it
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
-/* eslint-enable */
 
-const { Provider } = require('react-redux');
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <React.StrictMode>
