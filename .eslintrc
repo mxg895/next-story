@@ -17,7 +17,7 @@
       }
     },
     "rules": {
-      // line endings
+      // line endings:
       "eol-last": 2,
       "no-trailing-spaces": "error",
       "no-multiple-empty-lines": ["error", {
@@ -30,7 +30,7 @@
       "arrow-parens": ["error", "always"],
       // promises -- this one requires another plugin:
       //   "no-floating-promises": ["error"],
-      // single quotes:
+      // quotes & semicolons， etc.:
       "jsx-quotes": ["error", "prefer-single"],
       "@typescript-eslint/quotes": ["error", "single", {
         "allowTemplateLiterals": true,
