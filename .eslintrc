@@ -25,6 +25,7 @@
         "maxEOF": 0,
         "maxBOF": 0
       }],
+      "comma-dangle": "error",
       // arrow functions:
       "arrow-parens": ["error", "always"],
       // promises -- this one requires another plugin:
