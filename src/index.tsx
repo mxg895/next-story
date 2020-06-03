@@ -6,22 +6,21 @@ import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from './styles/theme';
 import { createStore } from 'redux';
-import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import App from './App';
 
 const store = createStore(
     (state) => state, // TODO: reducer placeholder for reducer; replace this line with the actual reducer once we have it
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-import { Provider } from 'react-redux';
-
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
-            <Routes />
+            <App />
           </BrowserRouter>
       </ThemeProvider>
       </Provider>
