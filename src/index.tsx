@@ -3,12 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { theme } from './styles/theme';
 import { createStore } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
+import { ThemeProvider } from 'styled-components';
 
 const store = createStore(
     (state) => state, // TODO: reducer placeholder for reducer; replace this line with the actual reducer once we have it
@@ -18,11 +19,13 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-      </ThemeProvider>
+        <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </ThemeProvider>
+        </MuiThemeProvider>
       </Provider>
   </React.StrictMode>,
   document.getElementById('root')

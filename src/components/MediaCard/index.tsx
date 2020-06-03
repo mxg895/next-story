@@ -45,7 +45,7 @@ const Title = styled.h2`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     padding-left: 5px;
-    min-height: 50px;
+    max-height: 50px;
 `;
 
 const Blurb = styled.div`
@@ -67,7 +67,7 @@ const Tags = styled(Paper)`
     min-height: 35px;
 `;
 
-type CardData = {
+export type CardData = {
     title: string,
     image?: string, // the url, etc to the image
     tags?: string[],
@@ -80,7 +80,7 @@ interface MediaCardProps {
 }
 
 const MediaCard: React.FC<MediaCardProps> = ({ cardData }: MediaCardProps) => {
-    const { title, image, tags, blurb/* , rating  */} = cardData;
+    const { title, image, tags, blurb } = cardData;
 
     return (
         <CardContainer elevation={1}>
