@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from "styled-components";
-import { Card, Paper } from "@material-ui/core";
+import styled from 'styled-components';
+import { Card, Paper } from '@material-ui/core';
 
 const CardContainer = styled(Card)`
     height: 200px;
@@ -80,12 +80,12 @@ interface MediaCardProps {
 }
 
 const MediaCard: React.FC<MediaCardProps> = ({ cardData }: MediaCardProps) => {
-    const { title, image, tags, blurb, rating } = cardData;
+    const { title, image, tags, blurb/* , rating  */} = cardData;
 
     return (
         <CardContainer elevation={1}>
             <LeftSide>
-                <MediaImage src={image} onClick={() => { console.log('image click ')}} />
+                <MediaImage src={image} onClick={() => { console.log('image click ');}} />
             </LeftSide>
             <RightSide>
                 <Paper square={true} elevation={2}><Title>{title}</Title></Paper>

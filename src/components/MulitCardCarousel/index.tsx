@@ -1,8 +1,8 @@
 import React from 'react';
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import MediaCard from "../MediaCard";
-import styled from "styled-components";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import MediaCard from '../MediaCard';
+import styled from 'styled-components';
 import MockCover from '../../assets/MockCover.png';
 
 const StyledCarousel = styled(Carousel)`
@@ -15,7 +15,7 @@ const mockCardData = {
     tags: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     rating: 3
-}
+};
 
 const MultiCardCarousel: React.FC = () => {
     return (
@@ -83,6 +83,6 @@ const MultiCardCarousel: React.FC = () => {
             <MediaCard cardData={mockCardData} />
         </StyledCarousel>
     );
-}
+};
 
 export default MultiCardCarousel;
