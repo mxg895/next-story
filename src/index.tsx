@@ -8,6 +8,7 @@ import { theme } from './styles/theme';
 import { createStore } from 'redux';
 import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
+import NavigationBar from './components/NavigationBar/index';
 
 const store = createStore(
     (state) => state, // TODO: reducer placeholder for reducer; replace this line with the actual reducer once we have it
@@ -20,6 +21,7 @@ ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
+          <NavigationBar />
           <BrowserRouter>
             <Routes />
           </BrowserRouter>
