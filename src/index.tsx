@@ -7,7 +7,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from './styles/theme';
 import { createStore } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
-import NavigationBar from './components/NavigationBar/index';
 import { Provider } from 'react-redux';
 import App from './App';
 
@@ -20,7 +19,6 @@ ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <NavigationBar />
           <BrowserRouter>
             <App />
           </BrowserRouter>
