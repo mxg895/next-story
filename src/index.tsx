@@ -3,26 +3,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { theme } from './styles/theme';
 import { createStore } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
+import { ThemeProvider } from 'styled-components';
+import allReducers from './reducers/combinedReducers';
 
 const store = createStore(
-    (state) => state, // TODO: reducer placeholder for reducer; replace this line with the actual reducer once we have it
+    allReducers,
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-      </ThemeProvider>
+        <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </ThemeProvider>
+        </MuiThemeProvider>
       </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -8,15 +8,20 @@ const MarginHeader = styled(Typography)`
     margin-top: 25px;
 `;
 
+const NavBarSpace = styled.div`
+    margin-top: 100px;
+`;
+
 const Home: React.FC = () => {
   return (
     <Container maxWidth='lg'>
-      <MarginHeader variant='h1'>Recommendation</MarginHeader>
-        <MultiCardCarousel/>
-        <br/>
-        <br/>
-      <MarginHeader variant='h1'>Popular</MarginHeader>
-        <MultiCardCarousel/>
+        <NavBarSpace/>
+        <MarginHeader variant='h1'>Recommendation</MarginHeader>
+          <MultiCardCarousel/>
+          <br/>
+          <br/>
+        <MarginHeader variant='h1'>Popular</MarginHeader>
+          <MultiCardCarousel/>
     </Container>
   );
 };
