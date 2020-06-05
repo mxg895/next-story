@@ -105,7 +105,6 @@ const NavigationBar = () => {
         >
         <MenuItem onClick={handleMenuClose}>Login</MenuItem>
         <MenuItem onClick={handleMenuClose}>Signup</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
         </Menu>
     );
 
@@ -165,13 +164,21 @@ const NavigationBar = () => {
                 <DesktopMenu>
                     <IconButton
                         edge="end"
-                        aria-label="account of current user"
+                        aria-label="profile"
+                        aria-haspopup="true"
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                    <IconButton
+                        edge="end"
+                        aria-label="login signup"
                         aria-controls={menuId}
                         aria-haspopup="true"
                         onClick={handleDesktopMenuOpen}
                         color="inherit"
                     >
-                        <AccountCircle />
+                        <MenuIcon />
                     </IconButton>
                 </DesktopMenu>
                 <MobileMenu>
