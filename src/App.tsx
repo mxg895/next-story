@@ -2,6 +2,8 @@ import React from 'react';
 import Routes from './routes';
 import MediaModal from './components/MediaModal';
 import {connect} from "react-redux";
+import NavigationBar from './components/NavigationBar/index';
+
 
 function App(props: any) {
     const { mediaModalObject } = props;
@@ -13,6 +15,7 @@ function App(props: any) {
                     isOpen={mediaModalObject.isModalOpen}
                     modalData={mediaModalObject.data}
                 />}
+          <NavigationBar/>
           <Routes/>
         </div>
     );
