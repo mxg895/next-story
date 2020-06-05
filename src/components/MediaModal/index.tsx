@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { Modal, useMediaQuery, Typography, Paper } from '@material-ui/core';
 import styled from 'styled-components';
-import MockCover from '../../assets/MockCover.png';
 import { CardData } from '../MediaCard';
+import {connect} from "react-redux";
+import { setMediaModalClosedAction } from "../../actions/mediaModalActions";
 
 interface MediaModalProps {
     isOpen: boolean,
-    modalData?: CardData //TODO-MK make this required
+    modalData: CardData
 }
 
 const CenteredBody = styled.div<{ isSmall: boolean, isShort: boolean }>`
@@ -43,8 +44,8 @@ const TopContainer = styled.div<{ isShort: boolean }>`
     overflow: auto;
 `;
 
-const MediaImage = styled.img`
-    max-width: 50%;
+const MediaImage = styled.img<{ isShort: boolean }>`
+    max-width: ${(props) => props.isShort ? '30%' : '50%'}
 `;
 
 const TopLeftContainer = styled.div`
@@ -57,9 +58,9 @@ const MediaTags = styled.div`
     overflow: auto;
 `;
 
-const MediaBlurb = styled.div`
+const MediaBlurb = styled.div<{ isSmall: boolean, isShort: boolean }>`
     margin: 10px;
-    margin-bottom: 35px;
+    margin-bottom: ${(props) => props.isSmall || props.isShort ? '100px' : '35px'};
 `;
 
 const ModalFooter = styled(Paper)`
@@ -71,7 +72,7 @@ const ModalFooter = styled(Paper)`
     justify-content: flex-end;
 `;
 
-const GoToPageButton = styled.button`
+const Button = styled.button`
     margin-right: 10px;
     background: none;
     border: none;
@@ -80,70 +81,52 @@ const GoToPageButton = styled.button`
     font-size: 16px;
 
     &:hover {
-        color: ${({ theme }) => theme.palette.primary.main};
+        color: ${({ theme }) => theme.palette.grey[900]};
     }
 `;
 
-const modalData = {
-    title: 'Mock Title Harry Potter Mock Title Harry Potter',
-    image: MockCover,
-    tags: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
-    blurb: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
-    in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
-    in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
-    in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-    rating: 3
+function closeMediaModal(props: any) {
+    props.setMediaModalClosedAction();
 }
 
 const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     const [open, setOpen] = React.useState(false);
-    const { isOpen } = props;
+    const { isOpen, modalData } = props;
 
     const isSmall = useMediaQuery('(max-width:450px)'); // TODO-MK figure out if we want this special or override Mui breakpoints
     const isShort = useMediaQuery('(max-height:500px)');
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     useEffect(() => {
         if (isOpen) {
             setOpen(isOpen);
+        } else {
+            setOpen(false);
         }
     }, [isOpen]);
 
     return (
-        <Modal open={open} onClose={handleClose}>
+        <Modal open={open} onClose={() => closeMediaModal(props)}>
             <CenteredBody isSmall={isSmall} isShort={isShort}>
                 <ModalHeader>
-                    Add close x icon here
+                    <Button onClick={() => closeMediaModal(props)}>Add close x icon here</Button>
                 </ModalHeader>
                 <ModalContent isSmall={isSmall} isShort={isShort}>
                     <TopContainer isShort={isShort}>
-                        <MediaImage src={modalData.image} />
+                        <MediaImage src={modalData?.image} isShort={isShort} />
                         <TopLeftContainer>
-                            <Typography variant='h3' gutterBottom>{modalData.title}</Typography>
-                            <Typography variant='caption' gutterBottom>Avg Rating: {modalData.rating.toString()}</Typography>
-                            <MediaTags><Typography>{modalData.tags.join(', ')}</Typography></MediaTags>
+                            <Typography variant='h3' gutterBottom>{modalData?.title}</Typography>
+                            <Typography variant='caption' gutterBottom>Avg Rating: {modalData?.rating?.toString()}</Typography>
+                            <MediaTags>
+                                <Typography>{modalData?.tags?.join(', ')}</Typography>
+                            </MediaTags>
                         </TopLeftContainer>
                     </TopContainer>
-                    <MediaBlurb><Typography variant='body1'>{modalData.blurb}</Typography></MediaBlurb>
+                    <MediaBlurb isSmall={isSmall} isShort={isShort}>
+                        <Typography variant='body1'>{modalData?.blurb}</Typography>
+                    </MediaBlurb>
                 </ModalContent>
                 <ModalFooter elevation={3}>
-                    <GoToPageButton>Go to page</GoToPageButton>
+                    <Button>Go to page</Button>
                     {/* TODO-MK add a right arrow icon here */}
                 </ModalFooter>
             </CenteredBody>
@@ -151,4 +134,4 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     );
 }
 
-export default MediaModal;
+export default connect(null, { setMediaModalClosedAction })(MediaModal);
