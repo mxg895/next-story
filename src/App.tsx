@@ -1,7 +1,7 @@
 import React from 'react';
 import Routes from './routes';
 import MediaModal from './components/MediaModal';
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 import NavigationBar from './components/NavigationBar/index';
 
 
@@ -23,8 +23,8 @@ function App(props: any) {
 
 const mapStateToProps = (state: any) => {
     return {
-        mediaModalObject: state.mediaModalReducer.mediaModalObject,
+        mediaModalObject: state.mediaModalReducer.mediaModalObject
     };
-}
+};
 
 export default connect(mapStateToProps)(App);

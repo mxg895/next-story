@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Modal, useMediaQuery, Typography, Paper } from '@material-ui/core';
 import styled from 'styled-components';
 import { CardData } from '../MediaCard';
-import {connect} from "react-redux";
-import { setMediaModalClosedAction } from "../../actions/mediaModalActions";
+import { connect } from 'react-redux';
+import { setMediaModalClosedAction } from '../../actions/mediaModalActions';
 
 interface MediaModalProps {
     isOpen: boolean,
@@ -108,7 +108,7 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
         <Modal open={open} onClose={() => closeMediaModal(props)}>
             <CenteredBody isSmall={isSmall} isShort={isShort}>
                 <ModalHeader>
-                    <Button onClick={() => closeMediaModal(props)}>Add close x icon here</Button>
+                    <Button onClick={() => closeMediaModal(props)}>Close</Button>
                 </ModalHeader>
                 <ModalContent isSmall={isSmall} isShort={isShort}>
                     <TopContainer isShort={isShort}>
@@ -132,6 +132,6 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
             </CenteredBody>
         </Modal>
     );
-}
+};
 
 export default connect(null, { setMediaModalClosedAction })(MediaModal);
