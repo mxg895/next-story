@@ -1,8 +1,8 @@
-import { combineReducers } from "redux";
-import mediaModalReducer from "./mediaModalReducers";
+import { combineReducers } from 'redux';
+import mediaModalReducer from './mediaModalReducers';
 
 const allReducers = combineReducers({
-    mediaModalReducer,
+    mediaModalReducer
 });
 
 export default allReducers;

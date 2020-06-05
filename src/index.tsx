@@ -10,7 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
 import { ThemeProvider } from 'styled-components';
-import allReducers from "./reducers/combinedReducers";
+import allReducers from './reducers/combinedReducers';
 
 const store = createStore(
     allReducers,

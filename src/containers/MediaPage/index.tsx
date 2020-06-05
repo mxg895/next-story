@@ -4,6 +4,6 @@ const MediaPage: React.FC = () => {
     return (
         <></>
     );
-}
+};
 
 export default MediaPage;

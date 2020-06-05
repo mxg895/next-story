@@ -9,7 +9,7 @@ import {
     Toolbar,
     InputBase,
     Button,
-    IconButton,
+    IconButton
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -134,18 +134,18 @@ const NavigationBar = () => {
                     Next Story
                 </Logo>
                 <DesktopNavigationItems>
-                    <DesktopNavigationTabs 
+                    <DesktopNavigationTabs
                         variant='fullWidth'
                         value={value}
                         aria-label='nav items tabs'
                         onChange={handleChange}
                     >
-                        <Tab 
-                            component='a' 
+                        <Tab
+                            component='a'
                             label='Movies'
                         />
-                        <Tab 
-                            component='a' 
+                        <Tab
+                            component='a'
                             label='Books'
                         />
                     </DesktopNavigationTabs>
@@ -153,7 +153,7 @@ const NavigationBar = () => {
                 <Spacer/>
                 <SearchArea>
                     <SearchInputArea
-                        placeholder="Search…"
+                        placeholder='Search…'
                         inputProps={{ 'aria-label': 'search' }}
                     />
                     <SearchButton>
@@ -163,31 +163,31 @@ const NavigationBar = () => {
                 <Spacer/>
                 <DesktopMenu>
                     <IconButton
-                        edge="end"
-                        aria-label="profile"
-                        aria-haspopup="true"
-                        color="inherit"
+                        edge='end'
+                        aria-label='profile'
+                        aria-haspopup='true'
+                        color='inherit'
                     >
                         <AccountCircle />
                     </IconButton>
                     <IconButton
-                        edge="end"
-                        aria-label="login signup"
+                        edge='end'
+                        aria-label='login signup'
                         aria-controls={menuId}
-                        aria-haspopup="true"
+                        aria-haspopup='true'
                         onClick={handleDesktopMenuOpen}
-                        color="inherit"
+                        color='inherit'
                     >
                         <MenuIcon />
                     </IconButton>
                 </DesktopMenu>
                 <MobileMenu>
                     <IconButton
-                        aria-label="show more"
+                        aria-label='show more'
                         aria-controls={mobileMenuId}
-                        aria-haspopup="true"
+                        aria-haspopup='true'
                         onClick={handleMobileMenuOpen}
-                        color="inherit"
+                        color='inherit'
                     >
                         <MenuIcon />
                     </IconButton>

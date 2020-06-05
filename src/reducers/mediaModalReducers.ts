@@ -1,4 +1,4 @@
-import { MEDIA_MODAL_OPEN, MEDIA_MODAL_CLOSED } from "../constants/mediaModalConstants";
+import { MEDIA_MODAL_OPEN, MEDIA_MODAL_CLOSED } from '../constants/mediaModalConstants';
 
 const mediaModalReducer = (state = {}, action: any) => {
     switch(action.type) {
@@ -15,6 +15,6 @@ const mediaModalReducer = (state = {}, action: any) => {
         default:
             return {...state};
     }
-}
+};
 
 export default mediaModalReducer;
