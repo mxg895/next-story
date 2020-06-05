@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Card, Paper } from '@material-ui/core';
-import {connect} from "react-redux";
-import { setMediaModalOpenAction } from "../../actions/mediaModalActions";
+import { connect } from 'react-redux';
+import { setMediaModalOpenAction } from '../../actions/mediaModalActions';
 
 const CardContainer = styled(Card)`
     height: 200px;
