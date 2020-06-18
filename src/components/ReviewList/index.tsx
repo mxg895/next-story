@@ -37,7 +37,7 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     const userId = 'tempId';
     const hasAddedReview = false; // TODO figure this out with an api call
 
-    // TODO make pages instead or combine pages with infiniteScroll
+    // TODO make pages instead or combine pages with infiniteScroll ... or allow sort / filtering
     return (
         <>
             <Typography variant={'h3'}>Reviews</Typography>
