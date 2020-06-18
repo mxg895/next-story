@@ -12,6 +12,7 @@ const StyledCarousel = styled(Carousel)`
 const mockCardData = {
     title: 'Mock Title Harry Potter Mock Title Harry Potter',
     image: MockCover,
+    person: 'J.K. Rowling',
     tags: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     rating: 3
@@ -29,14 +30,15 @@ const MultiCardCarousel: React.FC = () => {
             minimumTouchDrag={80}
             slidesToSlide={1}
             swipeable
-            removeArrowOnDeviceType={['xs', 'sm']}
+            centerMode={true}
+            removeArrowOnDeviceType={['xxs', 'xs', 'sm']}
             responsive={{
                 xl: {
                     breakpoint: {
                         max: 3000,
                         min: 1920
                     },
-                    items: 5,
+                    items: 6,
                     partialVisibilityGutter: 40
                 },
                 lg: {
@@ -44,20 +46,28 @@ const MultiCardCarousel: React.FC = () => {
                         max: 1920,
                         min: 1280
                     },
-                    items: 4,
+                    items: 5,
                     partialVisibilityGutter: 30
                 },
                 md: {
                     breakpoint: {
                         max: 1280,
-                        min: 600
+                        min: 1100
+                    },
+                    items: 4,
+                    partialVisibilityGutter: 0
+                },
+                xmd: {
+                    breakpoint: {
+                        max: 1100,
+                        min: 900
                     },
                     items: 3,
                     partialVisibilityGutter: 0
                 },
                 sm: {
                     breakpoint: {
-                        max: 960,
+                        max: 900,
                         min: 600
                     },
                     items: 2,
@@ -66,10 +76,18 @@ const MultiCardCarousel: React.FC = () => {
                 xs: {
                     breakpoint: {
                         max: 600,
-                        min: 0
+                        min: 400
                     },
                     items: 1,
-                    partialVisibilityGutter: 5
+                    partialVisibilityGutter: 0
+                },
+                xxs: {
+                    breakpoint: {
+                        max: 400,
+                        min: 0
+                    },
+                    items: 0.5,
+                    partialVisibilityGutter: 100
                 }
             }}
         >
