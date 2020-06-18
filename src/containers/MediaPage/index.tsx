@@ -16,6 +16,8 @@ const MediaPage: React.FC<{}> = () => {
                 <Typography variant='h1'>Image</Typography>
                 <Typography variant='subtitle1'>people</Typography>
                 <Typography variant='body1'>blurb</Typography>
+                <Typography variant='body1'>tags</Typography>
+                <Typography variant='body1'>next story tags</Typography>
                 <br/>
                 <ReviewList mediaId={mediaId} mediaType={mediaType}/>
             </Container>
