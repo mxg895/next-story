@@ -17,12 +17,13 @@
         "movieId":"",
         "title":"",
         "director":"",
-        "averageRating": 0,
-        "genre_ids": [],
+        "rating": {"average": 0, "ratings": [{ "userId":  "", "rating": 0 }]
+        },
+        "genreIds": [],
         "nextStoryTags": [],
         "overview": "",
         "year": "",
-        "reviews": [{"text": "", "userId": "", "datePosted": "", "rating": 0}]
+        "reviews": [{"text": "", "userId": "", "datePosted": ""}]
     }],
     "genres": [{
         "genreId": 0,
@@ -37,12 +38,13 @@
         "bookId": "",
         "title": "",
         "authors": "",
-        "averageRating" : 0,
-        "genre_ids": [],
+        "rating": {"average": 0, "ratings": [{ "userId":  "", "rating": 0 }]
+        },
+        "genreIds": [],
         "nextStoryTags": [],
         "overview": "",
         "year": "",
-        "reviews": [{"text": "", "userId": "", "datePosted": "", "rating": 0}]
+        "reviews": [{"text": "", "userId": "", "userName": "", "datePosted": ""}]
     }],
     "popularMovies": ["movieId"], // just use ids and query for the info
     "popularBooks": ["bookId"]
