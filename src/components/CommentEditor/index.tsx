@@ -17,7 +17,7 @@ export enum CommentEditorAction {
 }
 
 const CommentEditor: React.FC<any> = (props: any) => {
-    const [currentText, setCurrentText] = useState(props.commentProps?.review.text || '');
+    const [currentText, setCurrentText] = useState(props.editCommentProps?.review.text || '');
 
     const submit = () => {
         const { editCommentProps, addCommentProps } = props;
