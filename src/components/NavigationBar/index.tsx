@@ -14,6 +14,9 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory({forceRefresh: true});
 
 const NavContainer = styled(AppBar)`
     top: 0;
@@ -88,6 +91,14 @@ const NavigationBar = () => {
         handleMobileMenuClose();
     };
 
+    const navToLogin = async () => {
+        history.push('/login');
+    };
+
+    const navToSignup= async () => {
+        history.push('/signup');
+    };
+
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
@@ -103,8 +114,8 @@ const NavigationBar = () => {
         open={isMenuOpen}
         onClose={handleMenuClose}
         >
-        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Signup</MenuItem>
+        <MenuItem onClick={navToLogin}>Login</MenuItem>
+        <MenuItem onClick={navToSignup}>Signup</MenuItem>
         </Menu>
     );
 
