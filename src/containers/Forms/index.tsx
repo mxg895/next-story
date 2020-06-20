@@ -14,7 +14,7 @@ import {TmdbApi} from 'tmdb-typescript-api';
 
 
 const { Search } = Input;
-
+let api: TmdbApi = new TmdbApi('597ad6ea2c97c1f27b49df9b11a6abe1');
 
 class SearchBox extends React.Component<{ searchHandler: any }> {
     render() {
@@ -34,12 +34,34 @@ class SearchBox extends React.Component<{ searchHandler: any }> {
 }
 
 function searchMovies(text: string) {
-    let api: TmdbApi = new TmdbApi('597ad6ea2c97c1f27b49df9b11a6abe1');
+
     api.search.movies(text).subscribe((movies) => {
         let movie = movies.results[0];
-        if(movie != undefined){
+        if(movie !== undefined){
             console.log(`Pulp Fiction was released in ${movie.release_date}`);
             console.log(`movie name is ${movie.title}`);
+            getMovies(movie.id);
+        }
+        //todo
+        //credits and people and role
+    });
+}
+
+function getMovies(movieId: number) {
+
+    api.movies.details(movieId).subscribe((movieDetails) => {
+        if(movieDetails !== undefined){
+            let genres = movieDetails.genres;
+            for (let genre of genres){
+                console.log(`Genre name is ${genre.name}`);
+            }
+            console.log(`movie overview is ${movieDetails.overview}`);
+            console.log(`movie release date is ${movieDetails.release_date}`);
+            console.log(`movie spoken language is/are `);
+            let spokenLanguages = movieDetails.spoken_languages;
+            for (let lang of spokenLanguages){
+                console.log(`${lang.name}-${lang.iso_639_1}, `);
+            }
         }
 
     });

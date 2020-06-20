@@ -1,0 +1,52 @@
+{
+    "profiles": [{
+        "userId": "",
+        "name": "",
+        "type": "general vs admin",
+        "avatar": "",
+        "Message": "",
+        "booksRead": [], // for all the lists below just use ids and query for the info
+        "moviesWatched": [],
+        "favoriteGenres":[],
+        "favoriteMovies": [],
+        "favoriteBooks": [],
+        "favoriteAuthors": [],
+        "favoriteDirectors": []
+    }],
+    "movies": [{
+        "movieId":"",
+        "title":"",
+        "director":"",
+        "rating": {"average": 0, "ratings": [{ "userId":  "", "rating": 0 }]
+        },
+        "genreIds": [],
+        "nextStoryTags": [],
+        "overview": "",
+        "year": "",
+        "reviews": [{"text": "", "userId": "", "datePosted": ""}]
+    }],
+    "genres": [{
+        "genreId": 0,
+        "genreName": ""
+    }],
+    "nextStoryTags" : [{
+        "tagId": 0,
+        "tagName": "",
+        "tagDescription": ""
+    }],
+    "books": [{
+        "bookId": "",
+        "title": "",
+        "authors": "",
+        "rating": {"average": 0, "ratings": [{ "userId":  "", "rating": 0 }]
+        },
+        "genreIds": [],
+        "nextStoryTags": [],
+        "overview": "",
+        "year": "",
+        "reviews": [{"text": "", "userId": "", "userName": "", "datePosted": ""}]
+    }],
+    "popularMovies": ["movieId"], // just use ids and query for the info
+    "popularBooks": ["bookId"]
+}
+
