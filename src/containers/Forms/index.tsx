@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import '../../App.css';
 import Login from '../../components/Login';
 import SignUp from '../../components/SignUp';
+import axios from 'axios';
 
 import {
     Input,
@@ -12,6 +13,22 @@ import {
 } from 'antd';
 import {TmdbApi} from 'tmdb-typescript-api';
 
+export const baseUrl = 'https://api.themoviedb.org';
+
+
+interface ServerResponse {
+    data: [Genre]
+}
+
+interface ServerData {
+    foo: string
+    bar: number
+}
+
+interface Genre {
+    id: number;
+    name: string;
+}
 
 const { Search } = Input;
 let api: TmdbApi = new TmdbApi('597ad6ea2c97c1f27b49df9b11a6abe1');
@@ -41,10 +58,37 @@ function searchMovies(text: string) {
             console.log(`Pulp Fiction was released in ${movie.release_date}`);
             console.log(`movie name is ${movie.title}`);
             getMovies(movie.id);
+            getGenres();
+            getMoviesCredits('2038');
         }
         //todo
         //credits and people and role
     });
+}
+
+function getGenres(){
+    axios
+        .get(`${baseUrl}/3/genre/movie/list`, {
+            params: { api_key: '597ad6ea2c97c1f27b49df9b11a6abe1' }
+        })
+        .then((response) => {
+            var genres = response.data.genres;
+            console.log(genres);
+        })
+        .catch((error) => console.log(error));
+}
+
+function getMoviesCredits(id: string){
+    axios
+        .get(`${baseUrl}/3/movie/${id}/credits`, {
+            params: { api_key: '597ad6ea2c97c1f27b49df9b11a6abe1' }
+        })
+        .then((response) => {
+
+            console.log(response.data.cast);
+            console.log(response.data.crew);
+        })
+        .catch((error) => console.log(error));
 }
 
 function getMovies(movieId: number) {
