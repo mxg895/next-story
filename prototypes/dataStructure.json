@@ -40,8 +40,8 @@
         "authors": "",
         "rating": {"average": 0, "ratings": [{ "userId":  "", "rating": 0 }]
         },
-        "genreIds": [],
-        "nextStoryTags": [],
+        "genreIds": [], // use tag ids or name, depends on the movie/book api?
+        "nextStoryTags": [], // use tagIds
         "overview": "",
         "year": "",
         "reviews": [{"text": "", "userId": "", "userName": "", "datePosted": ""}]

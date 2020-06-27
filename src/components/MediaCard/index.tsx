@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Card } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { setMediaModalOpenAction } from '../../actions/mediaModalActions';
-import { MediaType } from '../../constants/dataTypes';
+import { CardData } from '../../constants/dataTypes';
 
 const CardContainer = styled(Card)`
     height: 250px;
@@ -22,17 +22,6 @@ const MediaImage = styled.img`
         opacity: 50%;
     }
 `;
-
-export type CardData = {
-    title: string,
-    id: string,
-    mediaType: MediaType,
-    image?: string, // the url, etc to the image
-    tags?: string[],
-    person?: string,
-    blurb: string,
-    rating?: number
-}
 
 interface MediaCardProps {
     cardData: CardData

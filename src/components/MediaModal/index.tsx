@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Modal, useMediaQuery, Typography, Paper, IconButton } from '@material-ui/core';
 import styled from 'styled-components';
-import { CardData } from '../MediaCard';
 import { connect } from 'react-redux';
 import { setMediaModalClosedAction } from '../../actions/mediaModalActions';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { CardData } from '../../constants/dataTypes';
 
 interface MediaModalProps {
     isOpen: boolean,
@@ -135,7 +135,7 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                         <MediaImage src={modalData?.image} isShort={isShort} />
                         <TopLeftContainer>
                             <Typography variant='h3' gutterBottom>{modalData?.title}</Typography>
-                            <Typography variant='caption' gutterBottom>Avg Rating: {modalData?.rating?.toString()}</Typography>
+                            <Typography variant='caption' gutterBottom>Avg Rating: {modalData?.avgRating?.toString()}</Typography>
                             <MediaTags>
                                 <Typography>{modalData?.tags?.join(', ')}</Typography>
                             </MediaTags>
