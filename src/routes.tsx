@@ -15,10 +15,10 @@ class Routes extends React.Component {
         <Route exact key='forms' path='/forms'
                render={(props) => <LazyLoader load={() => import('./containers/Forms')} {...props} />}
         />
-        <Route exact key='movies' path='/movies'
+        <Route exact key='movie' path='/movie/:id'
                render={(props) => <LazyLoader load={() => import('./containers/MediaPage')} {...props} />}
         />
-        <Route exact key='books' path='/books'
+        <Route exact key='book' path='/book/:id'
                render={(props) => <LazyLoader load={() => import('./containers/MediaPage')} {...props} />}
         />
         <Route exact key='notFound' path='*'

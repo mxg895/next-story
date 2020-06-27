@@ -1,7 +1,8 @@
 import { ADD_REVIEW, DELETE_REVIEW, EDIT_REVIEW } from '../constants/reviewConstants';
+import { MediaType } from '../constants/dataTypes';
 
 export interface ReviewObjectType {
-    mediaType: 'movie' | 'book',
+    mediaType: MediaType,
     mediaId: string,
     reviewText: string,
     userId: string,
@@ -9,7 +10,7 @@ export interface ReviewObjectType {
     datePosted: string,
 }
 interface DeleteReviewObjectType {
-    mediaType: 'movie' | 'book',
+    mediaType: MediaType,
     mediaId: string,
     userId: string,
 }

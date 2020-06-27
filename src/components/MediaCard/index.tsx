@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Card } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { setMediaModalOpenAction } from '../../actions/mediaModalActions';
+import { MediaType } from '../../constants/dataTypes';
 
 const CardContainer = styled(Card)`
     height: 250px;
@@ -24,6 +25,8 @@ const MediaImage = styled.img`
 
 export type CardData = {
     title: string,
+    id: string,
+    mediaType: MediaType,
     image?: string, // the url, etc to the image
     tags?: string[],
     person?: string,
