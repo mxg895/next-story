@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
-import { Modal, useMediaQuery, Typography, Paper } from '@material-ui/core';
+import { Modal, useMediaQuery, Typography, Paper, IconButton } from '@material-ui/core';
 import styled from 'styled-components';
 import { CardData } from '../MediaCard';
 import { connect } from 'react-redux';
 import { setMediaModalClosedAction } from '../../actions/mediaModalActions';
+import CloseIcon from '@material-ui/icons/Close';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 interface MediaModalProps {
     isOpen: boolean,
@@ -72,7 +76,7 @@ const ModalFooter = styled(Paper)`
     justify-content: flex-end;
 `;
 
-const Button = styled.button`
+const StyledButton = styled(Button)`
     margin-right: 10px;
     background: none;
     border: none;
@@ -85,6 +89,13 @@ const Button = styled.button`
     }
 `;
 
+const StyledCloseIcon = styled(CloseIcon)`
+    color: white;
+    &:hover {
+        color: grey;
+    }
+`;
+
 function closeMediaModal(props: any) {
     props.setMediaModalClosedAction();
 }
@@ -92,9 +103,16 @@ function closeMediaModal(props: any) {
 const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     const [open, setOpen] = React.useState(false);
     const { isOpen, modalData } = props;
+    const history = useHistory();
 
     const isSmall = useMediaQuery('(max-width:450px)'); // TODO-MK figure out if we want this special or override Mui breakpoints
     const isShort = useMediaQuery('(max-height:500px)');
+
+    function goToPage() {
+        const { id, mediaType } = modalData;
+        history.push(`/${mediaType}/${id}`);
+        closeMediaModal(props);
+    }
 
     useEffect(() => {
         if (isOpen) {
@@ -108,7 +126,9 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
         <Modal open={open} onClose={() => closeMediaModal(props)}>
             <CenteredBody isSmall={isSmall} isShort={isShort}>
                 <ModalHeader>
-                    <Button onClick={() => closeMediaModal(props)}>Close</Button>
+                    <IconButton onClick={() => closeMediaModal(props)}>
+                        <StyledCloseIcon />
+                    </IconButton>
                 </ModalHeader>
                 <ModalContent isSmall={isSmall} isShort={isShort}>
                     <TopContainer isShort={isShort}>
@@ -126,8 +146,12 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                     </MediaBlurb>
                 </ModalContent>
                 <ModalFooter elevation={3}>
-                    <Button>Go to page</Button>
-                    {/* TODO-MK add a right arrow icon here */}
+                    <StyledButton
+                        endIcon={<ArrowForwardIcon />}
+                        onClick={() => goToPage()}
+                    >
+                        Go to page
+                    </StyledButton>
                 </ModalFooter>
             </CenteredBody>
         </Modal>

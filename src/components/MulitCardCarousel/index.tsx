@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import MediaCard from '../MediaCard';
 import styled from 'styled-components';
 import MockCover from '../../assets/MockCover.png';
+import { MediaType } from '../../constants/dataTypes';
 
 const StyledCarousel = styled(Carousel)`
     margin-top: 20px;
@@ -11,6 +12,8 @@ const StyledCarousel = styled(Carousel)`
 
 const mockCardData = {
     title: 'Mock Title Harry Potter Mock Title Harry Potter',
+    id: '001',
+    mediaType: MediaType.movie,
     image: MockCover,
     person: 'J.K. Rowling',
     tags: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
