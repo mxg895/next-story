@@ -21,7 +21,7 @@ const StarToolTip = styled.div`
 const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
     const [ratedStar, setStar] = useState(0);
     const { isClickable, avgRating } = props;
-    let twoDecimalRating: number = 0;
+    let twoDecimalRating: number = 0; // TODO set up tooltip functionality
     let closestWholeNumber: number;
     if (avgRating) {
         const twoDecimalRatingString = avgRating.toFixed(2);
