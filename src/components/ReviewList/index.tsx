@@ -41,7 +41,7 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     // TODO make pages instead or combine pages with infiniteScroll ... or allow sort / filtering
     return (
         <>
-            <Typography variant={'h3'}>Reviews</Typography>
+            <Typography variant={'h3'}>{reviews.length} Total Reviews</Typography>
             {addCommentEditorOpen ?
                 <>
                     <Typography variant={'h5'}><strong>{userName}</strong></Typography>
