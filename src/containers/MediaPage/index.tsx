@@ -63,12 +63,15 @@ const MediaPage: React.FC<{}> = (props: any ) => {
                 </StyledGridItem>
                 <Grid item sm={6}>
                     <Typography variant='h1'>{title}</Typography>
+                    <Box fontStyle='italic'>
+                        <Typography variant='subtitle1' gutterBottom>
+                            {people}
+                        </Typography>
+                    </Box>
                     <VerticallyCenteredDiv>
-                        Avg rating: <StarRater isClickable={false} avgRating={avgRating}/>
+                        <Typography variant='subtitle2' >Avg rating: </Typography>
+                        <StarRater isClickable={false} avgRating={avgRating}/>
                     </VerticallyCenteredDiv>
-                    <Typography variant='subtitle1' gutterBottom>
-                        <Box fontStyle='italic'>{people}</Box>
-                    </Typography>
                     <Typography variant='body1'>{blurb}</Typography>
                 </Grid>
                 <Grid item sm={3}>
