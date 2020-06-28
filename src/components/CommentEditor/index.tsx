@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/reviewActions';
+import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/mediaActions';
 
 const TextArea = styled.textarea`
     height: 100px;
