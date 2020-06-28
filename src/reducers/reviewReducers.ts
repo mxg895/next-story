@@ -1,4 +1,5 @@
 import {ADD_REVIEW, DELETE_REVIEW, EDIT_REVIEW} from '../constants/reviewConstants';
+import {MediaType} from '../constants/dataTypes';
 
 const books = [{
     bookId: '000',
@@ -67,9 +68,9 @@ const movies = [{
             {text: '', userId: '', datePosted: ''}]
 }];
 
-const reviewReducer = (state = { movies: movies, books: books}, action: any) => {
-    const mediaType: 'movie' | 'book' = action.mediaType;
-    if (mediaType === 'movie' || true) {
+const mediaReducer = (state = { movies: movies, books: books}, action: any) => {
+    const mediaType: MediaType = action.mediaType;
+    if (mediaType === MediaType.movie || true) {
         switch (action.type) {
             case EDIT_REVIEW:
                 let moviesNoEdit: any[] = [];
@@ -151,4 +152,4 @@ const reviewReducer = (state = { movies: movies, books: books}, action: any) => 
 
 };
 
-export default reviewReducer;
+export default mediaReducer;
