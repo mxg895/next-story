@@ -38,9 +38,9 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
         <StarToolTip>
             {[...Array(5)].map((star, index) => {
                 return (
-                    <>
+                    <div key={index}>
                         {isClickable ?
-                            <StyledIconButton key={index} size={'small'} onClick={() => clickStar(index + 1)}>
+                            <StyledIconButton size={'small'} onClick={() => clickStar(index + 1)}>
                                 {index < ratedStar ?
                                     <StarIcon color={'primary'} />
                                     :
@@ -56,7 +56,7 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
                                 }
                             </>
                         }
-                    </>
+                    </div>
                 );
             })}
         </StarToolTip>

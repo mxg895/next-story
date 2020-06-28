@@ -73,10 +73,12 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     );
 };
 
-const mapStateToProps = (state: any, ownProps: Pick<ReviewListProps, 'mediaId'>) => {
+const mapStateToProps = (state: any, ownProps: Pick<ReviewListProps, 'mediaId' | 'mediaType'>) => {
     const mediaId = ownProps.mediaId;
+    const mediaType = ownProps.mediaType === MediaType.movie ? 'movies' : 'books';
+    const idType = ownProps.mediaType === MediaType.movie ? 'movieId' : 'bookId';
     return {
-        reviews: state.media.movies?.filter((m: any) => m.movieId === mediaId)[0]?.reviews
+        reviews: state.media[mediaType]?.filter((m: any) => m[idType] === mediaId)[0]?.reviews
     };
 };
 
