@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Typography} from '@material-ui/core';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {deleteReviewAction} from '../../actions/reviewActions';
+import {deleteReviewAction} from '../../actions/mediaActions';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 
 interface CommentBlockProps {

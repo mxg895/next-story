@@ -1,4 +1,4 @@
-import {ADD_REVIEW, DELETE_REVIEW, EDIT_REVIEW} from '../constants/reviewConstants';
+import {ADD_REVIEW, DELETE_REVIEW, EDIT_REVIEW} from '../constants/mediaConstants';
 import {MediaType} from '../constants/dataTypes';
 
 const books = [{
