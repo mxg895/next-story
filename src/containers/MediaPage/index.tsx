@@ -16,7 +16,6 @@ const StyledImage = styled.img`
 const MediaPage: React.FC<{}> = (props: any ) => {
     const { id, mediaType } = props.match.params;
     const { title, image, people, blurb, tags, nextStoryTags } = useMemo(() => {
-        console.log('mediaId: ', id);
         // TODO get the media info from an api call using the media id
         return {
             title: 'Mock Title Harry Potter',

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import reviewReducer from './reviewReducers';
+import media from './reviewReducers';
 
 const allReducers = combineReducers({
-    reviewReducer
+    media
 });
 
 export default allReducers;

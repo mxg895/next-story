@@ -41,7 +41,7 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     // TODO make pages instead or combine pages with infiniteScroll ... or allow sort / filtering
     return (
         <>
-            <Typography variant={'h3'}>{reviews.length} Total Reviews</Typography>
+            <Typography variant={'h3'}>{reviews?.length || 0} Total Reviews</Typography>
             {addCommentEditorOpen ?
                 <>
                     <Typography variant={'h5'}><strong>{userName}</strong></Typography>
@@ -73,9 +73,10 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     );
 };
 
-const mapStateToProps = (state: any) => {
-    return { // TODO use ownProps.match.params for movie vs book and for movie/book id
-        reviews: state.reviewReducer.movies?.filter((m: any) => m.movieId === '000')[0]?.reviews
+const mapStateToProps = (state: any, ownProps: Pick<ReviewListProps, 'mediaId'>) => {
+    const mediaId = ownProps.mediaId;
+    return {
+        reviews: state.media.movies?.filter((m: any) => m.movieId === mediaId)[0]?.reviews
     };
 };
 
