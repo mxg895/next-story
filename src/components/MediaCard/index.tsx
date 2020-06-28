@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Card } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { setMediaModalOpenAction } from '../../actions/mediaModalActions';
 import { CardData } from '../../constants/dataTypes';
+import MediaModal from '../MediaModal';
 
 const CardContainer = styled(Card)`
     height: 250px;
@@ -27,19 +26,18 @@ interface MediaCardProps {
     cardData: CardData
 }
 
-function openMediaModal(props: any) {
-    const data = props.cardData;
-    props.setMediaModalOpenAction(data);
-}
-
 const MediaCard: React.FC<MediaCardProps> = (props: MediaCardProps) => {
     const { image } = props.cardData;
+    const [isMediaModalOpen, setMediaModalOpen] = useState(false);
 
     return (
-        <CardContainer elevation={1}>
-            <MediaImage src={image} onClick={() => openMediaModal(props)} />
-        </CardContainer>
+        <>
+            <MediaModal isOpen={isMediaModalOpen} setModalOpen={() => setMediaModalOpen(false)} modalData={props.cardData} />
+            <CardContainer elevation={1}>
+                <MediaImage src={image} onClick={() => setMediaModalOpen(true)} />
+            </CardContainer>
+        </>
     );
 };
 
-export default connect(null, { setMediaModalOpenAction })(MediaCard);
+export default MediaCard;

@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Modal, useMediaQuery, Typography, Paper, IconButton } from '@material-ui/core';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { setMediaModalClosedAction } from '../../actions/mediaModalActions';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Button } from '@material-ui/core';
@@ -11,7 +9,8 @@ import { CardData } from '../../constants/dataTypes';
 
 interface MediaModalProps {
     isOpen: boolean,
-    modalData: CardData
+    modalData: CardData,
+    setModalOpen: (open: boolean) => void
 }
 
 const CenteredBody = styled.div<{ isSmall: boolean, isShort: boolean }>`
@@ -96,13 +95,8 @@ const StyledCloseIcon = styled(CloseIcon)`
     }
 `;
 
-function closeMediaModal(props: any) {
-    props.setMediaModalClosedAction();
-}
-
 const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
-    const [open, setOpen] = React.useState(false);
-    const { isOpen, modalData } = props;
+    const { isOpen, modalData, setModalOpen } = props;
     const history = useHistory();
 
     const isSmall = useMediaQuery('(max-width:450px)'); // TODO-MK figure out if we want this special or override Mui breakpoints
@@ -111,22 +105,14 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     function goToPage() {
         const { id, mediaType } = modalData;
         history.push(`/${mediaType}/${id}`);
-        closeMediaModal(props);
+        setModalOpen(false);
     }
 
-    useEffect(() => {
-        if (isOpen) {
-            setOpen(isOpen);
-        } else {
-            setOpen(false);
-        }
-    }, [isOpen]);
-
     return (
-        <Modal open={open} onClose={() => closeMediaModal(props)}>
+        <Modal open={isOpen} onClose={() => setModalOpen(false)}>
             <CenteredBody isSmall={isSmall} isShort={isShort}>
                 <ModalHeader>
-                    <IconButton onClick={() => closeMediaModal(props)}>
+                    <IconButton onClick={() => setModalOpen(false)}>
                         <StyledCloseIcon />
                     </IconButton>
                 </ModalHeader>
@@ -158,4 +144,4 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     );
 };
 
-export default connect(null, { setMediaModalClosedAction })(MediaModal);
+export default MediaModal;
