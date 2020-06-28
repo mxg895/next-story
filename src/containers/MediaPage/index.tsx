@@ -50,42 +50,44 @@ const MediaPage: React.FC<{}> = (props: any ) => {
     }, [id]);
 
     return (
-        <Container maxWidth='lg'>
-            <Grid container direction={'row'}  spacing={5}>
-                <StyledGridItem item sm={3}>
-                    <StyledImage src={image} />
-                    <div>
-                        Your rating:
-                        <CenteredDiv>
-                            <StarRater isClickable={true} avgRating={avgRating}/>
-                        </CenteredDiv>
-                    </div>
-                </StyledGridItem>
-                <Grid item sm={6}>
-                    <Typography variant='h1'>{title}</Typography>
-                    <Box fontStyle='italic'>
-                        <Typography variant='subtitle1' gutterBottom>
-                            {people}
-                        </Typography>
-                    </Box>
-                    <VerticallyCenteredDiv>
-                        <Typography variant='subtitle2' >Avg rating: </Typography>
-                        <StarRater isClickable={false} avgRating={avgRating}/>
-                    </VerticallyCenteredDiv>
-                    <Typography variant='body1'>{blurb}</Typography>
+        <>
+            <Container maxWidth='lg'>
+                <Grid container direction={'row'}  spacing={5}>
+                    <StyledGridItem item sm={3}>
+                        <StyledImage src={image} />
+                        <div>
+                            Your rating:
+                            <CenteredDiv>
+                                <StarRater isClickable={true} avgRating={avgRating}/>
+                            </CenteredDiv>
+                        </div>
+                    </StyledGridItem>
+                    <Grid item sm={6}>
+                        <Typography variant='h1'>{title}</Typography>
+                        <Box fontStyle='italic'>
+                            <Typography variant='subtitle1' gutterBottom>
+                                {people}
+                            </Typography>
+                        </Box>
+                        <VerticallyCenteredDiv>
+                            <Typography variant='subtitle2' >Avg rating: </Typography>
+                            <StarRater isClickable={false} avgRating={avgRating}/>
+                        </VerticallyCenteredDiv>
+                        <Typography variant='body1'>{blurb}</Typography>
+                    </Grid>
+                    <Grid item sm={3}>
+                        Genres:
+                        <TagsSection tags={tags}/>
+                        Tags:
+                        <TagsSection tags={nextStoryTags}/>
+                    </Grid>
                 </Grid>
-                <Grid item sm={3}>
-                    Genres:
-                    <TagsSection tags={tags}/>
-                    Tags:
-                    <TagsSection tags={nextStoryTags}/>
-                </Grid>
-            </Grid>
+            </Container>
             {/*TODO only show CommentEditor to add comments if the user has not submitted before*/}
             <Container maxWidth='md'>
                 <ReviewList mediaId={id} mediaType={mediaType}/>
             </Container>
-        </Container>
+        </>
     );
 };
 
