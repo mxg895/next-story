@@ -64,8 +64,7 @@ const MediaPage: React.FC<{}> = (props: any ) => {
                 <Grid item sm={6}>
                     <Typography variant='h1'>{title}</Typography>
                     <VerticallyCenteredDiv>
-                        {'Avg rating: '}
-                        <StarRater isClickable={false} avgRating={avgRating}/>
+                        Avg rating: <StarRater isClickable={false} avgRating={avgRating}/>
                     </VerticallyCenteredDiv>
                     <Typography variant='subtitle1' gutterBottom>
                         <Box fontStyle='italic'>{people}</Box>
