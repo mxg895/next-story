@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-import {IconButton} from '@material-ui/core';
+import {Box, IconButton} from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import styled from 'styled-components';
 
@@ -13,7 +13,7 @@ const StyledIconButton = styled(IconButton)`
     padding: 0px !important;
 `;
 
-const StarToolTip = styled.div`
+const VerticallyCenteredDiv = styled.div`
     display: flex;
     align-items: center;
 `;
@@ -35,10 +35,10 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
     }
 
     return (
-        <StarToolTip>
+        <Box display='flex'>
             {[...Array(5)].map((star, index) => {
                 return (
-                    <div key={index}>
+                    <VerticallyCenteredDiv key={index}>
                         {isClickable ?
                             <StyledIconButton size={'small'} onClick={() => clickStar(index + 1)}>
                                 {index < ratedStar ?
@@ -56,10 +56,10 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
                                 }
                             </>
                         }
-                    </div>
+                    </VerticallyCenteredDiv>
                 );
             })}
-        </StarToolTip>
+        </Box>
     );
 };
 
