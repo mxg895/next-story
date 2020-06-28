@@ -30,7 +30,7 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
     }
 
     function clickStar(starIndex: number) {
-        setStar(starIndex);
+        ratedStar === starIndex ? setStar(starIndex - 1) : setStar(starIndex);
         // TODO use the api to set the rating (add the media type and media id as props)
     }
 
