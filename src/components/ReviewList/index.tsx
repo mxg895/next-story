@@ -5,10 +5,11 @@ import {Typography} from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 import Button from '../Button';
+import { MediaType } from '../../constants/dataTypes';
 
 interface ReviewListProps {
     mediaId: string,
-    mediaType: 'movie' | 'book',
+    mediaType: MediaType,
     reviews: any[],
 }
 
