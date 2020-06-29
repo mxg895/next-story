@@ -58,7 +58,7 @@ const MediaPage: React.FC<{}> = (props: any ) => {
                         <div>
                             Your rating:
                             <CenteredDiv>
-                                <StarRater isClickable={true} avgRating={avgRating}/>
+                                <StarRater />
                             </CenteredDiv>
                         </div>
                     </StyledGridItem>
@@ -71,7 +71,7 @@ const MediaPage: React.FC<{}> = (props: any ) => {
                         </Box>
                         <VerticallyCenteredDiv>
                             <Typography variant='subtitle2' >Avg rating: </Typography>
-                            <StarRater isClickable={false} avgRating={avgRating}/>
+                            <StarRater avgRating={avgRating}/>
                         </VerticallyCenteredDiv>
                         <Typography variant='body1'>{blurb}</Typography>
                     </Grid>
