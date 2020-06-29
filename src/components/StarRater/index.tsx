@@ -5,7 +5,6 @@ import StarIcon from '@material-ui/icons/Star';
 import styled from 'styled-components';
 
 interface StarRaterProps {
-    isClickable: boolean;
     avgRating?: number;
 }
 
@@ -20,7 +19,7 @@ const VerticallyCenteredDiv = styled.div`
 
 const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
     const [ratedStar, setStar] = useState(0);
-    const { isClickable, avgRating } = props;
+    const { avgRating } = props;
     let twoDecimalRating: number = 0; // TODO set up tooltip functionality
     let closestWholeNumber: number;
     if (avgRating) {
@@ -39,7 +38,7 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
             {[...Array(5)].map((star, index) => {
                 return (
                     <VerticallyCenteredDiv key={index}>
-                        {isClickable ?
+                        {!avgRating ?
                             <StyledIconButton size={'small'} onClick={() => clickStar(index + 1)}>
                                 {index < ratedStar ?
                                     <StarIcon color={'primary'} />
