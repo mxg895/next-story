@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e865e5c0-6e42-4808-93a3-2d21368832db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/.eslintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/README-CRA.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/prototypes/HomePNG.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/prototypes/ProfilePNG.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/prototypes/dataStructure.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/App.test.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/actions/mediaModalActions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/actions/reviewActions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/MockCover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Button/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/CommentBlock/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/CommentEditor/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/LazyLoader/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/LoadingSign/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Login/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/MediaCard/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/MediaModal/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/MulitCardCarousel/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/NavigationBar/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/ReviewList/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/SignUp/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/constants/mediaModalConstants.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/constants/reviewConstants.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/containers/Container/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/containers/Forms/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/containers/Home/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/containers/MediaPage/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/containers/Notfound/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/containers/Profile/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/react-app-env.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/reducers/combinedReducers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/reducers/mediaModalReducers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/reducers/reviewReducers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/routes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/serviceWorker.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/setupTests.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/styles/theme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README-CRA.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prototypes/HomePNG.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prototypes/ProfilePNG.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prototypes/dataStructure.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/mediaModalActions.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/reviewActions.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/MockCover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Button/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CommentBlock/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CommentEditor/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LazyLoader/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoadingSign/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MediaCard/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MediaModal/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MulitCardCarousel/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavigationBar/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ReviewList/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SignUp/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/mediaModalConstants.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/reviewConstants.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Container/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Forms/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Home/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/MediaPage/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Notfound/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Profile/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react-app-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/combinedReducers.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/mediaModalReducers.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/reviewReducers.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serviceWorker.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/setupTests.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/theme.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1e6BQUstJBEuBieKlLgICQtelO8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e865e5c0-6e42-4808-93a3-2d21368832db" name="Default Changelist" comment="" />
+      <created>1593632145637</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1593632145637</updated>
+      <workItem from="1593632146981" duration="1245000" />
+      <workItem from="1593633527255" duration="311000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+</project>
