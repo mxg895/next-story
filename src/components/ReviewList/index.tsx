@@ -24,7 +24,7 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
         setStateReviews(rerenderReviews);
     }, [reviews]);
 
-    const fetchMoreData = () => {
+    const fetchMoreData = () => { // todo - fetch from database here and not MediaPage for better performance
         setTimeout(() => {
             const currentReviewLength = stateReviews.length;
             const theFetchNum = currentReviewLength + 5;
