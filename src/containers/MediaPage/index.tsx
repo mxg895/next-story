@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import ReviewList from '../../components/ReviewList';
@@ -32,7 +32,19 @@ const CenteredDiv = styled.div`
     margin-bottom: 10px;
 `;
 
+const WatchReadButton = styled.button<{ isForLater: boolean }>`
+    background-color: ${({ theme, isForLater }) => isForLater ? theme.palette.grey[300] : theme.palette.primary.light};
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    color: ${({ isForLater }) => isForLater ? 'black' : 'white'};
+`;
+
 const MediaPage: React.FC<{}> = (props: any ) => {
+    const [isForLater, setForLater] = useState(false);
     const { id, mediaType } = props.match.params;
     const { title, image, people, blurb, tags, nextStoryTags, avgRating } = useMemo(() => {
         // TODO get the media info from an api call using the media id
@@ -49,6 +61,21 @@ const MediaPage: React.FC<{}> = (props: any ) => {
         };
     }, [id]);
 
+    useEffect(() => {
+        // todo get if this media is on the user's watch/read later list and set the state
+    }, [id]);
+
+    const addOrRemoveWatchReadLater = (mediaType: MediaType, mediaId: string) => {
+        console.log('watch or read later, mediaType: ', mediaType, 'id: ', mediaId);
+        if (isForLater) {
+            setForLater(false);
+            // todo remove from watch later in mongodb and maybe redux
+        } else {
+            setForLater(true);
+            // todo add to watch later in mongodb and maybe redux
+        }
+    };
+
     return (
         <>
             <Container maxWidth='lg'>
@@ -60,6 +87,9 @@ const MediaPage: React.FC<{}> = (props: any ) => {
                             <CenteredDiv>
                                 <StarRater />
                             </CenteredDiv>
+                            <WatchReadButton onClick={() => addOrRemoveWatchReadLater(mediaType, id)} isForLater={isForLater}>
+                                {`${isForLater ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
+                            </WatchReadButton>
                         </div>
                     </StyledGridItem>
                     <Grid item sm={6}>
