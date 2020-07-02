@@ -1,3 +1,4 @@
+// NOTE: see the initialData.js file!!! (and Mongoose if that's implemented)
 {
     "profiles": [{
         "userId": "",
@@ -15,15 +16,16 @@
     }],
     "movies": [{
         "movieId":"",
-        "title":"",
-        "director":"",
-        "rating": {"average": 0, "ratings": [{ "userId":  "", "rating": 0 }]
-        },
-        "genreIds": [],
         "nextStoryTags": [],
-        "overview": "",
-        "year": "",
-        "reviews": [{"text": "", "userId": "", "datePosted": ""}]
+        "ratingReviews": {
+            "average": 0,
+            "ratingsAndReviews": [
+                {
+                    "text": "",
+                    "userId": "",
+                    "datePosted": ""
+                }]
+        }
     }],
     "genres": [{
         "genreId": 0,
@@ -36,15 +38,16 @@
     }],
     "books": [{
         "bookId": "",
-        "title": "",
-        "authors": "",
-        "rating": {"average": 0, "ratings": [{ "userId":  "", "rating": 0 }]
-        },
-        "genreIds": [], // use tag ids or name, depends on the movie/book api?
         "nextStoryTags": [], // use tagIds
-        "overview": "",
-        "year": "",
-        "reviews": [{"text": "", "userId": "", "userName": "", "datePosted": ""}]
+        "ratingReviews": {
+            "average": 0,
+            "ratingsAndReviews": [
+                {
+                    "text": "",
+                    "userId": "",
+                    "datePosted": ""
+                }]
+        }
     }],
     "popularMovies": ["movieId"], // just use ids and query for the info
     "popularBooks": ["bookId"]
