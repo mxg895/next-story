@@ -5,6 +5,7 @@ import Button from '../Button';
 import {connect} from 'react-redux';
 import {deleteReviewAction} from '../../actions/mediaActions';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
+import ReactMarkdown from 'react-markdown';
 
 interface CommentBlockProps {
     review: any,
@@ -56,7 +57,7 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
                         </div>
                     </TopBar>
                     <Typography variant={'subtitle2'} gutterBottom>User rating: 0</Typography>
-                    <Typography variant={'body1'} gutterBottom>{ review.text }</Typography>
+                    <ReactMarkdown source={review.text} />
                 </>}
             </Review>
         </>
