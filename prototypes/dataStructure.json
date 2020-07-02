@@ -4,7 +4,7 @@
         "name": "",
         "type": "general vs admin",
         "avatar": "",
-        "Message": "",
+        "message": "",
         "booksRead": [], // for all the lists below just use ids and query for the info
         "moviesWatched": [],
         "favoriteGenres":[],

@@ -5,13 +5,19 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 
 interface StarRaterProps {
-    avgRating?: number;
+    readonly: boolean
+
+    // if readonly === true
+    readOnlyRating?: number;
+    hideReadOnlyLabel?: boolean;
+
+    // if readonly === false
     userRating?: number;
 }
 
 const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
-    const { avgRating, userRating } = props;
-    const [ratedStar, setStar] = useState<number | null | string>(avgRating?.toFixed(2) || 'none');
+    const { readonly, readOnlyRating, userRating, hideReadOnlyLabel } = props;
+    const [ratedStar, setStar] = useState<number | null | string>(readOnlyRating?.toFixed(2) || 'no rating');
     const [, setHover] = useState(userRating);
 
     function clickStar(newValue: number | null) {
@@ -23,19 +29,19 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
         <>
             <Rating
                 name='rating-name'
-                defaultValue={userRating || avgRating}
-                precision={avgRating ? 0.25 : 1}
+                defaultValue={userRating || readOnlyRating}
+                precision={readonly ? 0.25 : 1}
                 emptyIcon={<StarBorderIcon fontSize='inherit' />}
-                readOnly={!!avgRating}
+                readOnly={readonly}
                 onChange={(event, newValue) => {
                     clickStar(newValue);
                 }}
                 onChangeActive={(event, newHover) => {
                     setHover(newHover);
                 }}
-                size={avgRating ? 'small' : 'medium'}
+                size={readonly ? 'small' : 'medium'}
             />
-            {avgRating && <Box ml={2}><Typography variant='subtitle2' >{ratedStar}</Typography></Box>}
+            {readonly && !hideReadOnlyLabel && <Box ml={2}><Typography variant='subtitle2' >{ratedStar}</Typography></Box>}
         </>
     );
 };

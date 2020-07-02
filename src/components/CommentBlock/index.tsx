@@ -1,17 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import styled from 'styled-components';
-import {Typography} from '@material-ui/core';
+import {Box, Typography} from '@material-ui/core';
 import Button from '../Button';
 import {connect} from 'react-redux';
 import {deleteReviewAction} from '../../actions/mediaActions';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 import ReactMarkdown from 'react-markdown';
 import {hasDivOverflown} from '../../utils/styleHelpers';
+import {MediaType} from '../../constants/dataTypes';
+import StarRater from '../StarRater';
 
 interface CommentBlockProps {
     review: any,
-    mediaType: 'movie' | 'book',
-    mediaId: string
+    mediaType: MediaType,
+    mediaId: string,
 }
 
 const Review = styled.div`
@@ -63,6 +65,12 @@ const ShowLessButton = styled.button`
     margin-bottom: 5px;
 `;
 
+const VerticallyCenteredDiv = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+`;
+
 function deleteReview(props: any) {
     const { mediaType, mediaId } = props;
     const userId = props.review.userId;
@@ -74,15 +82,25 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
     const [expanded, setExpanded] = useState(false);
     const [hasOverflow, setHasOverflow] = useState(false);
     const expandableRef = useRef(null);
-    const { review } = props;
+    const { review, mediaId, mediaType } = props;
     const date = new Date(review.datePosted).toDateString();
+
+    const reviewerRating = useMemo(() => {
+        const userId = review.userId;
+        console.log('fetch rating using', userId, mediaType, mediaId);
+        // todo - fetch the rating for this based on the userId, the mediaId, and the mediaType
+        //  (or pass in as prop... and traverse array to find which is faster??)
+        return 4;
+    }, [props]);
 
     useEffect(() => {
         const isOverflowing = hasDivOverflown(expandableRef);
         if (isOverflowing) {
             setHasOverflow(true);
+        } else {
+            setHasOverflow(false);
         }
-    }, []);
+    }, [review]);
     // TODO only show the edit and delete buttons if the userId matches with the current user's id
     return (
         <>
@@ -105,7 +123,10 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
                             <Button onClick={() => deleteReview(props)}>Delete</Button>
                         </div>
                     </TopBar>
-                    <Typography variant={'subtitle2'} gutterBottom>User rating: 0</Typography>
+                    <VerticallyCenteredDiv>
+                        <Box mr={1}>User rated: </Box>
+                        {reviewerRating ? <StarRater readonly readOnlyRating={reviewerRating} hideReadOnlyLabel /> : 'no rating'}
+                    </VerticallyCenteredDiv>
                     <ReactMarkdown source={review.text} />
                     {!expanded && hasOverflow &&
                         <ShowMoreButton onClick={() => setExpanded(true)}>
