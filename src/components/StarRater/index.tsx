@@ -1,64 +1,42 @@
 import React, {useState} from 'react';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-import {Box, IconButton} from '@material-ui/core';
-import StarIcon from '@material-ui/icons/Star';
-import styled from 'styled-components';
+import {Box} from '@material-ui/core';
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
 
 interface StarRaterProps {
     avgRating?: number;
+    userRating?: number;
 }
 
-const StyledIconButton = styled(IconButton)`
-    padding: 0px !important;
-`;
-
-const VerticallyCenteredDiv = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
 const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
-    const [ratedStar, setStar] = useState(0);
-    const { avgRating } = props;
-    let twoDecimalRating: number = 0; // TODO set up tooltip functionality
-    let closestWholeNumber: number;
-    if (avgRating) {
-        const twoDecimalRatingString = avgRating.toFixed(2);
-        twoDecimalRating = Number(twoDecimalRatingString);
-        closestWholeNumber = Math.round(avgRating);
-    }
+    const { avgRating, userRating } = props;
+    const [ratedStar, setStar] = useState<number | null | string>(avgRating?.toFixed(2) || 'none');
+    const [, setHover] = useState(userRating);
 
-    function clickStar(starIndex: number) {
-        ratedStar === starIndex ? setStar(starIndex - 1) : setStar(starIndex);
+    function clickStar(newValue: number | null) {
+        setStar(newValue);
         // TODO use the api to set the rating (add the media type and media id as props)
     }
 
     return (
-        <Box display='flex'>
-            {[...Array(5)].map((star, index) => {
-                return (
-                    <VerticallyCenteredDiv key={index}>
-                        {!avgRating ?
-                            <StyledIconButton size={'small'} onClick={() => clickStar(index + 1)}>
-                                {index < ratedStar ?
-                                    <StarIcon color={'primary'} />
-                                    :
-                                    <StarBorderIcon color={'primary'} />
-                                }
-                            </StyledIconButton>
-                            :
-                            <>
-                                {index <  closestWholeNumber ?
-                                    <StarIcon color={'primary'} fontSize={'small'}/>
-                                    :
-                                    <StarBorderIcon color={'primary'} fontSize={'small'}/>
-                                }
-                            </>
-                        }
-                    </VerticallyCenteredDiv>
-                );
-            })}
-        </Box>
+        <>
+            <Rating
+                name='rating-name'
+                defaultValue={userRating || avgRating}
+                precision={avgRating ? 0.25 : 1}
+                emptyIcon={<StarBorderIcon fontSize='inherit' />}
+                readOnly={!!avgRating}
+                onChange={(event, newValue) => {
+                    clickStar(newValue);
+                }}
+                onChangeActive={(event, newHover) => {
+                    setHover(newHover);
+                }}
+                size={avgRating ? 'small' : 'medium'}
+            />
+            {avgRating && <Box ml={2}><Typography variant='subtitle2' >{ratedStar}</Typography></Box>}
+        </>
     );
 };
 
