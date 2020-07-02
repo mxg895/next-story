@@ -16,6 +16,8 @@ const StyledTagButton = styled.button`
     &:hover {
         background-color: ${({ theme }) => theme.palette.secondary.light};
     }
+    font-size: 16px;
+    padding: 3px 5px 3px 5px;
 `;
 
 const TagButton: React.FC<TagsButtonProps> = (props: TagsButtonProps) => {
