@@ -19,7 +19,8 @@ for movies, seeing ‘friend’ information, or add books/movies to a ‘Watch l
   1. Set up a database
 
 - 3-7 "standard" requirements (will most likely complete)
-  1. Admins should be able to add new book/movie manually
+  1. Note: probably won't do anymore: Admins should be able to add new book/movie manually
+  1. Allow users to add and remove story tags from a movie or book
   1. The website should be able to update its book/movie list via external API endpoints
   1. Allow users to add a review & ratings (out of 5 starts) for a book/movie
   1. Users should be able to add a book or movie to a personal 'Watch later' list
