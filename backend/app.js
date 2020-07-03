@@ -15,7 +15,12 @@ var app = express();
 // NOTE MUST CREATE A FILE CALLED '.env' AND ADD THE DATABASE_URI VALUE INTO IT
 const mongoDB = process.env.DATABASE_URI;
 
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoDB, { 
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: true,
+  useCreateIndex: true
+})
     .then(() => console.log('Connected to MongoDB with mongoose...'))
     .catch(() => console.log('Uh-oh something went wrong when trying to connect to MongoDB'));
 const db = mongoose.connection;
