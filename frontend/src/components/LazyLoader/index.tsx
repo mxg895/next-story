@@ -11,7 +11,7 @@ class LazyLoader extends React.Component<LazyLoaderProps> {
       </Suspense>
     );
   }
-};
+}
 
 interface LazyLoaderProps {
   load: () => Promise<{ default: React.ComponentType }>;
