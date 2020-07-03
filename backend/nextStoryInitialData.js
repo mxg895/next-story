@@ -1,4 +1,3 @@
-db = db.getSiblingDB("nextStory");
 db.profiles.drop();
 db.books.drop();
 db.movies.drop();
