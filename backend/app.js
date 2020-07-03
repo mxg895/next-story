@@ -12,7 +12,7 @@ var nextStoryTagsRouter = require('./routes/nextStoryTags');
 
 var app = express();
 
-// NOTE MUST CREATE A FILE CALLED '.env' AND ADD THE DATABASE_PASS AND DATABASE_NAME VALUES INTO IT
+// NOTE MUST CREATE A FILE CALLED '.env' AND ADD THE DATABASE_URI VALUE INTO IT
 const mongoDB = process.env.DATABASE_URI;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
