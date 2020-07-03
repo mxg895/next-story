@@ -9,8 +9,8 @@ import SignUp from '../../components/SignUp';
 const Forms: React.FC = () => {
     return (
         <Container maxWidth='md'>
-            <Login></Login>
-            <SignUp></SignUp>
+            <Login />
+            <SignUp />
         </Container>
     );
 };

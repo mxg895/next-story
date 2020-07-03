@@ -1,6 +1,6 @@
 import React from 'react';
 import Routes from './routes';
-import NavigationBar from './components/NavigationBar/index';
+import NavigationBar from './components/NavigationBar';
 
 
 function App() {
