@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import {
     AppBar,
@@ -14,6 +14,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { useHistory } from 'react-router-dom';
 
 const NavContainer = styled(AppBar)`
     top: 0;
@@ -66,12 +67,42 @@ const SearchButton = styled(Button)`
 `;
 
 const NavigationBar = () => {
-    const [value, setValue] = React.useState(0);
+    const [page, setPage] = React.useState('all');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
+    const history = useHistory();
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+        setPage(newValue);
     };
+
+    useEffect(() => {
+        switch (page) {
+            case 'movies':
+                // do something when the movies tab is clicked
+                break;
+            case 'books':
+                // do something when the books tab is clicked
+                break;
+            case 'tags':
+                history.push('/allStoryTags');
+                break;
+            case 'login':
+                history.push('/forms');
+                break;
+            case 'signup':
+                // do something when the signup tab is clicked
+                history.push('/forms');
+                break;
+            case 'profile':
+                // do something when the profile tab is clicked
+                break;
+            case 'all':
+            default:
+                history.push('/');
+                break;
+        }
+    }, [history, page]);
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -83,8 +114,14 @@ const NavigationBar = () => {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
+    const closeMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(null);
+        handleMobileMenuClose();
+    };
+
+    const handleMenuClose = (event: React.MouseEvent<HTMLElement>, value: string) => {
+        setAnchorEl(null);
+        setPage(value);
         handleMobileMenuClose();
     };
 
@@ -101,10 +138,10 @@ const NavigationBar = () => {
         keepMounted
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
-        onClose={handleMenuClose}
+        onClose={closeMenu}
         >
-        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Signup</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
         </Menu>
     );
 
@@ -119,11 +156,13 @@ const NavigationBar = () => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
         >
-        <MenuItem onClick={handleMenuClose}>Movies</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Books</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Signup</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'all')}>All</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'movies')}>Movies</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'books')}>Books</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'tags')}>Tags</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'profile')}>Profile</MenuItem>
         </Menu>
     );
 
@@ -136,17 +175,29 @@ const NavigationBar = () => {
                 <DesktopNavigationItems>
                     <DesktopNavigationTabs
                         variant='fullWidth'
-                        value={value}
+                        value={page}
                         aria-label='nav items tabs'
                         onChange={handleChange}
                     >
                         <Tab
                             component='a'
+                            label='All'
+                            value={'all'}
+                        />
+                        <Tab
+                            component='a'
                             label='Movies'
+                            value={'movies'}
                         />
                         <Tab
                             component='a'
                             label='Books'
+                            value={'books'}
+                        />
+                        <Tab
+                            component='a'
+                            label='Tags'
+                            value={'tags'}
                         />
                     </DesktopNavigationTabs>
                 </DesktopNavigationItems>

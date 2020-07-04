@@ -18,6 +18,9 @@ class Routes extends React.Component {
         <Route exact key='mediaPage' path='/:mediaType/:id'
                render={(props) => <LazyLoader load={() => import('./containers/MediaPage')} {...props} />}
         />
+        <Route exact key='nextStoryTagPage' path='/allStoryTags'
+               render={(props) => <LazyLoader load={() => import('./containers/NextStoryTagsPage')} {...props} />}
+        />
         <Route exact key='notFound' path='*'
           render={(props) => <LazyLoader load={() => import('./containers/Notfound')} {...props} />}
         />

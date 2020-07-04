@@ -20,19 +20,19 @@ db.profiles.insertMany([
         favoriteNextStoryTags: [
             {
                 tagId: 'tag-000',
-                tagName: 'happily ever after'
+                tagName: 'Happily Ever After'
             },
             {
                 tagId: 'tag-001',
-                tagName: 'downer ending'
+                tagName: 'Downer Ending'
             },
             {
                 tagId: 'tag-003',
-                tagName: 'save the world'
+                tagName: 'Save The World'
             },
             {
                 tagId: 'tag-004',
-                tagName: 'the chosen one'
+                tagName: 'The Chosen One'
             }
         ]
     },
@@ -52,15 +52,15 @@ db.profiles.insertMany([
         favoriteNextStoryTags: [
             {
                 tagId: 'tag-000',
-                tagName: 'happily ever after'
+                tagName: 'Happily Ever After'
             },
             {
                 tagId: 'tag-003',
-                tagName: 'save the world'
+                tagName: 'Save The World'
             },
             {
                 tagId: 'tag-006',
-                tagName: 'mentor character'
+                tagName: 'Mentor Character'
             }
         ]
     }
@@ -71,19 +71,19 @@ db.movies.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-000',
-                    tagName: 'happily ever after'
+                    tagName: 'Happily Ever After'
                 },
                 {
                     tagId: 'tag-002',
-                    tagName: 'tolkien-eque'
+                    tagName: 'Tolkien-eque'
                 },
                 {
                     tagId: 'tag-004',
-                    tagName: 'the chosen one'
+                    tagName: 'The Chosen One'
                 },
                 {
                     tagId: 'tag-005',
-                    tagName: 'reluctant hero'
+                    tagName: 'Reluctant Hero'
                 }
             ],
             ratingReviews: {
@@ -118,19 +118,19 @@ db.movies.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-000',
-                    tagName: 'happily ever after'
+                    tagName: 'Happily Ever After'
                 },
                 {
                     tagId: 'tag-001',
-                    tagName: 'downer ending'
+                    tagName: 'Downer Ending'
                 },
                 {
                     tagId: 'tag-004',
-                    tagName: 'the chosen one'
+                    tagName: 'The Chosen One'
                 },
                 {
                     tagId: 'tag-005',
-                    tagName: 'reluctant hero'
+                    tagName: 'Reluctant Hero'
                 }
             ],
             ratingReviews: {
@@ -165,23 +165,23 @@ db.movies.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-002',
-                    tagName: 'tolkien-eque'
+                    tagName: 'Tolkien-eque'
                 },
                 {
                     tagId: 'tag-003',
-                    tagName: 'save the world'
+                    tagName: 'Save The World'
                 },
                 {
                     tagId: 'tag-004',
-                    tagName: 'the chosen one'
+                    tagName: 'The Chosen One'
                 },
                 {
                     tagId: 'tag-005',
-                    tagName: 'reluctant hero'
+                    tagName: 'Reluctant Hero'
                 },
                 {
                     tagId: 'tag-006',
-                    tagName: 'mentor character'
+                    tagName: 'Mentor Character'
                 }
             ],
             ratingReviews: {
@@ -216,27 +216,27 @@ db.movies.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-000',
-                    tagName: 'happily ever after'
+                    tagName: 'Happily Ever After'
                 },
                 {
                     tagId: 'tag-001',
-                    tagName: 'downer ending'
+                    tagName: 'Downer Ending'
                 },
                 {
                     tagId: 'tag-002',
-                    tagName: 'tolkien-eque'
+                    tagName: 'Tolkien-eque'
                 },
                 {
                     tagId: 'tag-004',
-                    tagName: 'the chosen one'
+                    tagName: 'The Chosen One'
                 },
                 {
                     tagId: 'tag-005',
-                    tagName: 'reluctant hero'
+                    tagName: 'Reluctant Hero'
                 },
                 {
                     tagId: 'tag-006',
-                    tagName: 'mentor character'
+                    tagName: 'Mentor Character'
                 }
             ],
             ratingReviews: {
@@ -271,31 +271,31 @@ db.movies.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-000',
-                    tagName: 'happily ever after'
+                    tagName: 'Happily Ever After'
                 },
                 {
                     tagId: 'tag-001',
-                    tagName: 'downer ending'
+                    tagName: 'Downer Ending'
                 },
                 {
                     tagId: 'tag-002',
-                    tagName: 'tolkien-eque'
+                    tagName: 'Tolkien-eque'
                 },
                 {
                     tagId: 'tag-003',
-                    tagName: 'save the world'
+                    tagName: 'Save The World'
                 },
                 {
                     tagId: 'tag-004',
-                    tagName: 'the chosen one'
+                    tagName: 'The Chosen One'
                 },
                 {
                     tagId: 'tag-005',
-                    tagName: 'reluctant hero'
+                    tagName: 'Reluctant Hero'
                 },
                 {
                     tagId: 'tag-006',
-                    tagName: 'mentor character'
+                    tagName: 'Mentor Character'
                 }
             ],
             ratingReviews: {
@@ -330,31 +330,31 @@ db.movies.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-000',
-                    tagName: 'happily ever after'
+                    tagName: 'Happily Ever After'
                 },
                 {
                     tagId: 'tag-001',
-                    tagName: 'downer ending'
+                    tagName: 'Downer Ending'
                 },
                 {
                     tagId: 'tag-002',
-                    tagName: 'tolkien-eque'
+                    tagName: 'Tolkien-eque'
                 },
                 {
                     tagId: 'tag-003',
-                    tagName: 'save the world'
+                    tagName: 'Save The World'
                 },
                 {
                     tagId: 'tag-004',
-                    tagName: 'the chosen one'
+                    tagName: 'The Chosen One'
                 },
                 {
                     tagId: 'tag-005',
-                    tagName: 'reluctant hero'
+                    tagName: 'Reluctant Hero'
                 },
                 {
                     tagId: 'tag-006',
-                    tagName: 'mentor character'
+                    tagName: 'Mentor Character'
                 }
             ],
             ratingReviews: {
@@ -391,23 +391,23 @@ db.books.insertMany([
             bookId: 'book-000',
             nextStoryTags: [                {
                 tagId: 'tag-000',
-                tagName: 'happily ever after'
+                tagName: 'Happily Ever After'
             },
             {
                 tagId: 'tag-002',
-                tagName: 'tolkien-eque'
+                tagName: 'Tolkien-eque'
             },
             {
                 tagId: 'tag-003',
-                tagName: 'save the world'
+                tagName: 'Save The World'
             },
             {
                 tagId: 'tag-004',
-                tagName: 'the chosen one'
+                tagName: 'The Chosen One'
             },
             {
                 tagId: 'tag-006',
-                tagName: 'mentor character'
+                tagName: 'Mentor Character'
             }],
             ratingReviews: {
                 average: 3.66666666667,
@@ -492,19 +492,19 @@ db.books.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-000',
-                    tagName: 'happily ever after'
+                    tagName: 'Happily Ever After'
                 },
                 {
                     tagId: 'tag-001',
-                    tagName: 'downer ending'
+                    tagName: 'Downer Ending'
                 },
                 {
                     tagId: 'tag-002',
-                    tagName: 'tolkien-eque'
+                    tagName: 'Tolkien-eque'
                 },
                 {
                     tagId: 'tag-003',
-                    tagName: 'save the world'
+                    tagName: 'Save The World'
                 }
             ],
             ratingReviews: {
@@ -569,11 +569,11 @@ db.books.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-000',
-                    tagName: 'happily ever after'
+                    tagName: 'Happily Ever After'
                 },
                 {
                     tagId: 'tag-006',
-                    tagName: 'mentor character'
+                    tagName: 'Mentor Character'
                 }
             ],
             ratingReviews: {
@@ -635,31 +635,31 @@ db.books.insertMany([
             nextStoryTags: [
                 {
                     tagId: 'tag-000',
-                    tagName: 'happily ever after'
+                    tagName: 'Happily Ever After'
                 },
                 {
                     tagId: 'tag-001',
-                    tagName: 'downer ending'
+                    tagName: 'Downer Ending'
                 },
                 {
                     tagId: 'tag-002',
-                    tagName: 'tolkien-eque'
+                    tagName: 'Tolkien-eque'
                 },
                 {
                     tagId: 'tag-003',
-                    tagName: 'save the world'
+                    tagName: 'Save The World'
                 },
                 {
                     tagId: 'tag-004',
-                    tagName: 'the chosen one'
+                    tagName: 'The Chosen One'
                 },
                 {
                     tagId: 'tag-005',
-                    tagName: 'reluctant hero'
+                    tagName: 'Reluctant Hero'
                 },
                 {
                     tagId: 'tag-006',
-                    tagName: 'mentor character'
+                    tagName: 'Mentor Character'
                 }
             ],
             ratingReviews: {
@@ -751,37 +751,37 @@ db.books.insertMany([
 db.nextStoryTags.insertMany([
         {
             tagId: 'tag-000',
-            tagName: 'happily ever after',
-            tagDescription: 'yay! everything works out in the end :) all\'s well that ends well'
+            tagName: 'Happily Ever After',
+            tagDescription: 'Yay! everything works out in the end :) All\'s well that ends well'
         },
         {
             tagId: 'tag-001',
-            tagName: 'downer ending',
+            tagName: 'Downer Ending',
             tagDescription: 'uh-oh the protagonists die or something in this one :/ to be avoided by the faint of heart!'
         },
         {
             tagId: 'tag-002',
-            tagName: 'tolkien-eque',
+            tagName: 'Tolkien-eque',
             tagDescription: 'Elves and orcs and dwarves! This tag is for stories that have elements clearly inspired by the fantasy world of J.R.R. Tolkein.'
         },
         {
             tagId: 'tag-003',
-            tagName: 'save the world',
+            tagName: 'Save The World',
             tagDescription: 'Epic conflict on a world wide scale? Do the protagnists need to save the world? If yes, this is the tag for you!'
         },
         {
             tagId: 'tag-004',
-            tagName: 'the chosen one',
+            tagName: 'The Chosen One',
             tagDescription: 'This character alone is capable of solving the conflict.'
         },
         {
             tagId: 'tag-005',
-            tagName: 'reluctant hero',
+            tagName: 'Reluctant Hero',
             tagDescription: 'The hero of this story doesn\'t want to do any heroing at all, but the story has other plans of them.'
         },
         {
             tagId: 'tag-006',
-            tagName: 'mentor character',
+            tagName: 'Mentor Character',
             tagDescription: 'So many stories have a mentor character that guides the fledgling hero to greatness.'
         }
     ]

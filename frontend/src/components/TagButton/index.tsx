@@ -23,7 +23,9 @@ const StyledTagButton = styled.button`
 const TagButton: React.FC<TagsButtonProps> = (props: TagsButtonProps) => {
     const { tag } = props;
     return (
-        <StyledTagButton>{tag}</StyledTagButton>
+        <>
+            {tag && <StyledTagButton>{tag}</StyledTagButton>}
+        </>
     );
 };
 
