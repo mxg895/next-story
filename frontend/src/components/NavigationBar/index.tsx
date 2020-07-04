@@ -67,14 +67,13 @@ const SearchButton = styled(Button)`
 `;
 
 const NavigationBar = () => {
-    const [value, setValue] = React.useState(0);
-    const [page, setPage] = React.useState('');
+    const [page, setPage] = React.useState('all');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory();
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+        setPage(newValue);
     };
 
     useEffect(() => {
@@ -86,19 +85,21 @@ const NavigationBar = () => {
                 // do something when the books tab is clicked
                 break;
             case 'tags':
-                history.push(`/allStoryTags`);
+                history.push('/allStoryTags');
                 break;
             case 'login':
-                // do something when the login tab is clicked
+                history.push('/forms');
                 break;
             case 'signup':
                 // do something when the signup tab is clicked
+                history.push('/forms');
                 break;
             case 'profile':
                 // do something when the profile tab is clicked
                 break;
+            case 'all':
             default:
-                history.push(`/`);
+                history.push('/');
                 break;
         }
     }, [history, page]);
@@ -109,19 +110,19 @@ const NavigationBar = () => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMobileMenuClose = (event: React.MouseEvent<HTMLElement>) => {
+    const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
 
     const closeMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(null);
-        handleMobileMenuClose(event);
+        handleMobileMenuClose();
     };
 
     const handleMenuClose = (event: React.MouseEvent<HTMLElement>, value: string) => {
         setAnchorEl(null);
         setPage(value);
-        handleMobileMenuClose(event);
+        handleMobileMenuClose();
     };
 
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -155,6 +156,7 @@ const NavigationBar = () => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
         >
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'all')}>All</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'movies')}>Movies</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'books')}>Books</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'tags')}>Tags</MenuItem>
@@ -173,21 +175,29 @@ const NavigationBar = () => {
                 <DesktopNavigationItems>
                     <DesktopNavigationTabs
                         variant='fullWidth'
-                        value={value}
+                        value={page}
                         aria-label='nav items tabs'
                         onChange={handleChange}
                     >
                         <Tab
                             component='a'
+                            label='All'
+                            value={'all'}
+                        />
+                        <Tab
+                            component='a'
                             label='Movies'
+                            value={'movies'}
                         />
                         <Tab
                             component='a'
                             label='Books'
+                            value={'books'}
                         />
                         <Tab
                             component='a'
                             label='Tags'
+                            value={'tags'}
                         />
                     </DesktopNavigationTabs>
                 </DesktopNavigationItems>
