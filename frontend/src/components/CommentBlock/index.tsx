@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Box, Typography} from '@material-ui/core';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {deleteReviewAction} from '../../actions/mediaActions';
+import {deleteReviewAction} from '../../actions/reviewActions';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 import ReactMarkdown from 'react-markdown';
 import {hasDivOverflown} from '../../utils/styleHelpers';
@@ -14,10 +14,13 @@ interface CommentBlockProps {
     review: any,
     mediaType: MediaType,
     mediaId: string,
+    userId: string,
+    isCurrentUserComment?: boolean
 }
 
-const Review = styled.div`
-    border-top: 2px solid ${({ theme }) => theme.palette.grey[400]};
+const Review = styled.div<{ isCurrentUserComment: boolean | undefined }>`
+    border-top: ${({ theme }) => `2px solid ${theme.palette.grey[400]}`};
+    border: ${({ theme, isCurrentUserComment }) => isCurrentUserComment && `2px solid ${theme.palette.grey[400]}`};
     min-height: 50px;
     padding: 5px;
     padding-bottom: 0px;
@@ -72,9 +75,8 @@ const VerticallyCenteredDiv = styled.div`
 `;
 
 function deleteReview(props: any) {
-    const { mediaType, mediaId } = props;
     const userId = props.review.userId;
-    props.deleteReviewAction({mediaId: mediaId, mediaType: mediaType, userId: userId});
+    props.deleteReviewAction(userId);
 }
 
 const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => {
@@ -82,7 +84,7 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
     const [expanded, setExpanded] = useState(false);
     const [hasOverflow, setHasOverflow] = useState(false);
     const expandableRef = useRef(null);
-    const { review, mediaId, mediaType } = props;
+    const { review, mediaId, mediaType, userId, isCurrentUserComment } = props;
     const date = new Date(review.datePosted).toDateString();
 
     const reviewerRating = useMemo(() => {
@@ -90,6 +92,10 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
         // todo - fetch the rating for this based on the userId, the mediaId, and the mediaType
         //  (or pass in as prop... and traverse array to find which is faster??)
         return 4;
+    }, [props]);
+
+    const isAuthor = useMemo(() => {
+        return userId === review.userId;
     }, [props]);
 
     useEffect(() => {
@@ -103,7 +109,7 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
     // TODO only show the edit and delete buttons if the userId matches with the current user's id
     return (
         <>
-            <Review>
+            <Review isCurrentUserComment={isCurrentUserComment}>
             {isEdit ?
                 <>
                     <Typography variant={'h5'}><strong>{review.userName}</strong></Typography>
@@ -116,11 +122,18 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
                 :
                 <ExpandableDiv expanded={expanded} ref={expandableRef}>
                     <TopBar>
-                        <Typography variant={'h5'}><strong>{review.userName}</strong> on {date}</Typography>
-                        <div>
-                            <Button onClick={() => setIsEdit(true)}>Edit</Button>
-                            <Button onClick={() => deleteReview(props)}>Delete</Button>
-                        </div>
+                        <Typography variant={'h5'}>
+                            <strong>
+                                {review.userName}
+                            </strong>
+                            on {date}
+                        </Typography>
+                        {isAuthor &&
+                            <div>
+                                <Button onClick={() => setIsEdit(true)}>Edit</Button>
+                                <Button onClick={() => deleteReview(props)}>Delete</Button>
+                            </div>
+                        }
                     </TopBar>
                     <VerticallyCenteredDiv>
                         <Box mr={1}>User rated: </Box>

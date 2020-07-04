@@ -67,7 +67,7 @@ const SearchButton = styled(Button)`
 `;
 
 const NavigationBar = () => {
-    const [page, setPage] = React.useState('all');
+    const [page, setPage] = React.useState<boolean | string>(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory();
@@ -98,8 +98,9 @@ const NavigationBar = () => {
                 // do something when the profile tab is clicked
                 break;
             case 'all':
-            default:
                 history.push('/');
+                break;
+            default:
                 break;
         }
     }, [history, page]);
