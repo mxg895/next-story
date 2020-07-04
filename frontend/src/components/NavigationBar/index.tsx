@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import {
     AppBar,
@@ -14,6 +14,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { useHistory } from 'react-router-dom';
 
 const NavContainer = styled(AppBar)`
     top: 0;
@@ -67,11 +68,40 @@ const SearchButton = styled(Button)`
 
 const NavigationBar = () => {
     const [value, setValue] = React.useState(0);
+    const [page, setPage] = React.useState('');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    const history = useHistory();
+
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
+
+    useEffect(() => {
+        switch (page) {
+            case 'movies':
+                // do something when the movies tab is clicked
+                break;
+            case 'books':
+                // do something when the books tab is clicked
+                break;
+            case 'tags':
+                history.push(`/allStoryTags`);
+                break;
+            case 'login':
+                // do something when the login tab is clicked
+                break;
+            case 'signup':
+                // do something when the signup tab is clicked
+                break;
+            case 'profile':
+                // do something when the profile tab is clicked
+                break;
+            default:
+                history.push(`/`);
+                break;
+        }
+    }, [history, page]);
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -79,13 +109,19 @@ const NavigationBar = () => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMobileMenuClose = () => {
+    const handleMobileMenuClose = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
+    const closeMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(null);
-        handleMobileMenuClose();
+        handleMobileMenuClose(event);
+    };
+
+    const handleMenuClose = (event: React.MouseEvent<HTMLElement>, value: string) => {
+        setAnchorEl(null);
+        setPage(value);
+        handleMobileMenuClose(event);
     };
 
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -101,10 +137,10 @@ const NavigationBar = () => {
         keepMounted
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
-        onClose={handleMenuClose}
+        onClose={closeMenu}
         >
-        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Signup</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
         </Menu>
     );
 
@@ -119,11 +155,12 @@ const NavigationBar = () => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
         >
-        <MenuItem onClick={handleMenuClose}>Movies</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Books</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Signup</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'movies')}>Movies</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'books')}>Books</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'tags')}>Tags</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'profile')}>Profile</MenuItem>
         </Menu>
     );
 
@@ -147,6 +184,10 @@ const NavigationBar = () => {
                         <Tab
                             component='a'
                             label='Books'
+                        />
+                        <Tab
+                            component='a'
+                            label='Tags'
                         />
                     </DesktopNavigationTabs>
                 </DesktopNavigationItems>
