@@ -87,7 +87,6 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
 
     const reviewerRating = useMemo(() => {
         const userId = review.userId;
-        console.log('fetch rating using', userId, mediaType, mediaId);
         // todo - fetch the rating for this based on the userId, the mediaId, and the mediaType
         //  (or pass in as prop... and traverse array to find which is faster??)
         return 4;

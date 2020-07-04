@@ -12,7 +12,7 @@ const StyledCarousel = styled(Carousel)`
 
 const mockCardData: CardData = {
     title: 'Mock Title Harry Potter Mock Title Harry Potter',
-    id: '000',
+    id: 'movie-001',
     mediaType: MediaType.movie,
     image: MockCover,
     people: 'J.K. Rowling',
