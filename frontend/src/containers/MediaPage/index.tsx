@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import ReviewList from '../../components/ReviewList';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import {Box, Grid} from '@material-ui/core';
 import TagsSection from '../../components/TagsSection';
 import StarRater from '../../components/StarRater';
+import axios from 'axios';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -43,23 +44,48 @@ const WatchReadButton = styled.button<{ isForLater: boolean }>`
     color: ${({ isForLater }) => isForLater ? 'black' : 'white'};
 `;
 
-const MediaPage: React.FC<{}> = (props: any ) => {
-    const [isForLater, setForLater] = useState(false);
+const MediaPage: React.FC<{}> = (props: any) => {
     const { id, mediaType } = props.match.params;
-    const { title, image, people, blurb, tags, nextStoryTags, avgRating, userRating } = useMemo(() => {
+    const [isForLater, setForLater] = useState(false);
+    const [mediaObject, setMediaObject] = useState({
+        title: '',
+        id: id,
+        mediaType: MediaType.movie,
+        image: '',
+        people: '',
+        genres: [''],
+        nextStoryTags: [{ tagId: '', tagName: '' }],
+        blurb: '',
+        avgRating: undefined,
+        userRating: undefined
+    });
+    const userId = 'user-000'; // get userId from redux
+    const { title, image, people, blurb, genres, nextStoryTags, avgRating, userRating } = mediaObject;
+
+    useEffect(() => {
+        const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
+        axios.get(`http://localhost:9000/${mediaRouteType}/${id}`)
+        .then((res: any) => {
+            const data = res.data;
+            const userRatingArr = data.ratingReviews.ratingsAndReviews.filter((r: any) => r.userId === userId);
+            const userRating = userRatingArr.length > 0 ? userRatingArr[0].rating : undefined;
+            setMediaObject({
+                title: 'Mock Title Harry Potter',
+                id: 'movie-001',
+                mediaType: MediaType.movie,
+                image: MockCover,
+                people: 'J.K. Rowling',
+                genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
+                nextStoryTags: data.nextStoryTags,
+                blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                avgRating: data.ratingReviews.average,
+                userRating: userRating
+            });
+        })
+        .catch((error: any) => {
+            console.log('Error on getting media', error);
+        });
         // TODO get the media info from an api call using the media id
-        return {
-            title: 'Mock Title Harry Potter',
-            id: '000',
-            mediaType: MediaType.movie,
-            image: MockCover,
-            people: 'J.K. Rowling',
-            tags: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
-            nextStoryTags: ['cliffhangers', 'sad ending'],
-            blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            avgRating: 3.531351513, // todo remember to search/filter the ratings for this
-            userRating: 3 // todo remember to search/filter the ratings for this
-        };
     }, [id, mediaType]);
 
     useEffect(() => {
@@ -108,9 +134,9 @@ const MediaPage: React.FC<{}> = (props: any ) => {
                     </Grid>
                     <Grid item sm={3}>
                         Genres:
-                        <TagsSection tags={tags}/>
+                        <TagsSection tags={genres}/>
                         Tags:
-                        <TagsSection tags={nextStoryTags}/>
+                        <TagsSection tagObjects={nextStoryTags}/>
                     </Grid>
                 </Grid>
             </Container>

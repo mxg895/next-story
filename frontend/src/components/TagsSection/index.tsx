@@ -3,7 +3,8 @@ import TagButton from '../TagButton';
 import styled from 'styled-components';
 
 interface TagsSectionProps {
-    tags: string[];
+    tags?: string[],
+    tagObjects?: Array<{ tagId: string, tagName: string }>
 }
 
 const StyledTagsSection = styled.div`
@@ -11,10 +12,11 @@ const StyledTagsSection = styled.div`
 `;
 
 const TagsSection: React.FC<TagsSectionProps> = (props: TagsSectionProps) => {
-    const { tags } = props;
+    const { tags, tagObjects } = props;
     return (
         <StyledTagsSection>
-            {tags.map((tag, index) => <TagButton key={index} tag={tag}/>)}
+            { tags && tags.map((tag, index) => <TagButton key={index} tag={tag}/>) }
+            { !tags && tagObjects && tagObjects.map((tagObject, index) => <TagButton key={index} tag={tagObject.tagName}/>) }
         </StyledTagsSection>
     );
 };

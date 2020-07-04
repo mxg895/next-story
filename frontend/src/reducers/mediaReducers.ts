@@ -23,8 +23,7 @@ const books = [{
 }];
 
 const movies = [{
-    movieId: '000',
-    genreIds: [],
+    movieId: 'movie-001',
     nextStoryTags: [],
     reviews: [{text: '# Extremo truncos illo\n' +
             '\n' +
@@ -144,7 +143,6 @@ const movies = [{
             {text: 'amazing!!', userName: 'name5', userId: '005', datePosted: 'Wed Jun 17 2020 19:14:30 GMT-0700 (Pacific Daylight Time)'}]
 }, {
     movieId: '001',
-    genreIds: [],
     nextStoryTags: [],
     reviews: [{text: '', userId: '', datePosted: ''},
             {text: '', userId: '', datePosted: ''},

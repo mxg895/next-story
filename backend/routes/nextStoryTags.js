@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const NextStoryTags = require('../models/nextStoryTag');
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
     NextStoryTags.find()
         .then(tags => {
             console.log('got all tags', tags);
@@ -14,7 +14,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.get('/:tagId', (req, res, next) => {
+router.get('/:tagId', (req, res) => {
     const tagId = req.params.tagId;
     console.log('tagId', tagId);
     NextStoryTags.findById(tagId)

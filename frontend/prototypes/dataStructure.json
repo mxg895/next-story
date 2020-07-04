@@ -1,6 +1,7 @@
 // NOTE!!: see the nextStoryInitialData.js file and Mongoose models under /backend/models
 {
-    "profiles": [{ // use mongoDB's native ObjectId's
+    "profiles": [{
+        "userId": "",
         "name": "",
         "type": "general vs admin",
         "avatar": "",
@@ -15,32 +16,33 @@
     }],
     "movies": [{
         "movieId":"",
-        "nextStoryTags": [], // use mongoDB's native ObjectId's so that we can use mongoose functions like 'populate'
+        "nextStoryTags": [{"tagId": "", "name": ""}],
         "ratingReviews": {
             "average": 0,
             "ratingsAndReviews": [
                 {
                     "text": "",
-                    "userId": "", // use profile._id from mongoDB's native ObjectId's
+                    "userId": "",
                     "userName": "",
                     "datePosted": "",
                     "rating": 0
                 }]
         }
     }],
-    "nextStoryTags" : [{ // use mongoDB's native ObjectId's
+    "nextStoryTags" : [{
+        "tagId": "",
         "tagName": "",
         "tagDescription": ""
     }],
     "books": [{
-        "id": "",
-        "nextStoryTags": [], // use mongoDB's native ObjectId's so that we can use mongoose functions like 'populate'
+        "bookId": "",
+        "nextStoryTags": [{"tagId": "", "name": ""}],
         "ratingReviews": {
             "average": 0,
             "ratingsAndReviews": [
                 {
                     "text": "",
-                    "userId": "", // use profile._id from mongoDB's native ObjectId's
+                    "userId": "",
                     "userName": "",
                     "datePosted": "",
                     "rating": 0

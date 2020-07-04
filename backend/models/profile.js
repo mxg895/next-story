@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const profileSchema = mongoose.Schema({
+    userId: String,
     name: String,
     type: String,
     avatar: String,
@@ -8,7 +9,7 @@ const profileSchema = mongoose.Schema({
     booksRead: Array,
     moviesWatched: Array,
     favoriteGenres: Array,
-    favoriteNextStoryTags: [{ type: mongoose.Schema.ObjectId, ref: 'NextStoryTag' }],
+    favoriteNextStoryTags: [{id: String, name: String }],
     favoriteMovies: Array,
     favoriteBooks: Array,
     favoriteAuthors: Array,
