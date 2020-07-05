@@ -12,13 +12,14 @@ var usersRouter = require('./routes/users');
 var nextStoryTagsRouter = require('./routes/nextStoryTags');
 var booksRouter = require('./routes/books');
 var moviesRouter = require('./routes/movies');
+var reviewRatingsRouter = require('./routes/reviewRatings');
 
 var app = express();
 
 // NOTE MUST CREATE A FILE CALLED '.env' AND ADD THE DATABASE_URI VALUE INTO IT
 const mongoDB = process.env.DATABASE_URI;
 
-mongoose.connect(mongoDB, { 
+mongoose.connect(mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: true,
@@ -45,6 +46,7 @@ app.use('/users', usersRouter);
 app.use('/nextStoryTags', nextStoryTagsRouter);
 app.use('/books', booksRouter);
 app.use('/movies', moviesRouter);
+app.use('/reviewRatings', reviewRatingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
