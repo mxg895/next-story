@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Box, Typography} from '@material-ui/core';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {deleteReviewAction} from '../../actions/ratingReviewActions';
+import {deleteReviewAction} from '../../actions/reviewRatingActions';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 import ReactMarkdown from 'react-markdown';
 import {hasDivOverflown} from '../../utils/styleHelpers';

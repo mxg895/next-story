@@ -3,7 +3,7 @@ import {
     DELETE_REVIEW,
     EDIT_REVIEW,
     LOAD_REVIEWS_FROM_DB
-} from '../constants/ratingReviewConstants';
+} from '../constants/reviewRatingConstants';
 
 export interface ReviewObjectType {
     text: string,

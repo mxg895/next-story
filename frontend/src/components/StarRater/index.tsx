@@ -5,7 +5,7 @@ import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
-import {changeRatingAction} from '../../actions/ratingReviewActions';
+import {changeRatingAction} from '../../actions/reviewRatingActions';
 
 interface StarRaterProps {
     readonly: boolean
@@ -18,6 +18,9 @@ interface StarRaterProps {
     userRating?: number;
     userId?: string;
     userName?: string;
+
+    // required if reviewRating object is changeable, such as readonly === false
+    userHasReviewText?: boolean;
 }
 
 const StyledIconButton = styled(IconButton)`

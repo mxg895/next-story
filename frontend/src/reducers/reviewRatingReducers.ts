@@ -4,9 +4,9 @@ import {
     DELETE_REVIEW,
     EDIT_REVIEW,
     LOAD_REVIEWS_FROM_DB
-} from '../constants/ratingReviewConstants';
+} from '../constants/reviewRatingConstants';
 
-const reviewReducer = (state = [], action: any) => {
+const reviewRatingReducer = (state = [], action: any) => {
     switch (action.type) {
         case EDIT_REVIEW:
             let reviewNoEdit: any[] = [];
@@ -98,4 +98,4 @@ const reviewReducer = (state = [], action: any) => {
     }
 };
 
-export default reviewReducer;
+export default reviewRatingReducer;
