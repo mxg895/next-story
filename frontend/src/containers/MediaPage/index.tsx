@@ -65,7 +65,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     });
     // TODO get username from redux
     const userName = 'tempName';
-    const userId = 'user-000';
+    const userId = 'user-001';
 
     const {
         title,
