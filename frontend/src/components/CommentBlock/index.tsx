@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Box, Typography} from '@material-ui/core';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {deleteReviewAction} from '../../actions/ratingReviewActions';
+import {deleteReviewAction} from '../../actions/reviewRatingActions';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 import ReactMarkdown from 'react-markdown';
 import {hasDivOverflown} from '../../utils/styleHelpers';
@@ -99,7 +99,7 @@ function deleteReview(props: any) {
         axios.delete(`http://localhost:9000/reviewRatings`
         + `/${props.mediaType}/${props.mediaId}/${props.review.userId}`)
             .then((res: any) => {
-                console.log('successfully deleted the review', res);
+                console.log('successfully deleted the reviewRating', res);
             })
             .catch((err: any) => {
                 console.log(err);

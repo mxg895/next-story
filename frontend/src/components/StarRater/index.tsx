@@ -5,7 +5,9 @@ import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
-import {changeRatingAction} from '../../actions/ratingReviewActions';
+import {changeRatingAction} from '../../actions/reviewRatingActions';
+import axios from 'axios';
+import {MediaType} from '../../constants/dataTypes';
 
 interface StarRaterProps {
     readonly: boolean
@@ -18,9 +20,9 @@ interface StarRaterProps {
     userRating?: number;
     userId?: string;
     userName?: string;
-
-    // required if reviewRating object is changeable, such as readonly === false
     userHasReviewText?: boolean;
+    mediaId?: string;
+    mediaType?: MediaType;
 }
 
 const StyledIconButton = styled(IconButton)`
@@ -55,6 +57,30 @@ const getIcon = (index: number, rating: number | undefined) => {
 
 const changeRating = (props: any, userId: string, userName: string, rating: number | undefined) => {
     props.changeRatingAction({ userId, userName, rating });
+    if (!rating && !props.userHasReviewText) {
+        axios.delete(`http://localhost:9000/reviewRatings`
+            + `/${props.mediaType}/${props.mediaId}/${userId}`)
+            .then((res: any) => {
+                console.log('Successfully deleted the reviewRating', res);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
+    } else {
+        axios.put('http://localhost:9000/reviewRatings/rating',
+            {
+                mediaId: props.mediaId,
+                mediaType: props.mediaType,
+                userId: userId,
+                rating: rating
+            })
+            .then((res: any) => {
+                console.log('Successfully put the rating: ', res);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
+    }
 };
 
 const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
@@ -71,7 +97,8 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
         if (!ratedStar) {
             setStar(userRating || 0);
         }
-    }, [userRating, ratedStar]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userRating]);
 
     function clickStar(starIndex: number) {
         const ratingToSet = ratedStar === starIndex ? starIndex - 1 : starIndex;

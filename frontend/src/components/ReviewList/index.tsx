@@ -57,7 +57,8 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                             mediaType: mediaType,
                             mediaId: mediaId,
                             userId: userId,
-                            userName: userName
+                            userName: userName,
+                            userRating: userRating
                         }}
                     />
                 </> :
@@ -105,9 +106,9 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
 };
 
 const mapStateToProps = (state: any, ownProps: any) => {
-    const reviews = state.reviews.filter((r: any) => r.text);
+    const reviews = state.reviewRatings.filter((r: any) => r.text);
     let otherUserReviews: any[] = [];
-    let currentUserReview: any;
+    let currentUserReview: any = undefined;
     reviews.forEach((r: any) => {
         r.userId === ownProps.userId ? currentUserReview = r : otherUserReviews.push(r);
     });

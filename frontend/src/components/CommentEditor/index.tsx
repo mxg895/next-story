@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/ratingReviewActions';
+import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/reviewRatingActions';
 import axios from 'axios';
 
 const TextArea = styled.textarea`
@@ -38,6 +38,7 @@ const CommentEditor: React.FC<any> = (props: any) => {
                         mediaType: addCommentProps.mediaType,
                         userName: addCommentProps.userName,
                         userId: addCommentProps.userId,
+                        rating: addCommentProps.userRating,
                         datePosted: now,
                         text: currentText
                     })
@@ -56,6 +57,22 @@ const CommentEditor: React.FC<any> = (props: any) => {
                     userName: editCommentProps.review.userName,
                     datePosted: now
                 } as ReviewObjectType);
+                axios.put('http://localhost:9000/reviewRatings/review',
+                    {
+                        mediaId: editCommentProps.mediaId,
+                        mediaType: editCommentProps.mediaType,
+                        userName: editCommentProps.review.userName,
+                        userId: editCommentProps.review.userId,
+                        rating: editCommentProps.userRating,
+                        datePosted: now,
+                        text: currentText
+                    })
+                    .then((res: any) => {
+                        console.log(res);
+                    })
+                    .catch((err: any) => {
+                        console.log(err);
+                    });
                 break;
             default:
                 return;

@@ -10,7 +10,7 @@ import TagsSection from '../../components/TagsSection';
 import StarRater from '../../components/StarRater';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {loadAllReviewsAction} from '../../actions/ratingReviewActions';
+import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -61,11 +61,12 @@ const MediaPage: React.FC<{}> = (props: any) => {
         nextStoryTags: [{ tagId: '', tagName: '' }],
         blurb: '',
         avgRating: 0,
-        userRating: 0
+        userRating: 0,
+        userHasReviewText: false
     });
     // TODO get username from redux
     const userName = 'tempName';
-    const userId = 'user-001';
+    const userId = 'user-001516';
 
     const {
         title,
@@ -75,7 +76,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
         genres,
         nextStoryTags,
         avgRating,
-        userRating
+        userRating,
+        userHasReviewText
     } = mediaObject;
 
     useEffect(() => {
@@ -88,6 +90,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         props.loadAllReviewsAction(reviews);
                         const userRatingReviewArr = reviews.filter((r: any) => r.userId === userId);
                         const userRating = userRatingReviewArr.length > 0 ? userRatingReviewArr[0].rating : undefined;
+                        const userHasReviewText = userRatingReviewArr.length > 0 && !!userRatingReviewArr[0].text;
                         setMediaObject({
                             title: 'Mock Title Harry Potter',
                             id: 'movie-001',
@@ -98,7 +101,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             nextStoryTags: mediaRes.data.nextStoryTags,
                             blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                             avgRating: reviewRatingRes.data.average,
-                            userRating: userRating
+                            userRating: userRating,
+                            userHasReviewText: userHasReviewText
                         });
                     })
                     .catch((error: any) => {
@@ -146,7 +150,15 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <div>
                             Your rating:
                             <CenteredDiv>
-                                <StarRater userRating={userRating} readonly={false} userId={userId} userName={userName}/>
+                                <StarRater
+                                    userRating={userRating}
+                                    readonly={false}
+                                    userId={userId}
+                                    userName={userName}
+                                    userHasReviewText={userHasReviewText}
+                                    mediaId={id}
+                                    mediaType={mediaType}
+                                />
                             </CenteredDiv>
                             <div>
                                 <AddToUserButton
