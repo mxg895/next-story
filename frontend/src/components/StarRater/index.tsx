@@ -32,8 +32,8 @@ const VerticallyCenteredDiv = styled.div`
     align-items: center;
 `;
 
-const getIcon = (index: number, rating: number) => {
-    const twoDecimalString = rating.toFixed(2);
+const getIcon = (index: number, rating: number | undefined) => {
+    const twoDecimalString = rating?.toFixed(2) || '0.00';
     const [wholeNumberString, decimalString] = twoDecimalString.split('.');
     const wholeNumber = parseInt(wholeNumberString);
     const decimalTimes100 = parseInt(decimalString);
@@ -85,7 +85,7 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
             {[...Array(5)].map((star, index) => {
                 return (
                     <VerticallyCenteredDiv key={index}>
-                        {readonly && readOnlyRating ?
+                        {readonly ?
                             <>
                                 {
                                     getIcon(index, readOnlyRating)
