@@ -130,14 +130,27 @@ const MediaPage: React.FC<{}> = (props: any) => {
         }
     };
 
+    const addOrRemoveCall = (mediaType: MediaType, mediaId: string, action:string) => {
+        //TODO cancel this userId
+        const tempuserId = 'user-001';
+        axios.put(`http://localhost:9000/users/${mediaType}/${mediaId}/${tempuserId}`, {
+            action:action
+        }).then((response: any) => {
+            console.log(response);
+        })
+            .catch((error: any) => {
+                console.log('Error getting reviews', error);
+            });
+    };
+
     const addOrRemoveFavorites = (mediaType: MediaType, mediaId: string) => {
         console.log('favorited mediaType: ', mediaType, 'id: ', mediaId);
         if (isFavorite) {
             setFavorite(false);
-            // todo remove from favorites in mongodb and maybe redux
+            addOrRemoveCall(mediaType, mediaId, 'REMOVE');
         } else {
             setFavorite(true);
-            // todo add to favorites in mongodb and maybe redux
+            addOrRemoveCall(mediaType, mediaId, 'ADD');
         }
     };
 

@@ -9,7 +9,7 @@ const profileSchema = mongoose.Schema({
     booksRead: Array,
     moviesWatched: Array,
     favoriteGenres: Array,
-    favoriteNextStoryTags: [{id: String, name: String }],
+    favoriteNextStoryTags: [{tagId: String, tagName: String }],
     favoriteMovies: Array,
     favoriteBooks: Array,
     favoriteAuthors: Array,
