@@ -90,7 +90,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         props.loadAllReviewsAction(reviews);
                         const userRatingReviewArr = reviews.filter((r: any) => r.userId === userId);
                         const userRating = userRatingReviewArr.length > 0 ? userRatingReviewArr[0].rating : undefined;
-                        const userHasReviewText = userRatingReviewArr.length > 0 && userRatingReviewArr[0].text;
+                        const userHasReviewText = userRatingReviewArr.length > 0 && !!userRatingReviewArr[0].text;
                         setMediaObject({
                             title: 'Mock Title Harry Potter',
                             id: 'movie-001',
@@ -156,6 +156,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
                                     userId={userId}
                                     userName={userName}
                                     userHasReviewText={userHasReviewText}
+                                    mediaId={id}
+                                    mediaType={mediaType}
                                 />
                             </CenteredDiv>
                             <div>

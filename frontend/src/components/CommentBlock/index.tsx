@@ -99,7 +99,7 @@ function deleteReview(props: any) {
         axios.delete(`http://localhost:9000/reviewRatings`
         + `/${props.mediaType}/${props.mediaId}/${props.review.userId}`)
             .then((res: any) => {
-                console.log('successfully deleted the review', res);
+                console.log('successfully deleted the reviewRating', res);
             })
             .catch((err: any) => {
                 console.log(err);
