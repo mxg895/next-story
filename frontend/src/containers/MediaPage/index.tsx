@@ -60,8 +60,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
         genres: [''],
         nextStoryTags: [{ tagId: '', tagName: '' }],
         blurb: '',
-        avgRating: undefined,
-        userRating: undefined
+        avgRating: 0,
+        userRating: 0
     });
     // TODO get username from redux
     const userName = 'tempName';
@@ -81,24 +81,26 @@ const MediaPage: React.FC<{}> = (props: any) => {
     useEffect(() => {
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
         axios.get(`http://localhost:9000/${mediaRouteType}/${id}`)
-        .then((res: any) => {
-            const data = res.data;
-            const reviews = data.ratingReviews.ratingsAndReviews.filter((r: any) => r.text);
-            props.loadAllReviewsAction(reviews);
-            const userRatingArr = reviews.filter((r: any) => r.userId === userId);
-            const userRating = userRatingArr.length > 0 ? userRatingArr[0].rating : undefined;
-            setMediaObject({
-                title: 'Mock Title Harry Potter',
-                id: 'movie-001',
-                mediaType: MediaType.movie,
-                image: MockCover,
-                people: 'J.K. Rowling',
-                genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
-                nextStoryTags: data.nextStoryTags,
-                blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                avgRating: data.ratingReviews.average,
-                userRating: userRating
-            });
+        .then((mediaRes: any) => {
+            axios.get(`http://localhost:9000/reviewRatings/${mediaType}/${id}`)
+                .then((reviewRatingRes: any) => {
+                    const reviews = reviewRatingRes.data.reviewArray;
+                    props.loadAllReviewsAction(reviews);
+                    const userRatingArr = reviews.filter((r: any) => r.userId === userId);
+                    const userRating = userRatingArr.length > 0 ? userRatingArr[0].rating : undefined;
+                    setMediaObject({
+                        title: 'Mock Title Harry Potter',
+                        id: 'movie-001',
+                        mediaType: MediaType.movie,
+                        image: MockCover,
+                        people: 'J.K. Rowling',
+                        genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
+                        nextStoryTags: mediaRes.data.nextStoryTags,
+                        blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                        avgRating: reviewRatingRes.data.average,
+                        userRating: userRating
+                    });
+                });
         })
         .catch((error: any) => {
             console.log('Error on getting media', error);

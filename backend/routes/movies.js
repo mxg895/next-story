@@ -8,7 +8,7 @@ router.get('/:movieId', (req, res) => {
     Movies.findOne({ movieId: movieId })
         .populate('nextStoryTags')
         .then(movie => {
-            console.log('Got all a movie', movie);
+            console.log('Got a movie', movie);
             res.status(200).json(movie);
         })
         .catch((err) => {
