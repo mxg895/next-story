@@ -6,7 +6,7 @@ const reviewRatingSchema = mongoose.Schema({
     text: String,
     userId: String,
     userName: String,
-    datePosted: Date,
+    datePosted: String,
     rating: Number
 }, { collection: 'reviewRatings' });
 

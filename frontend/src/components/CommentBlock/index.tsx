@@ -86,7 +86,7 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
 
     const isAuthor = useMemo(() => {
         return userId === review.userId;
-    }, [props]);
+    }, [review, userId]);
 
     useEffect(() => {
         const isOverflowing = hasDivOverflown(expandableRef);
