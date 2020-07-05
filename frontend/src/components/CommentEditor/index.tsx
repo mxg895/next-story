@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 import {connect} from 'react-redux';
 import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/ratingReviewActions';
+import axios from 'axios';
 
 const TextArea = styled.textarea`
     height: 100px;
@@ -21,19 +22,34 @@ const CommentEditor: React.FC<any> = (props: any) => {
 
     const submit = () => {
         const { editCommentProps, addCommentProps } = props;
+        const now = new Date().toString();
         switch(props.actionType) {
             case CommentEditorAction.Add:
                 props.addReviewAction({
                     text: currentText,
                     userId: addCommentProps.userId,
                     userName: addCommentProps.userName,
-                    datePosted: new Date().toDateString(),
+                    datePosted: now,
                     rating: undefined
                 } as ReviewObjectType);
+                axios.put('http://localhost:9000/reviewRatings/review',
+                    {
+                        mediaId: addCommentProps.mediaId,
+                        mediaType: addCommentProps.mediaType,
+                        userName: addCommentProps.userName,
+                        userId: addCommentProps.userId,
+                        datePosted: now,
+                        text: currentText
+                    })
+                    .then((res: any) => {
+                        console.log(res);
+                    })
+                    .catch((err: any) => {
+                        console.log(err);
+                    });
                 break;
             case CommentEditorAction.Edit:
                 const userId = editCommentProps.review.userId;
-                const now = new Date().toDateString();
                 props.editReviewAction({
                     text: currentText,
                     userId: userId,

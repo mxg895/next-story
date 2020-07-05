@@ -13,12 +13,13 @@ interface ReviewListProps {
     otherUserReviews: any[],
     currentUserReview?: any,
     userId: string,
-    userName: string
+    userName: string,
+    userRating?: number | undefined
 }
 
 const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     const [addCommentEditorOpen, setAddCommentEditor] = useState(false);
-    const { otherUserReviews, currentUserReview, mediaId, mediaType, userId, userName } = props;
+    const { otherUserReviews, currentUserReview, mediaId, mediaType, userId, userName, userRating } = props;
 
     let hasAddedReview = !!currentUserReview;
 
@@ -72,8 +73,11 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                 <>
                     <CommentBlock
                         review={currentUserReview}
-                        userId={userId}
+                        currentUserId={userId}
                         isCurrentUserComment={true}
+                        mediaId={mediaId}
+                        mediaType={mediaType}
+                        userRating={userRating}
                     />
                 </>
             }
@@ -92,7 +96,7 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                     <CommentBlock
                         key={index}
                         review={r}
-                        userId={userId}
+                        currentUserId={userId}
                     />)
                 }
             </InfiniteScroll> : null}

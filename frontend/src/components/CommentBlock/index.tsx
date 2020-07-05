@@ -8,11 +8,15 @@ import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 import ReactMarkdown from 'react-markdown';
 import {hasDivOverflown} from '../../utils/styleHelpers';
 import StarRater from '../StarRater';
+import axios from 'axios';
 
 interface CommentBlockProps {
     review: any,
-    userId: string,
-    isCurrentUserComment?: boolean
+    currentUserId: string,
+    isCurrentUserComment?: boolean,
+    mediaId?: string,
+    mediaType?: string,
+    userRating?: number | undefined;
 }
 
 const Review = styled.div<{ isCurrentUserComment: boolean | undefined }>`
@@ -73,7 +77,34 @@ const VerticallyCenteredDiv = styled.div`
 
 function deleteReview(props: any) {
     const userId = props.review.userId;
+    const reviewUserName = props.review.userName;
     props.deleteReviewAction(userId);
+    if (props.userRating) { // if a rating exists, don't delete from db
+        axios.put('http://localhost:9000/reviewRatings/review',
+            {
+                mediaId: props.mediaId,
+                mediaType: props.mediaType,
+                userName: reviewUserName,
+                userId: userId,
+                datePosted: '',
+                text: ''
+            })
+            .then((res: any) => {
+                console.log(res);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
+    } else { // if no rating, then delete whole reviewRating document from db
+        axios.delete(`http://localhost:9000/reviewRatings`
+        + `/${props.mediaType}/${props.mediaId}/${props.review.userId}`)
+            .then((res: any) => {
+                console.log('successfully deleted the review', res);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
+    }
 }
 
 const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => {
@@ -81,12 +112,12 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
     const [expanded, setExpanded] = useState(false);
     const [hasOverflow, setHasOverflow] = useState(false);
     const expandableRef = useRef(null);
-    const { review, userId, isCurrentUserComment } = props;
+    const { review, currentUserId, isCurrentUserComment } = props;
     const date = new Date(review.datePosted).toDateString();
 
     const isAuthor = useMemo(() => {
-        return userId === review.userId;
-    }, [review, userId]);
+        return currentUserId === review.userId;
+    }, [review, currentUserId]);
 
     useEffect(() => {
         const isOverflowing = hasDivOverflown(expandableRef);
@@ -114,9 +145,9 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
                     <TopBar>
                         <Typography variant={'h5'}>
                             <strong>
-                                {review.userName }
+                                {review.userName}
                             </strong>
-                            on {date}
+                            {` on ${date}`}
                         </Typography>
                         {isAuthor &&
                             <div>

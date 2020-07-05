@@ -146,13 +146,13 @@ const NavigationBar = () => {
     const mobileMenuId = 'mobile-menu';
     const renderMobileMenu = (
         <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        id={mobileMenuId}
-        keepMounted
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={handleMobileMenuClose}
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={mobileMenuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
         >
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'movies')}>Movies</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'books')}>Books</MenuItem>
