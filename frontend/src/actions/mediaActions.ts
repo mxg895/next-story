@@ -1,4 +1,4 @@
-import { ADD_REVIEW, DELETE_REVIEW, EDIT_REVIEW } from '../constants/mediaConstants';
+import { ADD_REVIEW, DELETE_MEDIA_REVIEW, EDIT_REVIEW } from '../constants/mediaConstants';
 import { MediaType } from '../constants/dataTypes';
 
 export interface ReviewObjectType {
@@ -29,7 +29,7 @@ export const addReviewAction = (reviewObject: ReviewObjectType) => {
 
 export const deleteReviewAction = (deletReviewObj: DeleteReviewObjectType) => {
     return {
-        type: DELETE_REVIEW,
+        type: DELETE_MEDIA_REVIEW,
         mediaType: deletReviewObj.mediaType,
         mediaId: deletReviewObj.mediaId,
         userId: deletReviewObj.userId

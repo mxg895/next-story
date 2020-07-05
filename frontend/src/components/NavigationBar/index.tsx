@@ -67,7 +67,7 @@ const SearchButton = styled(Button)`
 `;
 
 const NavigationBar = () => {
-    const [page, setPage] = React.useState('all');
+    const [page, setPage] = React.useState<boolean | string>(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory();
@@ -97,9 +97,7 @@ const NavigationBar = () => {
             case 'profile':
                 // do something when the profile tab is clicked
                 break;
-            case 'all':
             default:
-                history.push('/');
                 break;
         }
     }, [history, page]);
@@ -156,7 +154,6 @@ const NavigationBar = () => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'all')}>All</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'movies')}>Movies</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'books')}>Books</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'tags')}>Tags</MenuItem>
@@ -179,11 +176,6 @@ const NavigationBar = () => {
                         aria-label='nav items tabs'
                         onChange={handleChange}
                     >
-                        <Tab
-                            component='a'
-                            label='All'
-                            value={'all'}
-                        />
                         <Tab
                             component='a'
                             label='Movies'

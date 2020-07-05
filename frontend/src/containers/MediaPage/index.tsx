@@ -9,6 +9,8 @@ import {Box, Grid} from '@material-ui/core';
 import TagsSection from '../../components/TagsSection';
 import StarRater from '../../components/StarRater';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {loadAllReviewsAction} from '../../actions/ratingReviewActions';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -33,20 +35,22 @@ const CenteredDiv = styled.div`
     margin-bottom: 10px;
 `;
 
-const WatchReadButton = styled.button<{ isForLater: boolean }>`
-    background-color: ${({ theme, isForLater }) => isForLater ? theme.palette.grey[300] : theme.palette.primary.light};
+const AddToUserButton = styled.button<{ isAddedToUser: boolean }>`
+    background-color: ${({ theme, isAddedToUser }) => isAddedToUser ? theme.palette.grey[300] : theme.palette.primary.light};
     border: none;
     outline: none;
     font-size: 16px;
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
-    color: ${({ isForLater }) => isForLater ? 'black' : 'white'};
+    margin: 5px;
+    color: ${({ isAddedToUser }) => isAddedToUser ? 'black' : 'white'};
 `;
 
 const MediaPage: React.FC<{}> = (props: any) => {
     const { id, mediaType } = props.match.params;
     const [isForLater, setForLater] = useState(false);
+    const [isFavorite, setFavorite] = useState(false);
     const [mediaObject, setMediaObject] = useState({
         title: '',
         id: id,
@@ -59,15 +63,29 @@ const MediaPage: React.FC<{}> = (props: any) => {
         avgRating: undefined,
         userRating: undefined
     });
-    const userId = 'user-000'; // get userId from redux
-    const { title, image, people, blurb, genres, nextStoryTags, avgRating, userRating } = mediaObject;
+    // TODO get username from redux
+    const userName = 'tempName';
+    const userId = 'user-000';
+
+    const {
+        title,
+        image,
+        people,
+        blurb,
+        genres,
+        nextStoryTags,
+        avgRating,
+        userRating
+    } = mediaObject;
 
     useEffect(() => {
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
         axios.get(`http://localhost:9000/${mediaRouteType}/${id}`)
         .then((res: any) => {
             const data = res.data;
-            const userRatingArr = data.ratingReviews.ratingsAndReviews.filter((r: any) => r.userId === userId);
+            const reviews = data.ratingReviews.ratingsAndReviews.filter((r: any) => r.text);
+            props.loadAllReviewsAction(reviews);
+            const userRatingArr = reviews.filter((r: any) => r.userId === userId);
             const userRating = userRatingArr.length > 0 ? userRatingArr[0].rating : undefined;
             setMediaObject({
                 title: 'Mock Title Harry Potter',
@@ -86,7 +104,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
             console.log('Error on getting media', error);
         });
         // TODO get the media info from an api call using the media id
-    }, [id, mediaType]);
+    }, [props]);
 
     useEffect(() => {
         // todo get if this media is on the user's watch/read later list and set the state
@@ -103,6 +121,17 @@ const MediaPage: React.FC<{}> = (props: any) => {
         }
     };
 
+    const addOrRemoveFavorites = (mediaType: MediaType, mediaId: string) => {
+        console.log('favorited mediaType: ', mediaType, 'id: ', mediaId);
+        if (isFavorite) {
+            setFavorite(false);
+            // todo remove from favorites in mongodb and maybe redux
+        } else {
+            setFavorite(true);
+            // todo add to favorites in mongodb and maybe redux
+        }
+    };
+
     return (
         <>
             <Container maxWidth='lg'>
@@ -112,11 +141,24 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <div>
                             Your rating:
                             <CenteredDiv>
-                                <StarRater userRating={userRating} readonly={false}/>
+                                <StarRater userRating={userRating} readonly={false} userId={userId} userName={userName}/>
                             </CenteredDiv>
-                            <WatchReadButton onClick={() => addOrRemoveWatchReadLater(mediaType, id)} isForLater={isForLater}>
-                                {`${isForLater ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
-                            </WatchReadButton>
+                            <div>
+                                <AddToUserButton
+                                    onClick={() => addOrRemoveWatchReadLater(mediaType, id)}
+                                    isAddedToUser={isForLater}
+                                >
+                                    {`${isForLater ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
+                                </AddToUserButton>
+                            </div>
+                            <div>
+                                <AddToUserButton
+                                    onClick={() => addOrRemoveFavorites(mediaType, id)}
+                                    isAddedToUser={isFavorite}
+                                >
+                                    {isFavorite ? 'Remove favorite' : 'Add favorite'}
+                                </AddToUserButton>
+                            </div>
                         </div>
                     </StyledGridItem>
                     <Grid item sm={6}>
@@ -128,7 +170,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         </Box>
                         <VerticallyCenteredDiv>
                             <Typography variant='subtitle2' >Avg rating: </Typography>
-                            <StarRater readOnlyRating={avgRating} readonly/>
+                            <StarRater readOnlyRating={avgRating} readonly />
                         </VerticallyCenteredDiv>
                         <Typography variant='body1'>{blurb}</Typography>
                     </Grid>
@@ -142,10 +184,15 @@ const MediaPage: React.FC<{}> = (props: any) => {
             </Container>
             {/*TODO only show CommentEditor to add comments if the user has not submitted before*/}
             <Container maxWidth='md'>
-                <ReviewList mediaId={id} mediaType={mediaType}/>
+                <ReviewList
+                    mediaId={id}
+                    mediaType={mediaType}
+                    userName={userName}
+                    userId={userId}
+                />
             </Container>
         </>
     );
 };
 
-export default MediaPage;
+export default connect(null, { loadAllReviewsAction })(MediaPage);

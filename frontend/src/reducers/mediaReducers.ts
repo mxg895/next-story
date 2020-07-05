@@ -1,4 +1,4 @@
-import {ADD_REVIEW, DELETE_REVIEW, EDIT_REVIEW} from '../constants/mediaConstants';
+import {ADD_REVIEW, DELETE_MEDIA_REVIEW, EDIT_REVIEW} from '../constants/mediaConstants';
 import {MediaType} from '../constants/dataTypes';
 
 const books = [{
@@ -155,76 +155,76 @@ const mediaReducer = (state = { movies: movies, books: books}, action: any) => {
     const mediaId = mediaType === MediaType.movie ? 'movieId' : 'bookId';
     switch (action.type) {
         case EDIT_REVIEW:
-            let mediaNoEdit: any[] = [];
-            let mediaToEdit = {};
-            state[mediaKey].forEach((m: any) => {
-                m[mediaId] !== action.mediaId ? mediaNoEdit.push(m) : mediaToEdit = m;
-            });
-            const editedReviewsList = (mediaToEdit as any)?.reviews.map((r: any) => {
-                if (r.userId === action.userId) {
-                    return {
-                        userName: r.userName,
-                        text: action.reviewText,
-                        userId: action.userId,
-                        datePosted: action.datePosted
-                    };
-                } else {
-                    return r;
-                }
-            });
-            return {
-                ...state,
-                [mediaKey]: [
-                    ...mediaNoEdit,
-                    {
-                        ...mediaToEdit,
-                        reviews: editedReviewsList
-                    }
-                ]
-            };
+            // let mediaNoEdit: any[] = [];
+            // let mediaToEdit = {};
+            // state[mediaKey].forEach((m: any) => {
+            //     m[mediaId] !== action.mediaId ? mediaNoEdit.push(m) : mediaToEdit = m;
+            // });
+            // const editedReviewsList = (mediaToEdit as any)?.reviews.map((r: any) => {
+            //     if (r.userId === action.userId) {
+            //         return {
+            //             userName: r.userName,
+            //             text: action.reviewText,
+            //             userId: action.userId,
+            //             datePosted: action.datePosted
+            //         };
+            //     } else {
+            //         return r;
+            //     }
+            // });
+            // return {
+            //     ...state,
+            //     [mediaKey]: [
+            //         ...mediaNoEdit,
+            //         {
+            //             ...mediaToEdit,
+            //             reviews: editedReviewsList
+            //         }
+            //     ]
+            // };
         case ADD_REVIEW:
-            let mediaNoAdd: any[] = [];
-            let mediaToAddReview = {};
-            state[mediaKey].forEach((m: any) => {
-                m[mediaId] !== action.mediaId ? mediaNoAdd.push(m) : mediaToAddReview = m;
-            });
-            const addedReviewsList = [
-                {
-                    userName: action.userName,
-                    text: action.reviewText,
-                    userId: action.userId,
-                    datePosted: action.datePosted
-                },
-                ...(mediaToAddReview as any).reviews];
-            return {
-                ...state,
-                [mediaKey]: [
-                    ...mediaNoAdd,
-                    {
-                        ...mediaToAddReview,
-                        reviews: addedReviewsList
-                    }
-                ]
-            };
-        case DELETE_REVIEW:
-            let otherMedia: any[] = [];
-            let mediaOfInterest = {};
-            state[mediaKey].forEach((m: any) => {
-                m[mediaId] !== action.mediaId ? otherMedia.push(m) : mediaOfInterest = m;
-            });
-            const filteredReviewsList = (mediaOfInterest as any)?.reviews.filter((r: any) => {
-                return r.userId !== action.userId;
-            });
-            return {
-                ...state,
-                movies: [
-                    ...otherMedia,
-                    {
-                        ...mediaOfInterest,
-                        reviews: filteredReviewsList
-                    }
-                ]
-            };
+            // let mediaNoAdd: any[] = [];
+            // let mediaToAddReview = {};
+            // state[mediaKey].forEach((m: any) => {
+            //     m[mediaId] !== action.mediaId ? mediaNoAdd.push(m) : mediaToAddReview = m;
+            // });
+            // const addedReviewsList = [
+            //     {
+            //         userName: action.userName,
+            //         text: action.reviewText,
+            //         userId: action.userId,
+            //         datePosted: action.datePosted
+            //     },
+            //     ...(mediaToAddReview as any).reviews];
+            // return {
+            //     ...state,
+            //     [mediaKey]: [
+            //         ...mediaNoAdd,
+            //         {
+            //             ...mediaToAddReview,
+            //             reviews: addedReviewsList
+            //         }
+            //     ]
+            // };
+        case DELETE_MEDIA_REVIEW:
+            // let otherMedia: any[] = [];
+            // let mediaOfInterest = {};
+            // state[mediaKey].forEach((m: any) => {
+            //     m[mediaId] !== action.mediaId ? otherMedia.push(m) : mediaOfInterest = m;
+            // });
+            // const filteredReviewsList = (mediaOfInterest as any)?.reviews.filter((r: any) => {
+            //     return r.userId !== action.userId;
+            // });
+            // return {
+            //     ...state,
+            //     [mediaKey]: [
+            //         ...otherMedia,
+            //         {
+            //             ...mediaOfInterest,
+            //             reviews: filteredReviewsList
+            //         }
+            //     ]
+            // };
         default:
             return { ...state };
     }

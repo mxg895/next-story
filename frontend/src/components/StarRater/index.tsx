@@ -4,16 +4,20 @@ import {Box, IconButton} from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import styled from 'styled-components';
+import {connect} from 'react-redux';
+import {changeRatingAction} from '../../actions/ratingReviewActions';
 
 interface StarRaterProps {
     readonly: boolean
 
-    // if readonly === true
+    // required if readonly === true
     readOnlyRating?: number;
     hideReadOnlyLabel?: boolean;
 
-    // if readonly === false
+    // required if readonly === false
     userRating?: number;
+    userId?: string;
+    userName?: string;
 }
 
 const StyledIconButton = styled(IconButton)`
@@ -46,9 +50,13 @@ const getIcon = (index: number, rating: number) => {
     }
 };
 
+const changeRating = (props: any, userId: string, userName: string, rating: number | undefined) => {
+    props.changeRatingAction({ userId, userName, rating });
+};
+
 const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
     const [ratedStar, setStar] = useState(0);
-    const { readonly, readOnlyRating, hideReadOnlyLabel, userRating } = props;
+    const { readonly, readOnlyRating, hideReadOnlyLabel, userRating, userId, userName } = props;
     let twoDecimalRatingString = ''; // TODO set up tooltip functionality
     if (readonly && readOnlyRating) {
         twoDecimalRatingString = readOnlyRating.toFixed(2);
@@ -63,7 +71,9 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
     }, [userRating, ratedStar]);
 
     function clickStar(starIndex: number) {
-        ratedStar === starIndex ? setStar(starIndex - 1) : setStar(starIndex);
+        const ratingToSet = ratedStar === starIndex ? starIndex - 1 : starIndex;
+        setStar(ratingToSet);
+        userId && userName && changeRating(props, userId, userName, ratingToSet);
         // TODO use the api to set the rating (add the media type and media id as props)
     }
 
@@ -95,4 +105,4 @@ const StarRater: React.FC<StarRaterProps> = (props: StarRaterProps) => {
     );
 };
 
-export default StarRater;
+export default connect(null, { changeRatingAction })(StarRater);

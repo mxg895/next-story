@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/mediaActions';
+import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/ratingReviewActions';
 
 const TextArea = styled.textarea`
     height: 100px;
@@ -24,23 +24,21 @@ const CommentEditor: React.FC<any> = (props: any) => {
         switch(props.actionType) {
             case CommentEditorAction.Add:
                 props.addReviewAction({
-                    mediaType: addCommentProps.mediaType,
-                    mediaId: addCommentProps.mediaId,
-                    reviewText: currentText,
+                    text: currentText,
                     userId: addCommentProps.userId,
                     userName: addCommentProps.userName,
-                    datePosted: new Date().toDateString()
+                    datePosted: new Date().toDateString(),
+                    rating: undefined
                 } as ReviewObjectType);
                 break;
             case CommentEditorAction.Edit:
                 const userId = editCommentProps.review.userId;
+                const now = new Date().toDateString();
                 props.editReviewAction({
-                    mediaType: editCommentProps.mediaType,
-                    mediaId: editCommentProps.mediaId,
-                    reviewText: currentText,
+                    text: currentText,
                     userId: userId,
                     userName: editCommentProps.review.userName,
-                    datePosted: new Date().toDateString()
+                    datePosted: now
                 } as ReviewObjectType);
                 break;
             default:
@@ -53,7 +51,7 @@ const CommentEditor: React.FC<any> = (props: any) => {
         setCurrentText(event.target.value);
     };
 
-    // TODO use Markdown for the text
+    // TODO use a better editor - markdown text area? - for the text
     return (
         <>
             <TextArea value={currentText} onChange={changeMessageText}/>

@@ -1,65 +1,90 @@
 import React, {useEffect, useState} from 'react';
 import CommentBlock from '../CommentBlock';
-import {connect} from 'react-redux';
 import {Typography} from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 import Button from '../Button';
 import { MediaType } from '../../constants/dataTypes';
+import {connect} from 'react-redux';
 
 interface ReviewListProps {
     mediaId: string,
     mediaType: MediaType,
-    reviews: any[],
+    reviewRatings: any[],
+    userId: string,
+    userName: string
 }
 
 const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     const [addCommentEditorOpen, setAddCommentEditor] = useState(false);
-    const { reviews, mediaId, mediaType } = props;
-    const initialStateReviews = reviews?.slice(0,9);
+    const { reviewRatings, mediaId, mediaType, userId, userName } = props;
+    const reviews = reviewRatings.filter((r: any) => r.text);
+
+    let otherUserReviews: any[] = [];
+    let currentUserReview: any;
+    reviews.forEach((r) => {
+        r.userId === userId ? currentUserReview = r : otherUserReviews.push(r);
+    });
+    let hasAddedReview = !!currentUserReview;
+
+    const initialStateReviews = otherUserReviews?.slice(0,9);
     const [stateReviews, setStateReviews] = useState(initialStateReviews);
 
     useEffect(() => {
-        const rerenderReviews = reviews?.slice(0,9);
+        const rerenderReviews = otherUserReviews?.slice(0,9);
         setStateReviews(rerenderReviews);
-    }, [reviews]);
+    }, [reviewRatings]);
 
-    const fetchMoreData = () => { // todo - fetch from database here and not MediaPage for better performance
+    const fetchMoreData = () => {
         setTimeout(() => {
             const currentReviewLength = stateReviews.length;
             const theFetchNum = currentReviewLength + 5;
-            const fetchedReviews = reviews.slice(0, theFetchNum);
+            const fetchedReviews = otherUserReviews.slice(0, theFetchNum);
             setStateReviews(fetchedReviews);
         }, 1000);
     };
 
-    // TODO get username from redux
-    const userName = 'tempName';
-    const userId = 'tempId';
-    const hasAddedReview = false; // TODO figure this out with an api call
-
-    // TODO make pages instead or combine pages with infiniteScroll ... or allow sort / filtering
     return (
         <>
-            <Typography variant={'h3'}>{reviews?.length || 0} Total Reviews</Typography>
+            <Typography variant={'h3'} gutterBottom>
+                {reviews?.length || 0} Total Reviews
+            </Typography>
             {addCommentEditorOpen ?
                 <>
                     <Typography variant={'h5'}><strong>{userName}</strong></Typography>
                     <CommentEditor
                         actionType={CommentEditorAction.Add}
                         closeEdit={() => setAddCommentEditor(false)}
-                        addCommentProps={{mediaType: mediaType, mediaId: mediaId, userId: userId, userName: userName}}
+                        addCommentProps={{
+                            mediaType: mediaType,
+                            mediaId: mediaId,
+                            userId: userId,
+                            userName: userName
+                        }}
                     />
                 </> :
                 <div style={{textAlign: 'right'}}>
-                    {!hasAddedReview && <Button onClick={() => setAddCommentEditor(true)}>Add Review</Button>}
+                    {!hasAddedReview &&
+                        <Button onClick={() => setAddCommentEditor(true)}>
+                            Add Review
+                        </Button>
+                    }
                 </div>
             }
+            {currentUserReview && currentUserReview.text &&
+                <>
+                    <CommentBlock
+                        review={currentUserReview}
+                        userId={userId}
+                        isCurrentUserComment={true}
+                    />
+                </>
+            }
             <br/>
-            {reviews ? <InfiniteScroll
+            {otherUserReviews ? <InfiniteScroll
                 dataLength={stateReviews.length}
                 next={fetchMoreData}
-                hasMore={stateReviews.length < reviews.length}
+                hasMore={stateReviews.length < otherUserReviews.length}
                 loader={<h4 style={{textAlign: 'center'}}>Loading more reviews...</h4>}
                 endMessage={
                     <p style={{textAlign: 'center'}}>
@@ -67,18 +92,20 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                     </p>
                 }>
                 {stateReviews.map((r, index) =>
-                    <CommentBlock key={index} review={r} mediaType={mediaType} mediaId={mediaId}/>)}
+                    <CommentBlock
+                        key={index}
+                        review={r}
+                        userId={userId}
+                    />)
+                }
             </InfiniteScroll> : null}
         </>
     );
 };
 
-const mapStateToProps = (state: any, ownProps: Pick<ReviewListProps, 'mediaId' | 'mediaType'>) => {
-    const mediaId = ownProps.mediaId;
-    const mediaType = ownProps.mediaType === MediaType.movie ? 'movies' : 'books';
-    const idType = ownProps.mediaType === MediaType.movie ? 'movieId' : 'bookId';
+const mapStateToProps = (state: any) => {
     return {
-        reviews: state.media[mediaType]?.filter((m: any) => m[idType] === mediaId)[0]?.reviews
+        reviewRatings: state.reviews
     };
 };
 
