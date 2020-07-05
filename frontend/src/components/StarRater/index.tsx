@@ -56,7 +56,6 @@ const getIcon = (index: number, rating: number | undefined) => {
 };
 
 const changeRating = (props: any, userId: string, userName: string, rating: number | undefined) => {
-    console.log('props.userHasReviewText', props.userHasReviewText);
     props.changeRatingAction({ userId, userName, rating });
     if (!rating && !props.userHasReviewText) {
         axios.delete(`http://localhost:9000/reviewRatings`
