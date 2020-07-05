@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/reviewActions';
+import {addReviewAction, editReviewAction, ReviewObjectType} from '../../actions/ratingReviewActions';
 
 const TextArea = styled.textarea`
     height: 100px;
@@ -27,7 +27,8 @@ const CommentEditor: React.FC<any> = (props: any) => {
                     text: currentText,
                     userId: addCommentProps.userId,
                     userName: addCommentProps.userName,
-                    datePosted: new Date().toDateString()
+                    datePosted: new Date().toDateString(),
+                    rating: undefined
                 } as ReviewObjectType);
                 break;
             case CommentEditorAction.Edit:

@@ -1,11 +1,16 @@
-import { ADD_REVIEW, DELETE_REVIEW, EDIT_REVIEW, LOAD_REVIEWS_FROM_DB } from '../constants/reviewConstants';
+import {
+    ADD_REVIEW, CHANGE_RATING,
+    DELETE_REVIEW,
+    EDIT_REVIEW,
+    LOAD_REVIEWS_FROM_DB
+} from '../constants/ratingReviewConstants';
 
 export interface ReviewObjectType {
     text: string,
     userId: string,
     userName: string,
     datePosted: string,
-    rating: number
+    rating?: number | undefined
 }
 
 export const loadAllReviewsAction = (reviewsArray: any[]) => {
@@ -39,5 +44,15 @@ export const editReviewAction = (reviewObject: ReviewObjectType) => {
         userId: reviewObject.userId,
         userName: reviewObject.userName,
         datePosted: reviewObject.datePosted
+    };
+};
+
+
+export const changeRatingAction = (reviewObject: { userId: string, userName: string, rating: number | undefined }) => {
+    return {
+        type: CHANGE_RATING,
+        userId: reviewObject.userId,
+        userName: reviewObject.userName,
+        rating: reviewObject.rating
     };
 };

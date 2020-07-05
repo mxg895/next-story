@@ -97,9 +97,6 @@ const NavigationBar = () => {
             case 'profile':
                 // do something when the profile tab is clicked
                 break;
-            case 'all':
-                history.push('/');
-                break;
             default:
                 break;
         }
@@ -157,7 +154,6 @@ const NavigationBar = () => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'all')}>All</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'movies')}>Movies</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'books')}>Books</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'tags')}>Tags</MenuItem>
@@ -180,11 +176,6 @@ const NavigationBar = () => {
                         aria-label='nav items tabs'
                         onChange={handleChange}
                     >
-                        <Tab
-                            component='a'
-                            label='All'
-                            value={'all'}
-                        />
                         <Tab
                             component='a'
                             label='Movies'

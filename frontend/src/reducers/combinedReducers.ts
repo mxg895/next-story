@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import reviews from './reviewReducers';
+import reviews from './ratingReviewReducers';
 
 const allReducers = combineReducers({
     reviews

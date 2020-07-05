@@ -10,19 +10,18 @@ import {connect} from 'react-redux';
 interface ReviewListProps {
     mediaId: string,
     mediaType: MediaType,
-    reviews: any[],
-    // reduxReviews: any[],
+    reviewRatings: any[],
+    userId: string,
+    userName: string
 }
 
 const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     const [addCommentEditorOpen, setAddCommentEditor] = useState(false);
-    const { reviews, mediaId, mediaType } = props;
-    // TODO get username from redux
-    const userName = 'tempName';
-    const userId = 'user-000111';
+    const { reviewRatings, mediaId, mediaType, userId, userName } = props;
+    const reviews = reviewRatings.filter((r: any) => r.text);
 
     let otherUserReviews: any[] = [];
-    let currentUserReview;
+    let currentUserReview: any;
     reviews.forEach((r) => {
         r.userId === userId ? currentUserReview = r : otherUserReviews.push(r);
     });
@@ -34,7 +33,7 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     useEffect(() => {
         const rerenderReviews = otherUserReviews?.slice(0,9);
         setStateReviews(rerenderReviews);
-    }, [reviews]);
+    }, [reviewRatings]);
 
     const fetchMoreData = () => {
         setTimeout(() => {
@@ -45,7 +44,6 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
         }, 1000);
     };
 
-    // TODO make pages instead or combine pages with infiniteScroll ... or allow sort / filtering
     return (
         <>
             <Typography variant={'h3'} gutterBottom>
@@ -73,12 +71,10 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                     }
                 </div>
             }
-            {currentUserReview &&
+            {currentUserReview && currentUserReview.text &&
                 <>
                     <CommentBlock
                         review={currentUserReview}
-                        mediaType={mediaType}
-                        mediaId={mediaId}
                         userId={userId}
                         isCurrentUserComment={true}
                     />
@@ -99,8 +95,6 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                     <CommentBlock
                         key={index}
                         review={r}
-                        mediaType={mediaType}
-                        mediaId={mediaId}
                         userId={userId}
                     />)
                 }
@@ -109,12 +103,9 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     );
 };
 
-const mapStateToProps = (state: any, ownProps: Pick<ReviewListProps, 'mediaId' | 'mediaType'>) => {
-    const mediaId = ownProps.mediaId;
-    const mediaType = ownProps.mediaType === MediaType.movie ? 'movies' : 'books';
-    const idType = ownProps.mediaType === MediaType.movie ? 'movieId' : 'bookId';
+const mapStateToProps = (state: any) => {
     return {
-        reviews: state.reviews
+        reviewRatings: state.reviews
     };
 };
 

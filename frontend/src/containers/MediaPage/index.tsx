@@ -10,7 +10,7 @@ import TagsSection from '../../components/TagsSection';
 import StarRater from '../../components/StarRater';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {loadAllReviewsAction} from '../../actions/reviewActions';
+import {loadAllReviewsAction} from '../../actions/ratingReviewActions';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -63,7 +63,10 @@ const MediaPage: React.FC<{}> = (props: any) => {
         avgRating: undefined,
         userRating: undefined
     });
-    const userId = 'user-000'; // get userId from redux
+    // TODO get username from redux
+    const userName = 'tempName';
+    const userId = 'user-000';
+
     const {
         title,
         image,
@@ -80,7 +83,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.get(`http://localhost:9000/${mediaRouteType}/${id}`)
         .then((res: any) => {
             const data = res.data;
-            const reviews = data.ratingReviews.ratingsAndReviews;
+            const reviews = data.ratingReviews.ratingsAndReviews.filter((r: any) => r.text);
             props.loadAllReviewsAction(reviews);
             const userRatingArr = reviews.filter((r: any) => r.userId === userId);
             const userRating = userRatingArr.length > 0 ? userRatingArr[0].rating : undefined;
@@ -138,7 +141,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <div>
                             Your rating:
                             <CenteredDiv>
-                                <StarRater userRating={userRating} readonly={false}/>
+                                <StarRater userRating={userRating} readonly={false} userId={userId} userName={userName}/>
                             </CenteredDiv>
                             <div>
                                 <AddToUserButton
@@ -167,7 +170,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         </Box>
                         <VerticallyCenteredDiv>
                             <Typography variant='subtitle2' >Avg rating: </Typography>
-                            <StarRater readOnlyRating={avgRating} readonly/>
+                            <StarRater readOnlyRating={avgRating} readonly />
                         </VerticallyCenteredDiv>
                         <Typography variant='body1'>{blurb}</Typography>
                     </Grid>
@@ -184,6 +187,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
                 <ReviewList
                     mediaId={id}
                     mediaType={mediaType}
+                    userName={userName}
+                    userId={userId}
                 />
             </Container>
         </>

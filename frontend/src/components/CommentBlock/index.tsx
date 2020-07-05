@@ -3,17 +3,14 @@ import styled from 'styled-components';
 import {Box, Typography} from '@material-ui/core';
 import Button from '../Button';
 import {connect} from 'react-redux';
-import {deleteReviewAction} from '../../actions/reviewActions';
+import {deleteReviewAction} from '../../actions/ratingReviewActions';
 import CommentEditor, {CommentEditorAction} from '../CommentEditor';
 import ReactMarkdown from 'react-markdown';
 import {hasDivOverflown} from '../../utils/styleHelpers';
-import {MediaType} from '../../constants/dataTypes';
 import StarRater from '../StarRater';
 
 interface CommentBlockProps {
     review: any,
-    mediaType: MediaType,
-    mediaId: string,
     userId: string,
     isCurrentUserComment?: boolean
 }
@@ -84,15 +81,8 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
     const [expanded, setExpanded] = useState(false);
     const [hasOverflow, setHasOverflow] = useState(false);
     const expandableRef = useRef(null);
-    const { review, mediaId, mediaType, userId, isCurrentUserComment } = props;
+    const { review, userId, isCurrentUserComment } = props;
     const date = new Date(review.datePosted).toDateString();
-
-    const reviewerRating = useMemo(() => {
-        const userId = review.userId;
-        // todo - fetch the rating for this based on the userId, the mediaId, and the mediaType
-        //  (or pass in as prop... and traverse array to find which is faster??)
-        return 4;
-    }, [props]);
 
     const isAuthor = useMemo(() => {
         return userId === review.userId;
@@ -124,7 +114,7 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
                     <TopBar>
                         <Typography variant={'h5'}>
                             <strong>
-                                {review.userName}
+                                {review.userName }
                             </strong>
                             on {date}
                         </Typography>
@@ -137,7 +127,10 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
                     </TopBar>
                     <VerticallyCenteredDiv>
                         <Box mr={1}>User rated: </Box>
-                        {reviewerRating ? <StarRater readonly readOnlyRating={reviewerRating} hideReadOnlyLabel /> : 'no rating'}
+                        {review.rating ?
+                            <StarRater readonly readOnlyRating={review.rating} hideReadOnlyLabel />
+                            : 'no rating'
+                        }
                     </VerticallyCenteredDiv>
                     <ReactMarkdown source={review.text} />
                     {!expanded && hasOverflow &&

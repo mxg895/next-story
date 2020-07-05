@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const movieSchema = mongoose.Schema({
     movieId:  { type: String, required: true },
-    nextStoryTags: [{id: String, name: String }],
+    nextStoryTags: [{ tagId: String, tagName: String }],
     ratingReviews: {
         average: Number,
         ratingsAndReviews: [{

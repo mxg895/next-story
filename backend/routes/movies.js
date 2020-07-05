@@ -19,13 +19,13 @@ router.get('/:movieId', (req, res) => {
 
 router.post('/sampleMovie', (req, res) => {
     const movie = new Movies({
-        movieId:  'movie-000',
-        nextStoryTags: [mongoose.Types.ObjectId('5eff936c68db8c7667275e23'), mongoose.Types.ObjectId('4eff936c68db8c7667275e22')],
+        movieId:  'iwjfapowifja',
+        nextStoryTags: [{ tagId: '54054035', tagName: 'tagname' }],
         ratingReviews: {
             average: 4.6662,
             ratingsAndReviews: [{
                     text: 'this is a sample review',
-                    userId: mongoose.Types.ObjectId('5eff936c68db8c7667275e28'),
+                    userId: 'user-000',
                     userName: 'Sample Name Here',
                     datePosted: new Date(),
                     rating: 4
