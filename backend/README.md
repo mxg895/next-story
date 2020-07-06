@@ -11,6 +11,9 @@ please create a file in the /backend folder (root level) called '.env' and add:
 ```
 # Database
 DATABASE_URI=**_your mongodb database uri_**
+
+# TMDBAPI
+TMDBAPI_URL=**_your TMDBAPI api key registered on their website**
 ```
 ------------------------------
 
