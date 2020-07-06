@@ -3,6 +3,7 @@ var router = express.Router();
 const Movies = require('../models/movie');
 const axios = require('axios');
 const baseUrl = 'https://api.themoviedb.org';
+const tmdbApiKey = process.env.TMDBAPI_URL;
 
 router.get('/:movieId', (req, res) => {
     const movieId = req.params.movieId;
@@ -21,7 +22,7 @@ router.get('/:movieId', (req, res) => {
 var getGenres = function() {
     axios
         .get(`${baseUrl}/3/genre/movie/list`, {
-            params: { api_key: '597ad6ea2c97c1f27b49df9b11a6abe1' }
+            params: { api_key: tmdbApiKey }
         })
         .then((response) => {
             var genres = response.data.genres;
