@@ -16,20 +16,24 @@ router.put('/:mediaType/:mediaId/:userId', (req, res) => {
     const { mediaId,  userId } = req.params;
     const mediaType  = JSON.stringify(req.params.mediaType);
     const action = JSON.stringify(req.body.action);
-    console.log(userId);
-    console.log(mediaId);
+    var favoriteMedia = '';
     console.log(mediaType);
-    console.log(action.toString());
-    console.log(typeof action);
+    console.log(mediaId);
+    if(mediaType.includes("movie")){
+        favoriteMedia = 'favoriteMovies';
+    } else{
+        favoriteMedia = 'favoriteBooks';
+    }
+    console.log(favoriteMedia);
     if(action.includes("REMOVE")){
         Profile.findOneAndUpdate({ userId: userId},
             {
                 $pull :{
-                    favoriteMovies : {$in: [mediaId]}
+                    [favoriteMedia] : {$in: [mediaId]}
                 }},
             { new:true, multi:true })
             .then(user => {
-                console.log('Success. Updated user info: ', user.favoriteMovies);
+                console.log('Success. Updated user info: ', user.favoriteMovies + '\n' + user.favoriteBooks );
                 res.status(200).json(user);
             })
             .catch((err) => {
@@ -40,11 +44,11 @@ router.put('/:mediaType/:mediaId/:userId', (req, res) => {
         Profile.findOneAndUpdate({ userId: userId},
             {
                 $push :{
-                    favoriteMovies : mediaId
+                    [favoriteMedia]: mediaId
                 }},
             { new:true, multi:true })
             .then(user => {
-                console.log('Success. Updated user info: ', user.favoriteMovies);
+                console.log('Success. Updated user info: ', user.favoriteMovies + '\n' + user.favoriteBooks);
                 res.status(200).json(user);
             })
             .catch((err) => {
