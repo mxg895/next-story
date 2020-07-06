@@ -1,14 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const Movies = require('../models/movie');
-const mongoose = require('mongoose');
 const axios = require('axios');
 const baseUrl = 'https://api.themoviedb.org';
 
 router.get('/:movieId', (req, res) => {
     const movieId = req.params.movieId;
     Movies.findOne({ movieId: movieId })
-        .populate('nextStoryTags')
         .then(movie => {
             console.log('Got a movie', movie);
             getGenres();
