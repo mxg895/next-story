@@ -51,6 +51,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const { id, mediaType } = props.match.params;
     const [isForLater, setForLater] = useState(false);
     const [isFavorite, setFavorite] = useState(false);
+    const [watchedOrRead, setWatchedOrRead] = useState(false);
     const [mediaObject, setMediaObject] = useState({
         title: '',
         id: id,
@@ -136,12 +137,18 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     if (userLists.favoriteMovies.includes(id)) {
                         setFavorite(true);
                     }
+                    if (userLists.moviesWatched.includes(id)) {
+                        setWatchedOrRead(true);
+                    }
                 } else {
                     if (userLists.readLater.includes(id)) {
                         setForLater(true);
                     }
                     if (userLists.favoriteBooks.includes(id)) {
                         setFavorite(true);
+                    }
+                    if (userLists.booksRead.includes(id)) {
+                        setWatchedOrRead(true);
                     }
                 }
                 setUserLists({
@@ -160,6 +167,28 @@ const MediaPage: React.FC<{}> = (props: any) => {
             });
     }, [userId, mediaType]);
 
+    const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
+        axios.put(`http://localhost:9000/users/${key}/${mediaId}/${userId}`, {
+            action:action
+        }).then((response: any) => {
+            console.log(response);
+        })
+            .catch((error: any) => {
+                console.log('Error getting reviews', error);
+            });
+    };
+
+    const addOrRemoveWatchOrRead = (mediaId: string) => {
+        const key = mediaType === MediaType.movie ? 'moviesWatched' : 'booksRead';
+        if (watchedOrRead) {
+            setWatchedOrRead(false);
+            addOrRemoveCall(key, mediaId, 'REMOVE');
+        } else {
+            setWatchedOrRead(true);
+            addOrRemoveCall(key, mediaId, 'ADD');
+        }
+    };
+
     const addOrRemoveWatchReadLater = (mediaId: string) => {
         console.log('watch or read later, mediaType: ', mediaType, 'id: ', mediaId);
         const key = mediaType === MediaType.movie ? 'watchLater' : 'readLater';
@@ -170,17 +199,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
             setForLater(true);
             addOrRemoveCall(key, mediaId, 'ADD');
         }
-    };
-
-    const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
-        axios.put(`http://localhost:9000/users/${key}/${mediaId}/${userId}`, {
-            action:action
-        }).then((response: any) => {
-            console.log(response);
-        })
-            .catch((error: any) => {
-                console.log('Error getting reviews', error);
-            });
     };
 
     const addOrRemoveFavorites = (mediaId: string) => {
@@ -213,6 +231,14 @@ const MediaPage: React.FC<{}> = (props: any) => {
                                     mediaType={mediaType}
                                 />
                             </CenteredDiv>
+                            <div>
+                                <AddToUserButton
+                                    onClick={() => addOrRemoveWatchOrRead(id)}
+                                    isAddedToUser={watchedOrRead}
+                                >
+                                    {`${watchedOrRead ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
+                                </AddToUserButton>
+                            </div>
                             <div>
                                 <AddToUserButton
                                     onClick={() => addOrRemoveWatchReadLater(id)}
