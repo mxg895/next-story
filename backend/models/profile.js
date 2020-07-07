@@ -8,6 +8,8 @@ const profileSchema = mongoose.Schema({
     message: String,
     booksRead: Array,
     moviesWatched: Array,
+    readLater: Array,
+    watchLater: Array,
     favoriteGenres: Array,
     favoriteNextStoryTags: [{tagId: String, tagName: String }],
     favoriteMovies: Array,
