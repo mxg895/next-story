@@ -7,7 +7,6 @@ const tmdbApiKey = process.env.TMDBAPI_URL;
 
 router.get('/:movieId', (req, res) => {
     const movieId = req.params.movieId;
-    var resMovie = {};
     Movies.findOne({ movieId: movieId }).then(movie => {
             console.log('Got a movie', movie);
             // turn moogooseDoc to Json Object
@@ -20,19 +19,32 @@ router.get('/:movieId', (req, res) => {
             .then((response) => {
                 console.log(response.data);
                 var movieData = response.data;
-                // movieData._id = movie._id;
-                // movieData.movieId = movie.movieId;
-                // movieData.nextStoryTags = movie.nextStoryTags;
                 movie.title = movieData.title;
                 movie.blurb = movieData.overview;
-                movie.genres = movieData.genres;
+                movie.genres = [];
+                for(let i=0; i < movieData.genres.length; i++){
+                    movie.genres[i] = movieData.genres[i].name;
+                }
                 movie.avgRating = movieData.vote_average;
                 console.log(movie);
-                res.status(200).json(movie);
+
+                axios
+                    .get(`${baseUrl}/3/movie/${id}/credits`, {
+                        params: { api_key: tmdbApiKey }
+                    })
+                    .then((response) => {
+                        for(let i = 0; i < response.data.crew.length; i++){
+                            if(response.data.crew[i].department === 'Directing'){
+                                // console.log(response.data.crew[i]);
+                                movie.people = "Director-" + response.data.crew[i].name;
+                            }
+                        }
+                        //console.log(response.data.crew);
+                        res.status(200).json(movie);
+                    })
+                    .catch((error) => console.log(error));
             })
             .catch((error) => console.log(error));
-
-
         })
         .catch((err) => {
             console.log('Error fetching movie: ', err);
@@ -40,77 +52,17 @@ router.get('/:movieId', (req, res) => {
         });
 });
 
-
-
-// var getGenres = function() {
-//     axios
-//         .get(`${baseUrl}/3/genre/movie/list`, {
-//             params: { api_key: tmdbApiKey }
-//         })
-//         .then((response) => {
-//             var genres = response.data.genres;
-//             console.log(genres);
-//         }). then(() => {
-//             getMovies
-//     })
-//         .catch((error) => console.log(error));
-// }
-//
-// var getMoviesCredits = function(movieId){
-//     axios
-//         .get(`${baseUrl}/3/movie/${movieId}/credits`, {
-//             params: { api_key: tmdbApiKey }
-//         })
-//         .then((response) => {
-//
-//             console.log(response.data.cast);
-//             console.log(response.data.crew);
-//         })
-//         .catch((error) => console.log(error));
-// }
-
-var getMovies = function (movieId, movie) {
-    // axios
-    //     .get(`${baseUrl}/3/movie/${movieId}`, {
-    //         params: { api_key: tmdbApiKey }
-    //     })
-    //     .then((response) => {
-    //
-    //         console.log(response.data);
-    //     })
-    //     .catch((error) => console.log(error));
-    axios
-        .get(`${baseUrl}/3/movie/${movieId}`, {
-            params: { api_key: tmdbApiKey }
-        })
-        .then((response) => {
-            console.log(response.data);
-            var movieData = response.data;
-            // movieData._id = movie._id;
-            // movieData.movieId = movie.movieId;
-            // movieData.nextStoryTags = movie.nextStoryTags;
-            movie.title = movieData.title;
-            movie.blurb = movieData.overview;
-            movie.genres = movieData.genres;
-            movie.avgRating = movieData.vote_average;
-            console.log(movie);
-            return movie;
-        })
-        .catch((error) => console.log(error));
-
-}
-
 module.exports = router;
 
 
 //     title - title
-//     image,
+//     image, - not sure how to structure this
 //     people, - director another api call
 //     blurb - overview
 //     genres - genres
-//     nextStoryTags,
+//     nextStoryTags, - from our db
 //     avgRating, - vote_average
-//     userRating,
+//     userRating, - from our db
 //     userHasReviewText
 // }
 
