@@ -1,31 +1,41 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import UserInfo from '../../components/UserInfo';
-
-const StyledContainer = styled(Container)`
-  padding-top: 80px;
-`;
+import { useMediaQuery } from '@material-ui/core';
+import PageContainer from '../Container';
+import RightSection from './RightSection';
 
 const ProfileSection = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
 
-const UserActivityContainer = styled.div`
-  min-width: 300px;
+const StyledGrid = styled(Grid)`
+  flex: 1 1 auto;
 `;
 
+
+// const UserActivityContainer = styled.div`
+//   min-width: 300px;
+// `;
+
 const Profile: React.FC = () => {
+  const isBootstrapMd = useMediaQuery('(min-width: 960px)');
+
   return (
-    <StyledContainer maxWidth='lg'>
+    <PageContainer maxWidth='lg'>
       {/* <Typography variant='h1'>Profile Page</Typography> */}
       {/* <Grid spacing={1} container> */}
       <ProfileSection>
         <UserInfo />
-        <UserActivityContainer>user activity</UserActivityContainer>
+        {/* TODO?: wrap this in MUI Hidden if we match MUI's breakpoints to that of Bootstrap */}
+        {/* { isBootstrapMd && <Container maxWidth='md'>
+          <RegWidthCarousel title={`User's favourite books`}/>
+          </Container>} */}
+        <RightSection />
+        {/* </UserActivityContainer> */}
       </ProfileSection>
 
         {/* <Grid item sm={3} md={6}>
@@ -35,7 +45,7 @@ const Profile: React.FC = () => {
           <div>Right side</div>
         </Grid> */}
       {/* </Grid> */}
-    </StyledContainer>
+    </PageContainer>
   );
 };
 

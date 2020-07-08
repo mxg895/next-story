@@ -4,11 +4,12 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import React from 'react';
 
 const UserInfoContainer = styled.div`
+  flex: 0 1 auto;
   min-width: 300px;
   max-width: 400px;
   height: 100vh;
   overflow-x: hidden;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   & > * {
     margin-bottom: 10px;
   }
