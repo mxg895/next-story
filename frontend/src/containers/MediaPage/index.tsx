@@ -51,6 +51,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const { id, mediaType } = props.match.params;
     const [isForLater, setForLater] = useState(false);
     const [isFavorite, setFavorite] = useState(false);
+    const [watchedOrRead, setWatchedOrRead] = useState(false);
     const [mediaObject, setMediaObject] = useState({
         title: '',
         id: id,
@@ -64,9 +65,19 @@ const MediaPage: React.FC<{}> = (props: any) => {
         userRating: 0,
         userHasReviewText: false
     });
+    const [userLists, setUserLists] = useState({
+        booksRead: [],
+        moviesWatched: [],
+        watchLater: [],
+        readLater: [],
+        favoriteMovies: [],
+        favoriteBooks: [],
+        favoriteAuthors: [],
+        favoriteDirectors: []
+    });
     // TODO get username from redux
     const userName = 'tempName';
-    const userId = 'user-001516';
+    const userId = 'user-000';
 
     const {
         title,
@@ -116,24 +127,48 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType]);
 
     useEffect(() => {
-        // todo get if this media is on the user's watch/read later list and set the state
-    }, [id]);
+        axios.get(`http://localhost:9000/users/userLists/${userId}`)
+            .then((response: any) => {
+                const userLists = response.data;
+                if (mediaType === MediaType.movie) {
+                    if (userLists.watchLater.includes(id)) {
+                        setForLater(true);
+                    }
+                    if (userLists.favoriteMovies.includes(id)) {
+                        setFavorite(true);
+                    }
+                    if (userLists.moviesWatched.includes(id)) {
+                        setWatchedOrRead(true);
+                    }
+                } else {
+                    if (userLists.readLater.includes(id)) {
+                        setForLater(true);
+                    }
+                    if (userLists.favoriteBooks.includes(id)) {
+                        setFavorite(true);
+                    }
+                    if (userLists.booksRead.includes(id)) {
+                        setWatchedOrRead(true);
+                    }
+                }
+                setUserLists({
+                    booksRead: userLists.booksRead,
+                    moviesWatched: userLists.moviesWatched,
+                    watchLater: userLists.watchLater,
+                    readLater: userLists.readLater,
+                    favoriteMovies: userLists.favoriteMovies,
+                    favoriteBooks: userLists.favoriteBooks,
+                    favoriteAuthors: userLists.favoriteAuthors,
+                    favoriteDirectors: userLists.favoriteDirectors
+                });
+            })
+            .catch((error: any) => {
+                console.log('Error getting media', error);
+            });
+    }, [userId, mediaType]);
 
-    const addOrRemoveWatchReadLater = (mediaType: MediaType, mediaId: string) => {
-        console.log('watch or read later, mediaType: ', mediaType, 'id: ', mediaId);
-        if (isForLater) {
-            setForLater(false);
-            // todo remove from watch later in mongodb and maybe redux
-        } else {
-            setForLater(true);
-            // todo add to watch later in mongodb and maybe redux
-        }
-    };
-
-    const addOrRemoveCall = (mediaType: MediaType, mediaId: string, action:string) => {
-        //TODO cancel this userId
-        const tempuserId = 'user-001';
-        axios.put(`http://localhost:9000/users/${mediaType}/${mediaId}/${tempuserId}`, {
+    const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
+        axios.put(`http://localhost:9000/users/${key}/${mediaId}/${userId}`, {
             action:action
         }).then((response: any) => {
             console.log(response);
@@ -143,14 +178,37 @@ const MediaPage: React.FC<{}> = (props: any) => {
             });
     };
 
-    const addOrRemoveFavorites = (mediaType: MediaType, mediaId: string) => {
-        console.log('favorited mediaType: ', mediaType, 'id: ', mediaId);
+    const addOrRemoveWatchOrRead = (mediaId: string) => {
+        const key = mediaType === MediaType.movie ? 'moviesWatched' : 'booksRead';
+        if (watchedOrRead) {
+            setWatchedOrRead(false);
+            addOrRemoveCall(key, mediaId, 'REMOVE');
+        } else {
+            setWatchedOrRead(true);
+            addOrRemoveCall(key, mediaId, 'ADD');
+        }
+    };
+
+    const addOrRemoveWatchReadLater = (mediaId: string) => {
+        console.log('watch or read later, mediaType: ', mediaType, 'id: ', mediaId);
+        const key = mediaType === MediaType.movie ? 'watchLater' : 'readLater';
+        if (isForLater) {
+            setForLater(false);
+            addOrRemoveCall(key, mediaId, 'REMOVE');
+        } else {
+            setForLater(true);
+            addOrRemoveCall(key, mediaId, 'ADD');
+        }
+    };
+
+    const addOrRemoveFavorites = (mediaId: string) => {
+        const key = mediaType === MediaType.movie ? 'favoriteMovies' : 'favoriteBooks';
         if (isFavorite) {
             setFavorite(false);
-            addOrRemoveCall(mediaType, mediaId, 'REMOVE');
+            addOrRemoveCall(key, mediaId, 'REMOVE');
         } else {
             setFavorite(true);
-            addOrRemoveCall(mediaType, mediaId, 'ADD');
+            addOrRemoveCall(key, mediaId, 'ADD');
         }
     };
 
@@ -175,7 +233,15 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             </CenteredDiv>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveWatchReadLater(mediaType, id)}
+                                    onClick={() => addOrRemoveWatchOrRead(id)}
+                                    isAddedToUser={watchedOrRead}
+                                >
+                                    {`${watchedOrRead ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
+                                </AddToUserButton>
+                            </div>
+                            <div>
+                                <AddToUserButton
+                                    onClick={() => addOrRemoveWatchReadLater(id)}
                                     isAddedToUser={isForLater}
                                 >
                                     {`${isForLater ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
@@ -183,7 +249,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             </div>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveFavorites(mediaType, id)}
+                                    onClick={() => addOrRemoveFavorites(id)}
                                     isAddedToUser={isFavorite}
                                 >
                                     {isFavorite ? 'Remove favorite' : 'Add favorite'}
