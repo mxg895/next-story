@@ -13,6 +13,7 @@ var nextStoryTagsRouter = require('./routes/nextStoryTags');
 var booksRouter = require('./routes/books');
 var moviesRouter = require('./routes/movies');
 var reviewRatingsRouter = require('./routes/reviewRatings');
+var thirdPartyBookApiRouter = require('./routes/thridPartyBookApi');
 
 var app = express();
 
@@ -47,6 +48,7 @@ app.use('/nextStoryTags', nextStoryTagsRouter);
 app.use('/books', booksRouter);
 app.use('/movies', moviesRouter);
 app.use('/reviewRatings', reviewRatingsRouter);
+app.use('/thirdPartyBookApi', thirdPartyBookApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
