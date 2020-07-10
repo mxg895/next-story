@@ -6,9 +6,8 @@ import React from 'react';
 const UserInfoContainer = styled.div`
   flex: 0 1 auto;
   min-width: 300px;
-  max-width: 400px;
-  height: 100vh;
-  overflow-x: hidden;
+  /* height: 100vh; */
+  /* overflow-x: hidden; */
   /* overflow-y: auto; */
   & > * {
     margin-bottom: 10px;
@@ -23,9 +22,7 @@ const ProfilePicPlaceholder = styled(AccountBoxIcon)`
 `;
 
 const PhotoContainer = styled.div`
-  /* margin-bottom: 5px; */
   width: 150px;
-  /* height: 150px; */
   &>:first-child {
     border: solid 2px #D3D3D3;
     height: 150px;
