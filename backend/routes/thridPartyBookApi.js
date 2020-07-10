@@ -28,8 +28,32 @@ router.get('/googleBooks/searchTen/:query', (req, res) => {
                 returnList.push(returnObject);
                 i++;
             }
-            console.log('Succeeded getting book from openLibrary:', returnList);
+            console.log('Succeeded getting book from googleBooks:', returnList);
             res.status(200).json(returnList);
+        })
+        .catch((error) => console.log(error));
+});
+
+// note gets first match ...usually only reliable when querying by id
+router.get('/googleBooks/searchOne/:query', (req, res) => {
+    const bookQuery = req.params.query;
+    axios.get(` https://www.googleapis.com/books/v1/volumes?q=${bookQuery}`)
+        .then((response) => {
+            console.log(response);
+            const foundItem = response.data.items[0];
+            const returnObject = {
+                id: foundItem.id,
+                title: foundItem.volumeInfo && foundItem.volumeInfo.title,
+                mediaType: 'book',
+                image: foundItem.volumeInfo && foundItem.volumeInfo.imageLinks
+                    && foundItem.volumeInfo.imageLinks.thumbnail,
+                genres: foundItem.volumeInfo && foundItem.volumeInfo.categories,
+                blurb: foundItem.volumeInfo && foundItem.volumeInfo.description,
+                people: foundItem.volumeInfo && foundItem.volumeInfo.authors,
+                publishedDate: foundItem.volumeInfo && foundItem.volumeInfo.publishedDate
+            }
+            console.log('Succeeded getting book from googleBooks:', returnObject);
+            res.status(200).json(returnObject);
         })
         .catch((error) => console.log(error));
 });
