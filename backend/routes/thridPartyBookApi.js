@@ -3,7 +3,7 @@ var router = express.Router();
 const axios = require('axios');
 
 // note gets first 10 matches ... query can be title, id, genre, etc (basically anything in the 'response' data)
-router.get('/googleBooks/searchOne/:query', (req, res) => {
+router.get('/googleBooks/searchTen/:query', (req, res) => {
     const bookQuery = req.params.query;
     axios.get(` https://www.googleapis.com/books/v1/volumes?q=${bookQuery}`)
         .then((response) => {
