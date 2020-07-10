@@ -9,7 +9,8 @@ import {
     Toolbar,
     InputBase,
     Button,
-    IconButton
+    IconButton,
+    Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -31,29 +32,17 @@ const Spacer = styled.div`
     flex: 1;
 `;
 
-const DesktopNavigationItems = styled.div`
-    display: none;
-    @media (min-width: 992px) {
-        display: flex;
-    }
+const DesktopNavigationItems = styled(Hidden)`
 `;
 
 const SearchArea = styled.div`
     display: flex;
 `;
 
-const DesktopMenu = styled.div`
-    display: none;
-    @media (min-width: 992px) {
-        display: flex;
-    }
+const DesktopMenu = styled(Hidden)`
 `;
 
-const MobileMenu = styled.div`
-    display: none;
-    @media (max-width: 991px) {
-        display: flex;
-    }
+const MobileMenu = styled(Hidden)`
 `;
 
 const DesktopNavigationTabs = styled(Tabs)`
@@ -78,11 +67,8 @@ const NavigationBar = () => {
 
     useEffect(() => {
         switch (page) {
-            case 'movies':
-                // do something when the movies tab is clicked
-                break;
-            case 'books':
-                // do something when the books tab is clicked
+            case 'explore':
+                // do something when the explore tab is clicked
                 break;
             case 'tags':
                 history.push('/allStoryTags');
@@ -154,9 +140,8 @@ const NavigationBar = () => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'movies')}>Movies</MenuItem>
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'books')}>Books</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'tags')}>Tags</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'explore')}>Explore</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'profile')}>Profile</MenuItem>
@@ -169,7 +154,9 @@ const NavigationBar = () => {
                 <Logo href='/'>
                     Next Story
                 </Logo>
-                <DesktopNavigationItems>
+                <DesktopNavigationItems
+                    smDown
+                >
                     <DesktopNavigationTabs
                         variant='fullWidth'
                         value={page}
@@ -178,18 +165,13 @@ const NavigationBar = () => {
                     >
                         <Tab
                             component='a'
-                            label='Movies'
-                            value={'movies'}
-                        />
-                        <Tab
-                            component='a'
-                            label='Books'
-                            value={'books'}
-                        />
-                        <Tab
-                            component='a'
                             label='Tags'
                             value={'tags'}
+                        />
+                        <Tab
+                            component='a'
+                            label='Explore'
+                            value={'explore'}
                         />
                     </DesktopNavigationTabs>
                 </DesktopNavigationItems>
@@ -204,7 +186,9 @@ const NavigationBar = () => {
                     </SearchButton>
                 </SearchArea>
                 <Spacer/>
-                <DesktopMenu>
+                <DesktopMenu
+                    smDown
+                >
                     <IconButton
                         edge='end'
                         aria-label='profile'
@@ -224,7 +208,9 @@ const NavigationBar = () => {
                         <MenuIcon />
                     </IconButton>
                 </DesktopMenu>
-                <MobileMenu>
+                <MobileMenu
+                    mdUp
+                >
                     <IconButton
                         aria-label='show more'
                         aria-controls={mobileMenuId}
