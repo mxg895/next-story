@@ -20,6 +20,7 @@ router.get('/:movieId', (req, res) => {
                 console.log(response.data);
                 var movieData = response.data;
                 movie.title = movieData.title;
+                movie.mediaType = 'movie';
                 movie.blurb = movieData.overview;
                 movie.genres = [];
                 for(let i=0; i < movieData.genres.length; i++){
@@ -33,12 +34,15 @@ router.get('/:movieId', (req, res) => {
                         params: { api_key: tmdbApiKey }
                     })
                     .then((response) => {
+                        people = [];
                         for(let i = 0; i < response.data.crew.length; i++){
                             if(response.data.crew[i].department === 'Directing'){
                                 // console.log(response.data.crew[i]);
-                                movie.people = "Director-" + response.data.crew[i].name;
+                                people.push("Director-" + response.data.crew[i].name);
                             }
                         }
+                        movie.people = people;
+                        movie.publishedDate = movieData.release_date;
                         //console.log(response.data.crew);
                         res.status(200).json(movie);
                     })
@@ -54,6 +58,15 @@ router.get('/:movieId', (req, res) => {
 
 module.exports = router;
 
+// id: foundItem.id,
+//     title: foundItem.volumeInfo && foundItem.volumeInfo.title,
+//     mediaType: 'book',
+//     image: foundItem.volumeInfo && foundItem.volumeInfo.imageLinks
+// && foundItem.volumeInfo.imageLinks.thumbnail,
+//     genres: foundItem.volumeInfo && foundItem.volumeInfo.categories,
+//     blurb: foundItem.volumeInfo && foundItem.volumeInfo.description,
+//     people: foundItem.volumeInfo && foundItem.volumeInfo.authors,
+//     publishedDate: foundItem.volumeInfo && foundItem.volumeInfo.publishedDate
 
 //     title - title
 //     image, - not sure how to structure this
