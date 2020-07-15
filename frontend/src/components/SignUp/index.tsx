@@ -71,6 +71,7 @@ export default function SignUp() {
                     const userId = profile.data.userId;
                     const username = profile.data.name;
                     // encrypt and save in secure session?
+                    localStorage.setItem('isAuthenticated', '1');
                     history.push(`/`);
                 })
                 .catch((error: any) => {

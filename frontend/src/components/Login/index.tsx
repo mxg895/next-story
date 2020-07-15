@@ -66,6 +66,7 @@ export default function Login() {
                 console.log('isLoginSuccessful', passwordIsCorrect);
                 // encrypt and save in secure session?
                 if (passwordIsCorrect) {
+                    localStorage.setItem('isAuthenticated', '1');
                     history.push(`/`);
                 } else {
                     setLoginError(true);
