@@ -1,10 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,13 +10,15 @@ import FaceIcon from '@material-ui/icons/Face';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
     return (
         <Typography variant='body2' color='textSecondary' align='center'>
             {'Copyright © '}
             <Link color='inherit' href='https://material-ui.com/'>
-                Your Website
+                NextStory
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -48,6 +48,59 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const classes = useStyles();
+    const [passwordMismatch, setPasswordMismatch] = useState(false);
+    const [signUpError, setSignUpError] = useState(false);
+    const [serverErrorMsg, setServerErrorMsg] = useState('');
+    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
+    const history = useHistory();
+
+    const handleSignUp = (event: any) => {
+        event.preventDefault();
+        if (password === confirmPass) {
+            setPasswordMismatch(false);
+            axios.post(`http://localhost:9000/users/notGoogleSignUp`,
+                {
+                    userName: userName,
+                    email: email,
+                    textPass: password
+                })
+                .then((profile: any) => {
+                    const userId = profile.data.userId;
+                    const username = profile.data.name;
+                    // encrypt and save in secure session?
+                    history.push(`/`);
+                })
+                .catch((error: any) => {
+                    setSignUpError(true);
+                    const errorMsg = error.response.data.message;
+                    setServerErrorMsg(errorMsg);
+                    console.log('Error signing up', error);
+                });
+        } else {
+            setPasswordMismatch(true);
+        }
+    };
+
+    const handleNameChange = (event: any) => {
+        setUserName(event.target.value);
+    };
+
+    const handleEmailChange = (event: any) => {
+        setEmail(event.target.value);
+        setSignUpError(false);
+        setServerErrorMsg('');
+    };
+
+    const handlePassChange = (event: any) => {
+        setPassword(event.target.value);
+    };
+
+    const handleConfirmPassChange = (event: any) => {
+        setConfirmPass(event.target.value);
+    };
 
     return (
         <Container component='main' maxWidth='xs'>
@@ -59,29 +112,23 @@ export default function SignUp() {
                 <Typography component='h1' variant='h5'>
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form
+                    className={classes.form}
+                    noValidate
+                    onSubmit={handleSignUp}
+                >
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
-                                autoComplete='fname'
-                                name='firstName'
+                                autoComplete='name'
+                                name='userName'
                                 variant='outlined'
                                 required
                                 fullWidth
-                                id='firstName'
-                                label='First Name'
+                                id='userName'
+                                label='User Name'
+                                onChange={handleNameChange}
                                 autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant='outlined'
-                                required
-                                fullWidth
-                                id='lastName'
-                                label='Last Name'
-                                name='lastName'
-                                autoComplete='lname'
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -93,6 +140,7 @@ export default function SignUp() {
                                 label='Email Address'
                                 name='email'
                                 autoComplete='email'
+                                onChange={handleEmailChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -105,14 +153,34 @@ export default function SignUp() {
                                 type='password'
                                 id='password'
                                 autoComplete='current-password'
+                                onChange={handlePassChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value='allowExtraEmails' color='primary' />}
-                                label='I want to receive inspiration, marketing promotions and updates via email.'
+                            <TextField
+                                variant='outlined'
+                                required
+                                fullWidth
+                                name='confirmPassword'
+                                label='Confirm Password'
+                                type='password'
+                                id='confirmPassword'
+                                autoComplete='confirm-password'
+                                onChange={handleConfirmPassChange}
                             />
                         </Grid>
+                        {passwordMismatch &&
+                            <Grid item xs={12}>
+                                <div style={{ 'color': 'red' }}>Passwords do not match</div>
+                            </Grid>
+                        }
+                        {signUpError &&
+                            <Grid item xs={12}>
+                                <div style={{ 'color': 'red' }}>
+                                    {serverErrorMsg || 'There was an error signing up'}
+                                </div>
+                            </Grid>
+                        }
                     </Grid>
                     <Button
                         type='submit'
@@ -125,8 +193,8 @@ export default function SignUp() {
                     </Button>
                     <Grid container justify='flex-end'>
                         <Grid item>
-                            <Link href='#' variant='body2'>
-                                Already have an account? Sign in
+                            <Link href='/login' variant='body2'>
+                                Already have an account? Login
                             </Link>
                         </Grid>
                     </Grid>

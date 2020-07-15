@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,13 +12,15 @@ import FaceIcon from '@material-ui/icons/Face';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {useHistory} from 'react-router-dom';
+import axios from 'axios';
 
 function Copyright() {
     return (
         <Typography variant='body2' color='textSecondary' align='center'>
             {'Copyright © '}
             <Link color='inherit' href='https://material-ui.com/'>
-                Your Website
+                NextStory
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -48,6 +50,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
     const classes = useStyles();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [serverErrorMsg, setServerErrorMsg] = useState('');
+    const [loginError, setLoginError] = useState(false);
+    const history = useHistory();
+
+    const handleLogin = (event: any) => {
+        event.preventDefault();
+        setServerErrorMsg('');
+        axios.get(`http://localhost:9000/users/notGoogleLogin/${email}/${password}`)
+            .then((canLogin: any) => {
+                const passwordIsCorrect = canLogin.data;
+                console.log('canLogin', canLogin);
+                console.log('isLoginSuccessful', passwordIsCorrect);
+                // encrypt and save in secure session?
+                if (passwordIsCorrect) {
+                    history.push(`/`);
+                } else {
+                    setLoginError(true);
+                    setServerErrorMsg('Password is incorrect');
+                }
+            })
+            .catch((error: any) => {
+                setLoginError(true);
+                const errorMsg = error.response?.data?.message || 'There was an error logging in';
+                setServerErrorMsg(errorMsg);
+                console.log('Error logging in', error);
+            });
+    };
+
+    const handleEmailChange = (event: any) => {
+        setEmail(event.target.value);
+    };
+
+    const handlePassChange = (event: any) => {
+        setPassword(event.target.value);
+    };
 
     return (
         <Container component='main' maxWidth='xs'>
@@ -57,9 +96,9 @@ export default function Login() {
                     <FaceIcon />
                 </Avatar>
                 <Typography component='h1' variant='h5'>
-                    Sign in
+                    Login
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={handleLogin}>
                     <TextField
                         variant='outlined'
                         margin='normal'
@@ -70,6 +109,7 @@ export default function Login() {
                         name='email'
                         autoComplete='email'
                         autoFocus
+                        onChange={handleEmailChange}
                     />
                     <TextField
                         variant='outlined'
@@ -81,7 +121,15 @@ export default function Login() {
                         type='password'
                         id='password'
                         autoComplete='current-password'
+                        onChange={handlePassChange}
                     />
+                    {loginError &&
+                        <Grid item xs={12}>
+                            <div style={{ 'color': 'red' }}>
+                                {serverErrorMsg}
+                            </div>
+                        </Grid>
+                    }
                     <FormControlLabel
                         control={<Checkbox value='remember' color='primary' />}
                         label='Remember me'
@@ -93,7 +141,7 @@ export default function Login() {
                         color='primary'
                         className={classes.submit}
                     >
-                        Sign In
+                        Log In
                     </Button>
                     <Grid container>
                         <Grid item xs>
@@ -102,7 +150,7 @@ export default function Login() {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href='#' variant='body2'>
+                            <Link href='/signup' variant='body2'>
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>
