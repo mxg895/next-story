@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 function Copyright() {
     return (
@@ -48,41 +49,71 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const classes = useStyles();
-    const [passwordMismatch, setPasswordMismatch] = useState(false);
     const [signUpError, setSignUpError] = useState(false);
-    const [serverErrorMsg, setServerErrorMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isGoogleLogin, setIsGoogleLogin] = useState(false);
+
     const history = useHistory();
+
+    useEffect(() => {
+        const sessionDataString = sessionStorage.getItem('NS-session-data');
+        const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
+        const loginExpiry = sessionDataObj?.expiry;
+        const loggedIn = loginExpiry && new Date(loginExpiry) > new Date();
+        const googleLogin = sessionDataObj?.isGoogleLogin;
+        setIsLoggedIn(loggedIn);
+        setIsGoogleLogin(googleLogin);
+    }, []);
+
+    const postNewUser = (newUserObject: any, isGoogle: boolean) => {
+        axios.post(`http://localhost:9000/users/signUp`, newUserObject)
+            .then((profile: any) => {
+                const userId = profile.data.userId;
+                const username = profile.data.name;
+                const time = new Date();
+                time.setSeconds(time.getSeconds() + 3599); // same as google auth timeout
+                const authObject = {
+                    expiry: time,
+                    username: username,
+                    userId: userId,
+                    isGoogleLogin: isGoogle
+                };
+                sessionStorage.setItem('NS-session-data', JSON.stringify(authObject));
+                history.push(`/`);
+            })
+            .catch((error: any) => {
+                setSignUpError(true);
+                const errorMsg = error.response.data.message;
+                setErrorMsg(errorMsg);
+                console.log('Error signing up', error);
+            });
+    };
 
     const handleSignUp = (event: any) => {
         event.preventDefault();
-        if (password === confirmPass) {
-            setPasswordMismatch(false);
-            axios.post(`http://localhost:9000/users/notGoogleSignUp`,
-                {
-                    userName: userName,
-                    email: email,
-                    textPass: password
-                })
-                .then((profile: any) => {
-                    const userId = profile.data.userId;
-                    const username = profile.data.name;
-                    // encrypt and save in secure session?
-                    localStorage.setItem('isAuthenticated', '1');
-                    history.push(`/`);
-                })
-                .catch((error: any) => {
-                    setSignUpError(true);
-                    const errorMsg = error.response.data.message;
-                    setServerErrorMsg(errorMsg);
-                    console.log('Error signing up', error);
-                });
-        } else {
-            setPasswordMismatch(true);
+        if (!userName || ! email || !password || !confirmPass) {
+            setSignUpError(true);
+            setErrorMsg('All fields must be filled in');
+            return;
         }
+        if (password !== confirmPass) {
+            setSignUpError(true);
+            setErrorMsg('Passwords do not match');
+            return;
+        }
+        setSignUpError(false);
+        postNewUser({
+            userName: userName,
+            email: email,
+            textPass: password
+        }, false);
     };
 
     const handleNameChange = (event: any) => {
@@ -92,7 +123,7 @@ export default function SignUp() {
     const handleEmailChange = (event: any) => {
         setEmail(event.target.value);
         setSignUpError(false);
-        setServerErrorMsg('');
+        setErrorMsg('');
     };
 
     const handlePassChange = (event: any) => {
@@ -101,6 +132,40 @@ export default function SignUp() {
 
     const handleConfirmPassChange = (event: any) => {
         setConfirmPass(event.target.value);
+    };
+
+    const onSignUpSuccess = (response: any) => {
+        console.log('response: ', response);
+        setSignUpError(false);
+        const googleName = response.profileObj.name;
+        const googleEmail = response.profileObj.email;
+        if (googleEmail) {
+            const userObj = {
+                userName: googleName,
+                email: googleEmail
+            };
+            postNewUser(userObj, true);
+        }
+    };
+
+    const onSignUpFailure = (response: any) => {
+        console.log('onFailure');
+        console.log('response: ', response);
+        setSignUpError(true);
+    };
+
+    const handleLogout = () => {
+        console.log('logout success');
+        sessionStorage.removeItem('NS-session-data');
+        setIsLoggedIn(false);
+        setIsGoogleLogin(false);
+    };
+
+    const handleGoogleLogout = () => {
+        console.log('google logout success');
+        sessionStorage.removeItem('NS-session-data');
+        setIsLoggedIn(false);
+        setIsGoogleLogin(false);
     };
 
     return (
@@ -113,7 +178,7 @@ export default function SignUp() {
                 <Typography component='h1' variant='h5'>
                     Sign up
                 </Typography>
-                <form
+                {!isLoggedIn ? <form
                     className={classes.form}
                     noValidate
                     onSubmit={handleSignUp}
@@ -170,15 +235,10 @@ export default function SignUp() {
                                 onChange={handleConfirmPassChange}
                             />
                         </Grid>
-                        {passwordMismatch &&
-                            <Grid item xs={12}>
-                                <div style={{ 'color': 'red' }}>Passwords do not match</div>
-                            </Grid>
-                        }
                         {signUpError &&
                             <Grid item xs={12}>
                                 <div style={{ 'color': 'red' }}>
-                                    {serverErrorMsg || 'There was an error signing up'}
+                                    {errorMsg || 'There was an error signing up'}
                                 </div>
                             </Grid>
                         }
@@ -192,6 +252,18 @@ export default function SignUp() {
                     >
                         Sign Up
                     </Button>
+                        <span style={{ 'marginRight': '5px' }}>
+                            Or sign up with Google
+                        </span>
+                        <GoogleLogin
+                            clientId='279438615331-cvlr0tk0j35i4s9df4m51o9sb5uj8k3s.apps.googleusercontent.com'
+                            buttonText='Sign up'
+                            onSuccess={onSignUpSuccess}
+                            onFailure={onSignUpFailure}
+                            cookiePolicy={'single_host_origin'}
+                        />
+                    <br/>
+                    <br/>
                     <Grid container justify='flex-end'>
                         <Grid item>
                             <Link href='/login' variant='body2'>
@@ -200,6 +272,29 @@ export default function SignUp() {
                         </Grid>
                     </Grid>
                 </form>
+                :
+                    <>
+                        <div style={{ 'color': 'red', 'margin': '20px' }}>
+                            You are already signed in
+                        </div>
+                        <Link href='/' variant='body2'>
+                        Go to home
+                        </Link>
+                        <div style={{ 'margin': '10px' }}>
+                            Or
+                        </div>
+                        {isGoogleLogin ? <GoogleLogout
+                            clientId='279438615331-cvlr0tk0j35i4s9df4m51o9sb5uj8k3s.apps.googleusercontent.com'
+                            buttonText='Logout'
+                            onLogoutSuccess={handleGoogleLogout}
+                        />
+                        :
+                        <Button color={'primary'} onClick={handleLogout} >
+                            Logout
+                        </Button>
+                        }
+                    </>
+                }
             </div>
             <Box mt={5}>
                 <Copyright />

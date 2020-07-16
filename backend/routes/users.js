@@ -81,7 +81,7 @@ router.put('/:key/:mediaId/:userId', (req, res) => {
     }
 });
 
-router.post('/notGoogleSignUp', function(req, res, next) {
+router.post('/signUp', function(req, res, next) {
     const { userName, email, textPass } = req.body;
     Profile.findOne({ email : email })
         .then((user) => {
@@ -89,45 +89,79 @@ router.post('/notGoogleSignUp', function(req, res, next) {
                 // res.status(400).send('User with this email exists');
                 res.status(400).json({ message: 'A user with this email exists' });
             } else {
-                bcrypt.hash(textPass, saltRounds, function(err, hash) {
-                    if (hash) {
-                        const profile = {
-                            userId: uuid(),
-                            email: email,
-                            encrypted: hash,
-                            name: userName,
-                            type: 'general',
-                            avatar: '',
-                            message: '',
-                            booksRead: [],
-                            moviesWatched: [],
-                            readLater: [],
-                            watchLater: [],
-                            favoriteGenres: [],
-                            favoriteNextStoryTags: [],
-                            favoriteMovies: [],
-                            favoriteBooks: [],
-                            favoriteAuthors: [],
-                            favoriteDirectors: []
+                if (textPass) {
+                    bcrypt.hash(textPass, saltRounds, function(err, hash) {
+                        if (hash) {
+                            const profile = {
+                                userId: uuid(),
+                                email: email,
+                                encrypted: hash,
+                                name: userName,
+                                type: 'general',
+                                avatar: '',
+                                message: '',
+                                booksRead: [],
+                                moviesWatched: [],
+                                readLater: [],
+                                watchLater: [],
+                                favoriteGenres: [],
+                                favoriteNextStoryTags: [],
+                                favoriteMovies: [],
+                                favoriteBooks: [],
+                                favoriteAuthors: [],
+                                favoriteDirectors: []
+                            }
+                            new Profile(profile).save()
+                                .then((user) => {
+                                    const returnData = {
+                                        userId: user.userId,
+                                        name: user.name
+                                    }
+                                    res.status(200).json(returnData);
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                    res.status(500);
+                                });
                         }
-                        new Profile(profile).save()
-                            .then((user) => {
-                                const returnData = {
-                                    userId: user.userId,
-                                    name: user.name
-                                }
-                                res.status(200).json(returnData);
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                                res.status(500);
-                            })
+                        if (err) {
+                            console.log('Hashing error');
+                            res.status(500);
+                        }
+                    });
+                } else {
+                    const profile = {
+                        userId: uuid(),
+                        email: email,
+                        encrypted: '',
+                        name: userName,
+                        type: 'general',
+                        avatar: '',
+                        message: '',
+                        booksRead: [],
+                        moviesWatched: [],
+                        readLater: [],
+                        watchLater: [],
+                        favoriteGenres: [],
+                        favoriteNextStoryTags: [],
+                        favoriteMovies: [],
+                        favoriteBooks: [],
+                        favoriteAuthors: [],
+                        favoriteDirectors: []
                     }
-                    if (err) {
-                        console.log('Hashing error');
-                        res.status(500);
-                    }
-                });
+                    new Profile(profile).save()
+                        .then((user) => {
+                            const returnData = {
+                                userId: user.userId,
+                                name: user.name
+                            }
+                            res.status(200).json(returnData);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            res.status(500);
+                        })
+                }
             }
         })
         .catch((error) => {
@@ -148,12 +182,33 @@ router.get('/notGoogleLogin/:email/:textPass', function(req, res, next) {
                         console.log('Could not check hash', err);
                         res.status(401).json({ message: 'Could not check hash' });
                     } else {
-                        res.status(200).send(result);
+                        const resultObj = {
+                            passwordCorrect: result,
+                            name: user.name,
+                            userId: user.userId
+                        }
+                        res.status(200).send(resultObj);
                     }
                 });
             } else {
                 res.status(400).json({ message: 'A user with this email does not exist' });
             }
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500);
+        });
+});
+
+router.get('/googleLogin/:email', function(req, res, next) {
+    const { email } = req.params;
+    Profile.findOne({ email : email })
+        .then((user) => {
+            const userObj = {
+                name: user.name,
+                userId: user.userId
+            }
+            res.status(200).json(userObj);
         })
         .catch((error) => {
             console.log(error);

@@ -4,14 +4,19 @@ import { Route, Redirect } from 'react-router-dom';
 
 const ProtectedRoute: React.FC<RouteProps> = (props: any, ...rest) => {
     const Component = props.component;
-    console.log('ProtectedRoute');
-    const isAuthString = localStorage.getItem('isAuthenticated');
-    const isAuth = isAuthString && parseInt(isAuthString);
+    const sessionDataString = sessionStorage.getItem('NS-session-data');
+    const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
+    const loginExpiry = sessionDataObj?.expiry;
+    const isLoggedInAndUnexpired = loginExpiry && new Date(loginExpiry) > new Date();
+    if (!isLoggedInAndUnexpired) {
+        sessionStorage.removeItem('NS-session-data');
+    }
+
     return (
       <Route
           {...rest}
           render={(props) => {
-              if (isAuth) {
+              if (isLoggedInAndUnexpired) {
                   return <Component {...props} />;
               } else {
                   return <Redirect to={

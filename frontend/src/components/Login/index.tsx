@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useHistory} from 'react-router-dom';
 import axios from 'axios';
+import {GoogleLogin, GoogleLogout} from 'react-google-login';
 
 function Copyright() {
     return (
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1)
     },
     submit: {
-        margin: theme.spacing(3, 0, 2)
+        margin: theme.spacing(2, 0, 2)
     }
 }));
 
@@ -52,31 +53,57 @@ export default function Login() {
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [serverErrorMsg, setServerErrorMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
     const [loginError, setLoginError] = useState(false);
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isGoogleLogin, setIsGoogleLogin] = useState(false);
+
     const history = useHistory();
+
+    useEffect(() => {
+        const sessionDataString = sessionStorage.getItem('NS-session-data');
+        const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
+        const loginExpiry = sessionDataObj?.expiry;
+        const loggedIn = loginExpiry && new Date(loginExpiry) > new Date();
+        const googleLogin = sessionDataObj?.isGoogleLogin;
+        setIsLoggedIn(loggedIn);
+        setIsGoogleLogin(googleLogin);
+    }, []);
 
     const handleLogin = (event: any) => {
         event.preventDefault();
-        setServerErrorMsg('');
+        if (! email || !password) {
+            setLoginError(true);
+            setErrorMsg('All fields must be filled in');
+            return;
+        }
+        setLoginError(false);
         axios.get(`http://localhost:9000/users/notGoogleLogin/${email}/${password}`)
-            .then((canLogin: any) => {
-                const passwordIsCorrect = canLogin.data;
-                console.log('canLogin', canLogin);
-                console.log('isLoginSuccessful', passwordIsCorrect);
-                // encrypt and save in secure session?
+            .then((profile: any) => {
+                const passwordIsCorrect = profile.data.passwordCorrect;
                 if (passwordIsCorrect) {
-                    localStorage.setItem('isAuthenticated', '1');
+                    const userId = profile.data.userId;
+                    const username = profile.data.name;
+                    const time = new Date();
+                    time.setSeconds(time.getSeconds() + 3599); // same as google auth timeout
+                    const authObject = {
+                        expiry: time,
+                        username: username,
+                        userId: userId,
+                        isGoogleLogin: false
+                    };
+                    sessionStorage.setItem('NS-session-data', JSON.stringify(authObject));
                     history.push(`/`);
                 } else {
                     setLoginError(true);
-                    setServerErrorMsg('Password is incorrect');
+                    setErrorMsg('Password is incorrect');
                 }
             })
             .catch((error: any) => {
                 setLoginError(true);
                 const errorMsg = error.response?.data?.message || 'There was an error logging in';
-                setServerErrorMsg(errorMsg);
+                setErrorMsg(errorMsg);
                 console.log('Error logging in', error);
             });
     };
@@ -89,6 +116,53 @@ export default function Login() {
         setPassword(event.target.value);
     };
 
+    const onLoginSuccess = (response: any) => {
+        console.log('response: ', response);
+        const googleEmail = response.profileObj.email;
+        if (googleEmail) {
+            axios.get(`http://localhost:9000/users/googleLogin/${googleEmail}`)
+                .then((profile: any) => {
+                    const userId = profile.data.userId;
+                    const username = profile.data.name;
+                    const time = new Date();
+                    time.setSeconds(time.getSeconds() + 3599); // same as google auth timeout
+                    const authObject = {
+                        expiry: time,
+                        username: username,
+                        userId: userId,
+                        isGoogleLogin: true
+                    };
+                    sessionStorage.setItem('NS-session-data', JSON.stringify(authObject));
+                    history.push(`/`);
+                })
+                .catch((error: any) => {
+                    setLoginError(true);
+                    const errorMsg = error.response?.data?.message || 'There was an error logging in';
+                    setErrorMsg(errorMsg);
+                    console.log('Error logging in', error);
+                });
+        }
+    };
+
+    const onLoginFailure = (response: any) => {
+        console.log('on login Failure');
+        console.log('response: ', response);
+        setLoginError(true);
+        setErrorMsg('There was an error logging in');
+    };
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('NS-session-data');
+        setIsLoggedIn(false);
+        setIsGoogleLogin(false);
+    };
+
+    const handleGoogleLogout = () => {
+        sessionStorage.removeItem('NS-session-data');
+        setIsLoggedIn(false);
+        setIsGoogleLogin(false);
+    };
+
     return (
         <Container component='main' maxWidth='xs'>
             <CssBaseline />
@@ -99,7 +173,7 @@ export default function Login() {
                 <Typography component='h1' variant='h5'>
                     Login
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={handleLogin}>
+                {!isLoggedIn ? <form className={classes.form} noValidate onSubmit={handleLogin}>
                     <TextField
                         variant='outlined'
                         margin='normal'
@@ -127,7 +201,7 @@ export default function Login() {
                     {loginError &&
                         <Grid item xs={12}>
                             <div style={{ 'color': 'red' }}>
-                                {serverErrorMsg}
+                                {errorMsg}
                             </div>
                         </Grid>
                     }
@@ -144,6 +218,18 @@ export default function Login() {
                     >
                         Log In
                     </Button>
+                    <span style={{ 'marginRight': '5px' }}>
+                        Or login with Google
+                    </span>
+                    <GoogleLogin
+                        clientId='279438615331-cvlr0tk0j35i4s9df4m51o9sb5uj8k3s.apps.googleusercontent.com'
+                        buttonText='Login'
+                        onSuccess={onLoginSuccess}
+                        onFailure={onLoginFailure}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                    <br/>
+                    <br/>
                     <Grid container>
                         <Grid item xs>
                             <Link href='#' variant='body2'>
@@ -157,6 +243,29 @@ export default function Login() {
                         </Grid>
                     </Grid>
                 </form>
+                :
+                    <>
+                        <div style={{ 'color': 'red', 'margin': '20px' }}>
+                        You are already signed in
+                        </div>
+                        <Link href='/' variant='body2'>
+                        Go to home
+                        </Link>
+                        <div style={{ 'margin': '10px' }}>
+                        Or
+                        </div>
+                        {isGoogleLogin ? <GoogleLogout
+                                clientId='279438615331-cvlr0tk0j35i4s9df4m51o9sb5uj8k3s.apps.googleusercontent.com'
+                                buttonText='Logout'
+                                onLogoutSuccess={handleGoogleLogout}
+                            />
+                            :
+                            <Button color={'primary'} onClick={handleLogout} >
+                                Logout
+                            </Button>
+                        }
+                    </>
+                }
             </div>
             <Box mt={8}>
                 <Copyright />
