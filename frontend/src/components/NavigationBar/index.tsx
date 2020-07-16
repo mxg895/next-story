@@ -126,7 +126,6 @@ const NavigationBar = () => {
         >
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'logout')}>Logout</MenuItem>
         </Menu>
     );
 
@@ -145,7 +144,6 @@ const NavigationBar = () => {
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'explore')}>Explore</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'logout')}>Logout</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'profile')}>Profile</MenuItem>
         </Menu>
     );
