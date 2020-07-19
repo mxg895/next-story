@@ -26,3 +26,6 @@ where we just fill our db with data or something near the end idk :P
 ------------------------------
 - I added a couple of examples on how to use mongoose under /backend/routes/nextStoryTags.js. 
 Both router.get functions should be working.
+
+- @Warren - Hook up both frontend and backend apps and start on localhost:9000 
+  *After all your frontend changes, don't forget to run npm run-script build under cd frontend directory :)
