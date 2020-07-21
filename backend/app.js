@@ -13,6 +13,8 @@ var nextStoryTagsRouter = require('./routes/nextStoryTags');
 var booksRouter = require('./routes/books');
 var moviesRouter = require('./routes/movies');
 var reviewRatingsRouter = require('./routes/reviewRatings');
+var thirdPartyBookApiRouter = require('./routes/thridPartyBookApi');
+var thirdPartyMovieApiRouter = require('./routes/thirdPartyMovieApi');
 
 var app = express();
 
@@ -34,6 +36,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// path.join(__dirname, '../client/build/index.html')
+app.use(express.static(path.join(__dirname,'../frontend/build')));
+
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -47,6 +52,8 @@ app.use('/nextStoryTags', nextStoryTagsRouter);
 app.use('/books', booksRouter);
 app.use('/movies', moviesRouter);
 app.use('/reviewRatings', reviewRatingsRouter);
+app.use('/thirdPartyBookApi', thirdPartyBookApiRouter);
+app.use('/thirdPartyMovieApi', thirdPartyMovieApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
