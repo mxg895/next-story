@@ -1,10 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,13 +10,16 @@ import FaceIcon from '@material-ui/icons/Face';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 function Copyright() {
     return (
         <Typography variant='body2' color='textSecondary' align='center'>
             {'Copyright © '}
             <Link color='inherit' href='https://material-ui.com/'>
-                Your Website
+                NextStory
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -48,6 +49,124 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const classes = useStyles();
+    const [signUpError, setSignUpError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isGoogleLogin, setIsGoogleLogin] = useState(false);
+
+    const history = useHistory();
+
+    useEffect(() => {
+        const sessionDataString = sessionStorage.getItem('NS-session-data');
+        const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
+        const loginExpiry = sessionDataObj?.expiry;
+        const loggedIn = loginExpiry && new Date(loginExpiry) > new Date();
+        const googleLogin = sessionDataObj?.isGoogleLogin;
+        setIsLoggedIn(loggedIn);
+        setIsGoogleLogin(googleLogin);
+    }, []);
+
+    const postNewUser = (newUserObject: any, isGoogle: boolean) => {
+        axios.post(`http://localhost:9000/users/signUp`, newUserObject)
+            .then((profile: any) => {
+                const userId = profile.data.userId;
+                const username = profile.data.name;
+                const time = new Date();
+                time.setSeconds(time.getSeconds() + 3599); // same as google auth timeout
+                const authObject = {
+                    expiry: time,
+                    username: username,
+                    userId: userId,
+                    isGoogleLogin: isGoogle
+                };
+                sessionStorage.setItem('NS-session-data', JSON.stringify(authObject));
+                history.push(`/`);
+            })
+            .catch((error: any) => {
+                setSignUpError(true);
+                const errorMsg = error.response.data.message;
+                setErrorMsg(errorMsg);
+                console.log('Error signing up', error);
+            });
+    };
+
+    const handleSignUp = (event: any) => {
+        event.preventDefault();
+        if (!userName || ! email || !password || !confirmPass) {
+            setSignUpError(true);
+            setErrorMsg('All fields must be filled in');
+            return;
+        }
+        if (password !== confirmPass) {
+            setSignUpError(true);
+            setErrorMsg('Passwords do not match');
+            return;
+        }
+        setSignUpError(false);
+        postNewUser({
+            userName: userName,
+            email: email,
+            textPass: password
+        }, false);
+    };
+
+    const handleNameChange = (event: any) => {
+        setUserName(event.target.value);
+    };
+
+    const handleEmailChange = (event: any) => {
+        setEmail(event.target.value);
+        setSignUpError(false);
+        setErrorMsg('');
+    };
+
+    const handlePassChange = (event: any) => {
+        setPassword(event.target.value);
+    };
+
+    const handleConfirmPassChange = (event: any) => {
+        setConfirmPass(event.target.value);
+    };
+
+    const onSignUpSuccess = (response: any) => {
+        console.log('response: ', response);
+        setSignUpError(false);
+        const googleName = response.profileObj.name;
+        const googleEmail = response.profileObj.email;
+        if (googleEmail) {
+            const userObj = {
+                userName: googleName,
+                email: googleEmail
+            };
+            postNewUser(userObj, true);
+        }
+    };
+
+    const onSignUpFailure = (response: any) => {
+        console.log('onFailure');
+        console.log('response: ', response);
+        setSignUpError(true);
+    };
+
+    const handleLogout = () => {
+        console.log('logout success');
+        sessionStorage.removeItem('NS-session-data');
+        setIsLoggedIn(false);
+        setIsGoogleLogin(false);
+    };
+
+    const handleGoogleLogout = () => {
+        console.log('google logout success');
+        sessionStorage.removeItem('NS-session-data');
+        setIsLoggedIn(false);
+        setIsGoogleLogin(false);
+    };
 
     return (
         <Container component='main' maxWidth='xs'>
@@ -59,29 +178,23 @@ export default function SignUp() {
                 <Typography component='h1' variant='h5'>
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                {!isLoggedIn ? <form
+                    className={classes.form}
+                    noValidate
+                    onSubmit={handleSignUp}
+                >
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
-                                autoComplete='fname'
-                                name='firstName'
+                                autoComplete='name'
+                                name='userName'
                                 variant='outlined'
                                 required
                                 fullWidth
-                                id='firstName'
-                                label='First Name'
+                                id='userName'
+                                label='User Name'
+                                onChange={handleNameChange}
                                 autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant='outlined'
-                                required
-                                fullWidth
-                                id='lastName'
-                                label='Last Name'
-                                name='lastName'
-                                autoComplete='lname'
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -93,6 +206,7 @@ export default function SignUp() {
                                 label='Email Address'
                                 name='email'
                                 autoComplete='email'
+                                onChange={handleEmailChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -105,14 +219,29 @@ export default function SignUp() {
                                 type='password'
                                 id='password'
                                 autoComplete='current-password'
+                                onChange={handlePassChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value='allowExtraEmails' color='primary' />}
-                                label='I want to receive inspiration, marketing promotions and updates via email.'
+                            <TextField
+                                variant='outlined'
+                                required
+                                fullWidth
+                                name='confirmPassword'
+                                label='Confirm Password'
+                                type='password'
+                                id='confirmPassword'
+                                autoComplete='confirm-password'
+                                onChange={handleConfirmPassChange}
                             />
                         </Grid>
+                        {signUpError &&
+                            <Grid item xs={12}>
+                                <div style={{ 'color': 'red' }}>
+                                    {errorMsg || 'There was an error signing up'}
+                                </div>
+                            </Grid>
+                        }
                     </Grid>
                     <Button
                         type='submit'
@@ -123,14 +252,49 @@ export default function SignUp() {
                     >
                         Sign Up
                     </Button>
+                        <span style={{ 'marginRight': '5px' }}>
+                            Or sign up with Google
+                        </span>
+                        <GoogleLogin
+                            clientId='279438615331-cvlr0tk0j35i4s9df4m51o9sb5uj8k3s.apps.googleusercontent.com'
+                            buttonText='Sign up'
+                            onSuccess={onSignUpSuccess}
+                            onFailure={onSignUpFailure}
+                            cookiePolicy={'single_host_origin'}
+                        />
+                    <br/>
+                    <br/>
                     <Grid container justify='flex-end'>
                         <Grid item>
-                            <Link href='#' variant='body2'>
-                                Already have an account? Sign in
+                            <Link href='/login' variant='body2'>
+                                Already have an account? Login
                             </Link>
                         </Grid>
                     </Grid>
                 </form>
+                :
+                    <>
+                        <div style={{ 'color': 'red', 'margin': '20px' }}>
+                            You are already signed in
+                        </div>
+                        <Link href='/' variant='body2'>
+                        Go to home
+                        </Link>
+                        <div style={{ 'margin': '10px' }}>
+                            Or
+                        </div>
+                        {isGoogleLogin ? <GoogleLogout
+                            clientId='279438615331-cvlr0tk0j35i4s9df4m51o9sb5uj8k3s.apps.googleusercontent.com'
+                            buttonText='Logout'
+                            onLogoutSuccess={handleGoogleLogout}
+                        />
+                        :
+                        <Button color={'primary'} onClick={handleLogout} >
+                            Logout
+                        </Button>
+                        }
+                    </>
+                }
             </div>
             <Box mt={5}>
                 <Copyright />
