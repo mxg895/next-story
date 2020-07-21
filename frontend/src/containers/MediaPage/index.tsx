@@ -48,7 +48,7 @@ const AddToUserButton = styled.button<{ isAddedToUser: boolean }>`
 `;
 
 const MediaPage: React.FC<{}> = (props: any) => {
-    const { id, mediaType } = props.match.params;
+    const [mediaType, id] = props.location.pathname.split('/').filter((o: string) => o);
     const [isForLater, setForLater] = useState(false);
     const [isFavorite, setFavorite] = useState(false);
     const [watchedOrRead, setWatchedOrRead] = useState(false);
@@ -75,9 +75,10 @@ const MediaPage: React.FC<{}> = (props: any) => {
         favoriteAuthors: [],
         favoriteDirectors: []
     });
-    // TODO get username from redux
-    const userName = 'tempName';
-    const userId = 'user-000';
+    const sessionDataString = sessionStorage.getItem('NS-session-data');
+    const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
+    const userName = sessionDataObj.username;
+    const userId = sessionDataObj.userId;
 
     const {
         title,
@@ -165,7 +166,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
             .catch((error: any) => {
                 console.log('Error getting media', error);
             });
-    }, [userId, mediaType]);
+    }, [userId, mediaType, id]);
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
         axios.put(`http://localhost:9000/users/${key}/${mediaId}/${userId}`, {
