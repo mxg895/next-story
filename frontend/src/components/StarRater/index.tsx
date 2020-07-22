@@ -34,6 +34,8 @@ const VerticallyCenteredDiv = styled.div`
     align-items: center;
 `;
 
+const host = window.location.protocol + '//'+ window.location.host;
+
 const getIcon = (index: number, rating: number | undefined) => {
     const twoDecimalString = rating?.toFixed(2) || '0.00';
     const [wholeNumberString, decimalString] = twoDecimalString.split('.');
@@ -58,7 +60,7 @@ const getIcon = (index: number, rating: number | undefined) => {
 const changeRating = (props: any, userId: string, userName: string, rating: number | undefined) => {
     props.changeRatingAction({ userId, userName, rating });
     if (!rating && !props.userHasReviewText) {
-        axios.delete(`http://localhost:9000/reviewRatings`
+        axios.delete(host + `/reviewRatings`
             + `/${props.mediaType}/${props.mediaId}/${userId}`)
             .then((res: any) => {
                 console.log('Successfully deleted the reviewRating', res);
@@ -67,7 +69,7 @@ const changeRating = (props: any, userId: string, userName: string, rating: numb
                 console.log(err);
             });
     } else {
-        axios.put('http://localhost:9000/reviewRatings/rating',
+        axios.put(host + '/reviewRatings/rating',
             {
                 mediaId: props.mediaId,
                 mediaType: props.mediaType,

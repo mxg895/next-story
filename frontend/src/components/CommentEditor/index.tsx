@@ -17,6 +17,8 @@ export enum CommentEditorAction {
     Edit
 }
 
+const host = window.location.protocol + '//'+ window.location.host;
+
 const CommentEditor: React.FC<any> = (props: any) => {
     const [currentText, setCurrentText] = useState(props.editCommentProps?.review.text || '');
 
@@ -32,7 +34,7 @@ const CommentEditor: React.FC<any> = (props: any) => {
                     datePosted: now,
                     rating: undefined
                 } as ReviewObjectType);
-                axios.put('http://localhost:9000/reviewRatings/review',
+                axios.put(host + '/reviewRatings/review',
                     {
                         mediaId: addCommentProps.mediaId,
                         mediaType: addCommentProps.mediaType,
@@ -57,7 +59,7 @@ const CommentEditor: React.FC<any> = (props: any) => {
                     userName: editCommentProps.review.userName,
                     datePosted: now
                 } as ReviewObjectType);
-                axios.put('http://localhost:9000/reviewRatings/review',
+                axios.put(host + '/reviewRatings/review',
                     {
                         mediaId: editCommentProps.mediaId,
                         mediaType: editCommentProps.mediaType,

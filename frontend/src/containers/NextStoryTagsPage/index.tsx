@@ -11,11 +11,13 @@ const TagDiv = styled.div<{ last: boolean }>`
     padding: 10px;
 `;
 
+const host = window.location.protocol + '//'+ window.location.host;
+
 const NextStoryTagsPage: React.FC = () => {
     const [allTags, setAllTags] = useState([{ tagId: '', tagName: '', tagDescription: '' }]);
 
     useEffect(() => {
-        axios.get('http://localhost:9000/nextStoryTags')
+        axios.get(host + '/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
                 const sortedTags = tagData.sort(function(a: any, b: any) {

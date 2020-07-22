@@ -92,11 +92,13 @@ const MediaPage: React.FC<{}> = (props: any) => {
         userHasReviewText
     } = mediaObject;
 
+    const host = window.location.protocol + '//'+ window.location.host;
+
     useEffect(() => {
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
-        axios.get(`http://localhost:9000/${mediaRouteType}/${id}`)
+        axios.get(host + `/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
-                axios.get(`http://localhost:9000/reviewRatings/${mediaType}/${id}`)
+                axios.get(host + `/reviewRatings/${mediaType}/${id}`)
                     .then((reviewRatingRes: any) => {
                         const reviews = reviewRatingRes.data.reviewArray;
                         props.loadAllReviewsAction(reviews);
@@ -128,7 +130,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType]);
 
     useEffect(() => {
-        axios.get(`http://localhost:9000/users/userLists/${userId}`)
+        axios.get(host + `/users/userLists/${userId}`)
             .then((response: any) => {
                 const userLists = response.data;
                 if (mediaType === MediaType.movie) {
@@ -169,7 +171,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [userId, mediaType, id]);
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
-        axios.put(`http://localhost:9000/users/${key}/${mediaId}/${userId}`, {
+        axios.put(host + `/users/${key}/${mediaId}/${userId}`, {
             action:action
         }).then((response: any) => {
             console.log(response);

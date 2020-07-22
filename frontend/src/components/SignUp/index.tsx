@@ -62,6 +62,8 @@ export default function SignUp() {
 
     const history = useHistory();
 
+    const host = window.location.protocol + '//'+ window.location.host;
+
     useEffect(() => {
         const sessionDataString = sessionStorage.getItem('NS-session-data');
         const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
@@ -73,7 +75,7 @@ export default function SignUp() {
     }, []);
 
     const postNewUser = (newUserObject: any, isGoogle: boolean) => {
-        axios.post(`http://localhost:9000/users/signUp`, newUserObject)
+        axios.post(host + `/users/signUp`, newUserObject)
             .then((profile: any) => {
                 const userId = profile.data.userId;
                 const username = profile.data.name;
