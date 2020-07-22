@@ -10,7 +10,7 @@ import {
     InputBase,
     Button,
     IconButton,
-    Hidden,
+    Hidden
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -74,11 +74,11 @@ const NavigationBar = () => {
                 history.push('/allStoryTags');
                 break;
             case 'login':
-                history.push('/forms');
+                history.push('/login');
                 break;
             case 'signup':
                 // do something when the signup tab is clicked
-                history.push('/forms');
+                history.push('/signup');
                 break;
             case 'profile':
                 // do something when the profile tab is clicked
@@ -159,7 +159,7 @@ const NavigationBar = () => {
                 >
                     <DesktopNavigationTabs
                         variant='fullWidth'
-                        value={page}
+                        value={ (page === 'tags' || page === 'explore') ? page : false }
                         aria-label='nav items tabs'
                         onChange={handleChange}
                     >

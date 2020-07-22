@@ -1,18 +1,16 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from '@material-ui/core/Container';
+import Container from '../Container';
 import '../../App.css';
 import Login from '../../components/Login';
-import SignUp from '../../components/SignUp';
 
 
-const Forms: React.FC = () => {
+const LoginForm: React.FC = () => {
     return (
         <Container maxWidth='md'>
             <Login />
-            <SignUp />
         </Container>
     );
 };
 
-export default Forms;
+export default LoginForm;
