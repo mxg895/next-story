@@ -21,7 +21,7 @@ const ProtectedRoute: React.FC<RouteProps> = (props: any, ...rest) => {
               } else {
                   return <Redirect to={
                       {
-                          pathname: '/signup',
+                          pathname: '/login',
                           state: {
                               from: props.location
                           }

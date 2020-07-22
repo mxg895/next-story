@@ -57,5 +57,18 @@ router.get('/:movieId', (req, res) => {
         });
 });
 
+router.put('/updateNextStoryTags/:movieId', (req, res) => {
+    const movieId = req.params.movieId;
+    const { tagsArray } = req.body;
+    Movies.findOneAndUpdate({ movieId: movieId }, { nextStoryTags: tagsArray }, { new: true })
+        .then(movie => {
+            console.log('the updated movie: ', movie);
+            res.status(200).json(movie);
+    }).catch((err) => {
+            console.log('Error deleting a nextStoryTag from a movie: ', err);
+            res.status(500);
+    });
+});
+
 module.exports = router;
 
