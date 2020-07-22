@@ -19,7 +19,7 @@ var thirdPartyMovieApiRouter = require('./routes/thirdPartyMovieApi');
 var app = express();
 
 // NOTE MUST CREATE A FILE CALLED '.env' AND ADD THE DATABASE_URI VALUE INTO IT
-const mongoDB = process.env.DATABASE_URI;
+const mongoDB = 'mongodb+srv://m001-student:m001-mongodb-basics@sandbox-cqvzf.mongodb.net/test1?retryWrites=true&w=majority';
 
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
@@ -37,7 +37,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // path.join(__dirname, '../client/build/index.html')
-app.use(express.static(path.join(__dirname,'../frontend/build')));
+app.use(express.static(path.join(__dirname,'frontend/build copy')));
 
 app.use(cors());
 app.use(logger('dev'));
@@ -54,6 +54,10 @@ app.use('/movies', moviesRouter);
 app.use('/reviewRatings', reviewRatingsRouter);
 app.use('/thirdPartyBookApi', thirdPartyBookApiRouter);
 app.use('/thirdPartyMovieApi', thirdPartyMovieApiRouter);
+
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/frontend/build/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const axios = require('axios');
-const tmdbApiKey = process.env.TMDBAPI_URL;
+const tmdbApiKey = '597ad6ea2c97c1f27b49df9b11a6abe1';
 const baseUrl = 'https://api.themoviedb.org';
 
 // note gets first 10 matches ... query can be title, id, genre, etc (basically anything in the 'response' data)

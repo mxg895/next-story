@@ -75,12 +75,14 @@ const VerticallyCenteredDiv = styled.div`
     margin-bottom: 10px;
 `;
 
+const host = window.location.protocol + '//'+ window.location.host;
+
 function deleteReview(props: any) {
     const userId = props.review.userId;
     const reviewUserName = props.review.userName;
     props.deleteReviewAction(userId);
     if (props.userRating) { // if a rating exists, don't delete from db
-        axios.put('http://localhost:9000/reviewRatings/review',
+        axios.put(host + '/reviewRatings/review',
             {
                 mediaId: props.mediaId,
                 mediaType: props.mediaType,
@@ -96,7 +98,7 @@ function deleteReview(props: any) {
                 console.log(err);
             });
     } else { // if no rating, then delete whole reviewRating document from db
-        axios.delete(`http://localhost:9000/reviewRatings`
+        axios.delete(host + `/reviewRatings`
         + `/${props.mediaType}/${props.mediaId}/${props.review.userId}`)
             .then((res: any) => {
                 console.log('successfully deleted the reviewRating', res);

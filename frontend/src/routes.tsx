@@ -5,6 +5,9 @@ import ProtectedRoute from './components/ProtectedRoutes';
 
 class Routes extends React.Component {
   render() {
+
+    var host = window.location.protocol + '//'+ window.location.host;
+    console.log(host);
     return <>
       <Switch>
         <ProtectedRoute exact key='home' path={'/'}

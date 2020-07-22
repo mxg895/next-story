@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
-const Profile = require('../models/Profile');
+const Profile = require('../models/profile');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var { uuid } = require('uuidv4');
+
+
 
 /* GET users listing. */
 router.get('/:userId', function(req, res, next) {
