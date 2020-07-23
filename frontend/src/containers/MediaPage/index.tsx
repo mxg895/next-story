@@ -11,6 +11,7 @@ import StarRater from '../../components/StarRater';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
+import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -47,6 +48,11 @@ const AddToUserButton = styled.button<{ isAddedToUser: boolean }>`
     color: ${({ isAddedToUser }) => isAddedToUser ? 'black' : 'white'};
 `;
 
+const StyledFormControl = styled(FormControl)`
+    width: 100%;
+    margin: 5px !important;
+`;
+
 const MediaPage: React.FC<{}> = (props: any) => {
     const [mediaType, id] = props.location.pathname.split('/').filter((o: string) => o);
     const [isForLater, setForLater] = useState(false);
@@ -59,7 +65,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
         image: '',
         people: '',
         genres: [''],
-        nextStoryTags: [{ tagId: '', tagName: '' }],
         blurb: '',
         avgRating: 0,
         userRating: 0,
@@ -75,6 +80,11 @@ const MediaPage: React.FC<{}> = (props: any) => {
         favoriteAuthors: [],
         favoriteDirectors: []
     });
+
+    const [storyTags, setStoryTags] = useState([]);
+    const [unaddedStoryTags, setUnaddedStoryTags] = useState<Array<{ tagId: string, tagName: string }>>([]);
+    const [addedStoryTags, setAddedStoryTags] = useState<Array<{ tagId: string, tagName: string }>>([]);
+
     const sessionDataString = sessionStorage.getItem('NS-session-data');
     const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
     const userName = sessionDataObj.username;
@@ -86,7 +96,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
         people,
         blurb,
         genres,
-        nextStoryTags,
         avgRating,
         userRating,
         userHasReviewText
@@ -112,12 +121,12 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             image: MockCover,
                             people: 'J.K. Rowling',
                             genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
-                            nextStoryTags: mediaRes.data.nextStoryTags,
                             blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                             avgRating: reviewRatingRes.data.average,
                             userRating: userRating,
                             userHasReviewText: userHasReviewText
                         });
+                        setStoryTags(mediaRes.data.nextStoryTags);
                     })
                     .catch((error: any) => {
                         console.log('Error getting reviews', error);
@@ -127,7 +136,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                 console.log('Error getting media', error);
             });
         // TODO get the media info from an api call using the media id
-    }, [props, id, mediaType]);
+    }, [props, id, mediaType, userId]);
 
     useEffect(() => {
         axios.get(host + `/users/userLists/${userId}`)
@@ -169,6 +178,42 @@ const MediaPage: React.FC<{}> = (props: any) => {
                 console.log('Error getting media', error);
             });
     }, [userId, mediaType, id]);
+
+    useEffect(() => {
+        axios.get('/nextStoryTags')
+            .then((res: any) => {
+                const tagData = res.data;
+                const sortedTags = tagData.sort(function(a: any, b: any) {
+                    if(a.tagName < b.tagName) { return -1; }
+                    if(a.tagName > b.tagName) { return 1; }
+                    return 0;
+                });
+                const storyTagNames = storyTags.map((t: any) => t.tagName);
+                const unAdded: Array<{ tagId: string, tagName: string }> = [];
+                const added: Array<{ tagId: string, tagName: string }> = [];
+                sortedTags.forEach((t: any) => {
+                    if (storyTagNames.includes(t.tagName)) {
+                        added.push(t);
+                    } else unAdded.push(t);
+                });
+                setUnaddedStoryTags(unAdded);
+                setAddedStoryTags(added);
+            })
+            .catch((error: any) => {
+                console.log('Error getting all story tags', error);
+            });
+    }, [storyTags]);
+
+    const updateMediaInDB = (tagsArray: any[]) => {
+        const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
+        axios.put(`/${mediaRouteType}/updateNextStoryTags/${id}`,
+            { tagsArray: tagsArray })
+            .then((res: any) => {
+                console.log('updated tags for media', res.data);
+            }).catch((err: any) => {
+                console.log('error setting tags for media', err);
+            });
+    };
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
         axios.put(host + `/users/${key}/${mediaId}/${userId}`, {
@@ -213,6 +258,20 @@ const MediaPage: React.FC<{}> = (props: any) => {
             setFavorite(true);
             addOrRemoveCall(key, mediaId, 'ADD');
         }
+    };
+
+    const handleAddTag = (event: any) => {
+        console.log(event.target.value);
+        const newAddedTags = [...addedStoryTags, event.target.value];
+        setAddedStoryTags(newAddedTags);
+        updateMediaInDB(newAddedTags);
+    };
+
+    const handleDeleteTag = (event: any) => {
+        console.log(event.target.value);
+        const filteredStoryTags = addedStoryTags.filter((t: any) => t.tagId !== event.target.value.tagId);
+        setAddedStoryTags(filteredStoryTags);
+        updateMediaInDB(filteredStoryTags);
     };
 
     return (
@@ -277,11 +336,38 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         Genres:
                         <TagsSection tags={genres}/>
                         Tags:
-                        <TagsSection tagObjects={nextStoryTags}/>
+                        <TagsSection tagObjects={addedStoryTags}/>
+                        <StyledFormControl variant='outlined'>
+                            <InputLabel id='demo-simple-select-outlined-label'>Add a tag</InputLabel>
+                            <Select
+                                labelId='add-tag-label'
+                                id='add-tag'
+                                value={''}
+                                onChange={handleAddTag}
+                                label='Add a tag'
+                            >
+                                {unaddedStoryTags.map((t: any, index) => {
+                                    return <MenuItem key={`${index}_add`} value={t}>{t.tagName}</MenuItem>;
+                                })}
+                            </Select>
+                        </StyledFormControl>
+                        <StyledFormControl variant='outlined'>
+                            <InputLabel id='demo-simple-select-outlined-label'>Delete a tag</InputLabel>
+                            <Select
+                                labelId='delete-tag-label'
+                                id='delete-tag'
+                                value={''}
+                                onChange={handleDeleteTag}
+                                label='Delete a tag'
+                            >
+                                {addedStoryTags.map((t: any, index) => {
+                                    return <MenuItem key={`${index}_delete`} value={t}>{t.tagName}</MenuItem>;
+                                })}
+                            </Select>
+                        </StyledFormControl>
                     </Grid>
                 </Grid>
             </Container>
-            {/*TODO only show CommentEditor to add comments if the user has not submitted before*/}
             <Container maxWidth='md'>
                 <ReviewList
                     mediaId={id}
