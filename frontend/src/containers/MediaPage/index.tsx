@@ -180,7 +180,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [userId, mediaType, id]);
 
     useEffect(() => {
-        axios.get('http://localhost:9000/nextStoryTags')
+        axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
                 const sortedTags = tagData.sort(function(a: any, b: any) {
@@ -206,7 +206,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
 
     const updateMediaInDB = (tagsArray: any[]) => {
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
-        axios.put(`../../../../${mediaRouteType}/updateNextStoryTags/${id}`,
+        axios.put(`/${mediaRouteType}/updateNextStoryTags/${id}`,
             { tagsArray: tagsArray })
             .then((res: any) => {
                 console.log('updated tags for media', res.data);
