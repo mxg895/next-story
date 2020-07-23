@@ -18,6 +18,11 @@ var thirdPartyMovieApiRouter = require('./routes/thirdPartyMovieApi');
 
 var app = express();
 
+// Anything that doesn't match the above, send back index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + '/frontend/build/index.html'));
+});
+
 // NOTE MUST CREATE A FILE CALLED '.env' AND ADD THE DATABASE_URI VALUE INTO IT
 const mongoDB = process.env.DATABASE_URI;
 
