@@ -4,8 +4,8 @@ export interface ProfileState {
   avatar: string;
   booksRead: Array<string>
   email: string;
-  encrypted: string;
-  favoriteAuthors: string;
+  // encrypted: string;
+  favoriteAuthors: Array<string>;
   favoriteBooks: Array<string>;
   favoriteDirectors: Array<string>;
   favoriteGenres: Array<string>;

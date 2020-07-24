@@ -9,7 +9,7 @@ var { uuid } = require('uuidv4');
 router.get('/:userId', function(req, res, next) {
     console.log('getting userID');
     const userId = req.params.userId;
-    Profile.findOne({ userId : userId }).select('-__v')
+    Profile.findOne({ userId : userId }).select('-__v -encrypted')
         .then((user) => {
             // console.log(user);
             res.status(200).json(user);
