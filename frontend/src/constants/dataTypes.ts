@@ -8,7 +8,7 @@ export type CardData = {
     id: string,
     mediaType: MediaType,
     image: string, // the url, etc to the image
-    tags: string[],
+    genres: string[],
     nextStoryTags: string[],
     people: string,
     blurb: string,
