@@ -25,7 +25,8 @@ router.get('/tmdbMovies/searchTen/:query', (req, res) => {
                     image:   'https://image.tmdb.org/t/p/w342/' + foundItem.poster_path,
                     genres: foundItem.genre_ids,
                     blurb: foundItem.overview,
-                    publishedDate: foundItem.release_date
+                    publishedDate: foundItem.release_date,
+                    avgRating: 3
                 }
                 // promises.push(
                 //     axios.get(`${baseUrl}/3/movie/${foundItem.id}/credits`, {

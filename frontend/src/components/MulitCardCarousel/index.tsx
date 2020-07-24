@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import MediaCard from '../MediaCard';
 import styled from 'styled-components';
 import MockCover from '../../assets/MockCover.png';
 import { CardData, MediaType } from '../../constants/dataTypes';
+import axios from 'axios';
 
 const StyledCarousel = styled(Carousel)`
     margin-top: 20px;
@@ -16,13 +17,37 @@ const mockCardData: CardData = {
     mediaType: MediaType.movie,
     image: MockCover,
     people: 'J.K. Rowling',
-    tags: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
+    genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
     nextStoryTags: ['cliffhangers', 'sad ending'],
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     avgRating: 3
 };
 
 const MultiCardCarousel: React.FC = () => {
+    //TODO
+    //Someone please fix the aysnc issue below
+    let movies:CardData[] = [] ;
+    axios.get( window.location.protocol + '//'+ window.location.host + '/thirdPartyMovieApi' + '/tmdbMovies/searchTen/harry')
+        .then((res: any) => {
+            const movieData = res.data;
+            const sortedMovies = movieData.sort(function (a: any, b: any) {
+                if (a.title < b.title) {
+                    return -1;
+                }
+                if (a.title > b.title) {
+                    return 1;
+                }
+                return 0;
+            });
+            console.log(sortedMovies);
+            for (let i = 0; i < 10; i++) {
+                sortedMovies[i].image = MockCover;
+            }
+            movies = sortedMovies;
+        })
+        .catch((error: any) => {
+            console.log('Error getting all tags', error);
+        });
     return (
         <StyledCarousel
             additionalTransfrom={0}
