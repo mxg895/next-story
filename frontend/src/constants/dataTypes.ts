@@ -15,3 +15,8 @@ export type CardData = {
     blurb: string,
     avgRating: number
 }
+
+export interface Tag{
+  tagId: string;
+  tagName: string;
+}
