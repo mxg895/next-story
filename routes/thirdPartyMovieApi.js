@@ -25,7 +25,8 @@ router.get('/tmdbMovies/searchTen/:query', (req, res) => {
                     image:   'https://image.tmdb.org/t/p/w342/' + foundItem.poster_path,
                     genres: foundItem.genre_ids,
                     blurb: foundItem.overview,
-                    publishedDate: foundItem.release_date
+                    publishedDate: foundItem.release_date,
+                    avgRating: 3
                 }
                 // promises.push(
                 //     axios.get(`${baseUrl}/3/movie/${foundItem.id}/credits`, {
@@ -82,4 +83,125 @@ router.get('/tmdbMovies/searchOne/:query', (req, res) => {
         .catch((error) => console.log(error));
 });
 
+// popular movies
+router.get('/tmdbMovies/popularMovies', (req, res) => {
+    const movieQuery = req.params.query;
+    axios.get(`${baseUrl}/3/movie/popular?api_key=${tmdbApiKey}&language=en-US&query=${movieQuery}&page=1&include_adult=false`)
+        .then((response) => {
+            console.log(response);
+            const numberFound = response.data.results.length;
+            const numberToGet = numberFound >= 10 ? 10 : numberFound;
+            const returnList = [];
+            let genresMap = new Map();
+            for(let i = 0; i < genres.length; i++){
+                genresMap[genres[i].id] = genres[i].name;
+            }
+            let i = 0;
+            while (i < numberToGet) {
+                let people = [];
+                const foundItem = response.data.results[i];
+                let resGenres = [];
+                for(let i = 0; i < foundItem.genre_ids.length; i++){
+                    resGenres.push(genresMap[foundItem.genre_ids[i]]);
+                }
+                const returnObject = {
+                    id: foundItem.id,
+                    title:  foundItem.title,
+                    mediaType: 'movie',
+                    image:   'https://image.tmdb.org/t/p/w342/' + foundItem.poster_path,
+                    genres: resGenres,
+                    blurb: foundItem.overview,
+                    publishedDate: foundItem.release_date
+                }
+                returnObject.people = people;
+                returnList.push(returnObject);
+                i++;
+            }
+
+            console.log('Succeeded getting movies from tmdbApi:', returnList);
+            res.status(200).json(returnList);
+        })
+        .catch((error) => console.log(error));
+});
+
+const genres = [
+    {
+        "id": 28,
+        "name": "Action"
+    },
+    {
+        "id": 12,
+        "name": "Adventure"
+    },
+    {
+        "id": 16,
+        "name": "Animation"
+    },
+    {
+        "id": 35,
+        "name": "Comedy"
+    },
+    {
+        "id": 80,
+        "name": "Crime"
+    },
+    {
+        "id": 99,
+        "name": "Documentary"
+    },
+    {
+        "id": 18,
+        "name": "Drama"
+    },
+    {
+        "id": 10751,
+        "name": "Family"
+    },
+    {
+        "id": 14,
+        "name": "Fantasy"
+    },
+    {
+        "id": 36,
+        "name": "History"
+    },
+    {
+        "id": 27,
+        "name": "Horror"
+    },
+    {
+        "id": 10402,
+        "name": "Music"
+    },
+    {
+        "id": 9648,
+        "name": "Mystery"
+    },
+    {
+        "id": 10749,
+        "name": "Romance"
+    },
+    {
+        "id": 878,
+        "name": "Science Fiction"
+    },
+    {
+        "id": 10770,
+        "name": "TV Movie"
+    },
+    {
+        "id": 53,
+        "name": "Thriller"
+    },
+    {
+        "id": 10752,
+        "name": "War"
+    },
+    {
+        "id": 37,
+        "name": "Western"
+    }
+];
+
 module.exports = router;
+
