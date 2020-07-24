@@ -2,7 +2,7 @@ import {
     ADD_REVIEW, CHANGE_RATING,
     DELETE_REVIEW,
     EDIT_REVIEW,
-    LOAD_REVIEWS_FROM_DB
+    LOAD_REVIEWS_FROM_DB,
 } from '../constants/reviewRatingConstants';
 
 export interface ReviewObjectType {
