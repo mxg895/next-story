@@ -123,7 +123,7 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                             <Typography variant='h3' gutterBottom>{modalData?.title}</Typography>
                             <Typography variant='caption' gutterBottom>Avg Rating: {modalData?.avgRating?.toString()}</Typography>
                             <MediaTags>
-                                <Typography>{modalData?.tags?.join(', ')}</Typography>
+                                <Typography>{modalData?.genres?.join(', ')}</Typography>
                             </MediaTags>
                         </TopLeftContainer>
                     </TopContainer>

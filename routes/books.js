@@ -15,4 +15,17 @@ router.get('/:bookId', (req, res) => {
         });
 });
 
+router.put('/updateNextStoryTags/:bookId', (req, res) => {
+    const bookId = req.params.bookId;
+    const { tagsArray } = req.body;
+    Books.findOneAndUpdate({ movieId: bookId }, { nextStoryTags: tagsArray }, { new: true })
+        .then(book => {
+            console.log('the updated book: ', book);
+            res.status(200).json(book);
+    }).catch((err) => {
+        console.log('Error deleting a nextStoryTag from a book: ', err);
+        res.status(500);
+    });
+});
+
 module.exports = router;

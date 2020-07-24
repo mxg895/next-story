@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -60,7 +58,7 @@ export default function Login() {
     const [isGoogleLogin, setIsGoogleLogin] = useState(false);
 
     const history = useHistory();
-
+    const host = window.location.protocol + '//'+ window.location.host;
     useEffect(() => {
         const sessionDataString = sessionStorage.getItem('NS-session-data');
         const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
@@ -79,7 +77,7 @@ export default function Login() {
             return;
         }
         setLoginError(false);
-        axios.get(`http://localhost:9000/users/notGoogleLogin/${email}/${password}`)
+        axios.get(host + `/users/notGoogleLogin/${email}/${password}`)
             .then((profile: any) => {
                 const passwordIsCorrect = profile.data.passwordCorrect;
                 if (passwordIsCorrect) {
@@ -120,7 +118,7 @@ export default function Login() {
         console.log('response: ', response);
         const googleEmail = response.profileObj.email;
         if (googleEmail) {
-            axios.get(`http://localhost:9000/users/googleLogin/${googleEmail}`)
+            axios.get(host + `/users/googleLogin/${googleEmail}`)
                 .then((profile: any) => {
                     const userId = profile.data.userId;
                     const username = profile.data.name;
@@ -205,10 +203,6 @@ export default function Login() {
                             </div>
                         </Grid>
                     }
-                    <FormControlLabel
-                        control={<Checkbox value='remember' color='primary' />}
-                        label='Remember me'
-                    />
                     <Button
                         type='submit'
                         fullWidth

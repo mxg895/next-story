@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes');
 var usersRouter = require('./routes/users');
 var nextStoryTagsRouter = require('./routes/nextStoryTags');
 var booksRouter = require('./routes/books');
@@ -37,7 +37,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // path.join(__dirname, '../client/build/index.html')
-app.use(express.static(path.join(__dirname,'../frontend/build')));
+app.use(express.static(path.join(__dirname,'frontend/build')));
+
+// Anything that doesn't match the above, send back index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + '/frontend/build/index.html'));
+});
 
 app.use(cors());
 app.use(logger('dev'));
@@ -54,6 +59,10 @@ app.use('/movies', moviesRouter);
 app.use('/reviewRatings', reviewRatingsRouter);
 app.use('/thirdPartyBookApi', thirdPartyBookApiRouter);
 app.use('/thirdPartyMovieApi', thirdPartyMovieApiRouter);
+
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname,'frontend/build/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
