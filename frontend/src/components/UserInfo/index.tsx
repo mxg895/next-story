@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import React from 'react';
+import { ProfileState } from '../../constants/profileActionTypes';
+import Avatar from '@material-ui/core/Avatar';
 
 const UserInfoContainer = styled.div`
   flex: 0 1 auto;
@@ -29,40 +31,58 @@ const PhotoContainer = styled.div`
   }
 `;
 
+const StyledAvatar = styled(Avatar)`
+  &.MuiAvatar-root {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const StyledSectionHeader = styled(Typography)`
   &.MuiTypography-body1 {
     font-weight: bold;
   }
 `;
 
-const UserSummary = styled.div``;
-
-const UserInfo: React.FC<{}> = () => {
+const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, moviesCount, name }) => {
   return (
     <UserInfoContainer id='userinfo'>
       <PhotoContainer id='profile-pic'>
         <div>
-          <ProfilePicPlaceholder color='disabled' fontSize='large'/>
+          {avatar
+            ? <StyledAvatar variant='square'><img alt='profile' src={avatar} width='100%'/></StyledAvatar>
+            : <ProfilePicPlaceholder color='disabled' fontSize='large'/>
+          }
         </div>
         <Typography align='center' color='primary' variant='body1'>(Edit Profile)</Typography>
       </PhotoContainer>
-      <UserSummary>
-        <Typography variant='body2'>User Name: Name Here</Typography>
-        <Typography variant='body2'>Books Read: 20</Typography>
-        <Typography variant='body2'>Movies Watched 10</Typography>
-      </UserSummary>
+      <div>
+        <Typography variant='body2'>{`User Name: ${name}`}</Typography>
+        <Typography variant='body2'>{`Books Read: ${booksCount}`}</Typography>
+        <Typography variant='body2'>{`Movies Watched: ${moviesCount}`}</Typography>
+      </div>
       <div>
         <StyledSectionHeader>About Me/Message User</StyledSectionHeader>
         <Typography variant='body2'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra diam sit amet nisl suscipit adipiscing bibendum. Quis auctor elit sed vulputate. Lobortis elementum nibh tellus molestie nunc non blandit massa. Aliquam purus sit amet luctus venenatis lectus magna. Ac felis donec et odio pellentesque. Etiam erat velit scelerisque in dictum. Ridiculus mus mauris vitae ultricies leo integer malesuada. Sed pulvinar proin gravida hendrerit lectus. Faucibus interdum posuere lorem ipsum dolor.
+          {about}
         </Typography>
       </div>
       <div>
         <StyledSectionHeader>Contact</StyledSectionHeader>
-        <Typography variant='body2'>Contact Placeholder</Typography>
+        <Typography variant='body2'>{email}</Typography>
       </div>
     </UserInfoContainer>
   );
 };
+
+interface UserInfoProps {
+  about: string;
+  avatar: string;
+  booksCount: number;
+  email: string;
+  moviesCount: number;
+  name: string;
+  profile?: ProfileState;
+}
 
 export default UserInfo;
