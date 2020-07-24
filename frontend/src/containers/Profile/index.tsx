@@ -36,7 +36,7 @@ const Profile: React.FC<ProfileProps> = ({ profile: { avatar, booksRead, email, 
           <UserInfo about={message} avatar={avatar} booksCount={booksRead.length} email={email} moviesCount={moviesWatched.length} name={name} />
         </Grid>
         <Grid item xs={12} sm={12} md={7}>
-          <RightSection />
+          <RightSection {...rest}/>
         </Grid>
       </Grid>
     </PageContainer>
