@@ -132,14 +132,6 @@ const MultiCardCarousel: React.FC = (props: any) => { //should take popular/reco
             {
                 renderCards(mockBookList, mockMovieList, props.homePageFilterReducer)
             }
-            {/* <MediaCard cardData={mockMovieCardData} />
-            <MediaCard cardData={mockMovieCardData} />
-            <MediaCard cardData={mockMovieCardData} />
-            <MediaCard cardData={mockMovieCardData} />
-            <MediaCard cardData={mockMovieCardData} />
-            <MediaCard cardData={mockMovieCardData} />
-            <MediaCard cardData={mockMovieCardData} />
-            <MediaCard cardData={mockMovieCardData} /> */}
         </StyledCarousel>
     );
 };
