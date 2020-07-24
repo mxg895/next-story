@@ -7,10 +7,11 @@ var { uuid } = require('uuidv4');
 
 /* GET users listing. */
 router.get('/:userId', function(req, res, next) {
+    console.log('getting userID');
     const userId = req.params.userId;
-    Profile.findOne({ userId : userId })
+    Profile.findOne({ userId : userId }).select('-__v')
         .then((user) => {
-            console.log(user);
+            // console.log(user);
             res.status(200).json(user);
         })
         .catch((error) => {
