@@ -1,0 +1,2 @@
+(this["webpackJsonpnext-story"]=this["webpackJsonpnext-story"]||[]).push([[15],{352:function(t,e,a){"use strict";a.r(e);var n=a(0),r=a.n(n),s=a(140),o=a(142);e.default=function(){return r.a.createElement(s.a,{maxWidth:"md"},r.a.createElement(o.a,{variant:"h1"},"Page Not Found"))}}}]);
+//# sourceMappingURL=15.3a689dbc.chunk.js.map

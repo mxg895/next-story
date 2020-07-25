@@ -15,6 +15,7 @@ var moviesRouter = require('./routes/movies');
 var reviewRatingsRouter = require('./routes/reviewRatings');
 var thirdPartyBookApiRouter = require('./routes/thridPartyBookApi');
 var thirdPartyMovieApiRouter = require('./routes/thirdPartyMovieApi');
+const multiRouter = require('./routes/multi');
 
 var app = express();
 
@@ -59,6 +60,7 @@ app.use('/movies', moviesRouter);
 app.use('/reviewRatings', reviewRatingsRouter);
 app.use('/thirdPartyBookApi', thirdPartyBookApiRouter);
 app.use('/thirdPartyMovieApi', thirdPartyMovieApiRouter);
+app.use('/multi', multiRouter);
 
 app.get('*', (req,res) =>{
   res.sendFile(path.join(__dirname,'frontend/build/index.html'));

@@ -1,5 +1,6 @@
 {
   "files": {
+<<<<<<< HEAD
     "static/js/0.ec97d3c5.chunk.js": "/static/js/0.ec97d3c5.chunk.js",
     "static/js/0.ec97d3c5.chunk.js.map": "/static/js/0.ec97d3c5.chunk.js.map",
     "static/js/1.89ac3ddc.chunk.js": "/static/js/1.89ac3ddc.chunk.js",
@@ -12,6 +13,19 @@
     "static/css/4.af3c1da9.chunk.css": "/static/css/4.af3c1da9.chunk.css",
     "static/js/4.108c89d0.chunk.js": "/static/js/4.108c89d0.chunk.js",
     "static/js/4.108c89d0.chunk.js.map": "/static/js/4.108c89d0.chunk.js.map",
+=======
+<<<<<<< HEAD
+    "static/js/0.e13ebf0a.chunk.js": "/static/js/0.e13ebf0a.chunk.js",
+    "static/js/0.e13ebf0a.chunk.js.map": "/static/js/0.e13ebf0a.chunk.js.map",
+    "static/js/1.79380d35.chunk.js": "/static/js/1.79380d35.chunk.js",
+    "static/js/1.79380d35.chunk.js.map": "/static/js/1.79380d35.chunk.js.map",
+    "static/css/2.37c00e0b.chunk.css": "/static/css/2.37c00e0b.chunk.css",
+    "static/js/2.4eb533e2.chunk.js": "/static/js/2.4eb533e2.chunk.js",
+    "static/js/2.4eb533e2.chunk.js.map": "/static/js/2.4eb533e2.chunk.js.map",
+    "static/css/3.af3c1da9.chunk.css": "/static/css/3.af3c1da9.chunk.css",
+    "static/js/3.0a0ca6f5.chunk.js": "/static/js/3.0a0ca6f5.chunk.js",
+    "static/js/3.0a0ca6f5.chunk.js.map": "/static/js/3.0a0ca6f5.chunk.js.map",
+>>>>>>> 2cdb75e... [backend][frontend] fetch favorite books&movies and Read/Watch later
     "main.css": "/static/css/main.7a4a6115.chunk.css",
     "main.js": "/static/js/main.c1248260.chunk.js",
     "main.js.map": "/static/js/main.c1248260.chunk.js.map",
@@ -48,13 +62,76 @@
     "static/js/7.6fabf074.chunk.js.LICENSE.txt": "/static/js/7.6fabf074.chunk.js.LICENSE.txt",
     "static/js/8.6d238dd3.chunk.js.LICENSE.txt": "/static/js/8.6d238dd3.chunk.js.LICENSE.txt",
     "static/media/MockBookCover.jpg": "/static/media/MockBookCover.db0a0480.jpg",
+=======
+    "static/js/0.5f86959a.chunk.js": "/static/js/0.5f86959a.chunk.js",
+    "static/js/0.5f86959a.chunk.js.map": "/static/js/0.5f86959a.chunk.js.map",
+    "static/js/1.b4c415af.chunk.js": "/static/js/1.b4c415af.chunk.js",
+    "static/js/1.b4c415af.chunk.js.map": "/static/js/1.b4c415af.chunk.js.map",
+    "static/js/2.692e33f3.chunk.js": "/static/js/2.692e33f3.chunk.js",
+    "static/js/2.692e33f3.chunk.js.map": "/static/js/2.692e33f3.chunk.js.map",
+    "static/css/3.37c00e0b.chunk.css": "/static/css/3.37c00e0b.chunk.css",
+    "static/js/3.b5aeb438.chunk.js": "/static/js/3.b5aeb438.chunk.js",
+    "static/js/3.b5aeb438.chunk.js.map": "/static/js/3.b5aeb438.chunk.js.map",
+    "static/css/4.af3c1da9.chunk.css": "/static/css/4.af3c1da9.chunk.css",
+    "static/js/4.e2159a98.chunk.js": "/static/js/4.e2159a98.chunk.js",
+    "static/js/4.e2159a98.chunk.js.map": "/static/js/4.e2159a98.chunk.js.map",
+    "main.css": "/static/css/main.0c0a77ae.chunk.css",
+    "main.js": "/static/js/main.61b9bab1.chunk.js",
+    "main.js.map": "/static/js/main.61b9bab1.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.63200184.js",
+    "runtime-main.js.map": "/static/js/runtime-main.63200184.js.map",
+    "static/js/7.cf9a3646.chunk.js": "/static/js/7.cf9a3646.chunk.js",
+    "static/js/7.cf9a3646.chunk.js.map": "/static/js/7.cf9a3646.chunk.js.map",
+    "static/js/8.9a2bc177.chunk.js": "/static/js/8.9a2bc177.chunk.js",
+    "static/js/8.9a2bc177.chunk.js.map": "/static/js/8.9a2bc177.chunk.js.map",
+    "static/js/9.bb3d369e.chunk.js": "/static/js/9.bb3d369e.chunk.js",
+    "static/js/9.bb3d369e.chunk.js.map": "/static/js/9.bb3d369e.chunk.js.map",
+    "static/js/10.4648bbe0.chunk.js": "/static/js/10.4648bbe0.chunk.js",
+    "static/js/10.4648bbe0.chunk.js.map": "/static/js/10.4648bbe0.chunk.js.map",
+    "static/js/11.42598a6a.chunk.js": "/static/js/11.42598a6a.chunk.js",
+    "static/js/11.42598a6a.chunk.js.map": "/static/js/11.42598a6a.chunk.js.map",
+    "static/css/12.0bbeb6f4.chunk.css": "/static/css/12.0bbeb6f4.chunk.css",
+    "static/js/12.2674b78c.chunk.js": "/static/js/12.2674b78c.chunk.js",
+    "static/js/12.2674b78c.chunk.js.map": "/static/js/12.2674b78c.chunk.js.map",
+    "static/css/13.0bbeb6f4.chunk.css": "/static/css/13.0bbeb6f4.chunk.css",
+    "static/js/13.1fc187ef.chunk.js": "/static/js/13.1fc187ef.chunk.js",
+    "static/js/13.1fc187ef.chunk.js.map": "/static/js/13.1fc187ef.chunk.js.map",
+    "static/js/14.4a53d9a9.chunk.js": "/static/js/14.4a53d9a9.chunk.js",
+    "static/js/14.4a53d9a9.chunk.js.map": "/static/js/14.4a53d9a9.chunk.js.map",
+    "static/js/15.3a689dbc.chunk.js": "/static/js/15.3a689dbc.chunk.js",
+    "static/js/15.3a689dbc.chunk.js.map": "/static/js/15.3a689dbc.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.0c2ff445b6d00116fc4c2c30d45504e9.js": "/precache-manifest.0c2ff445b6d00116fc4c2c30d45504e9.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/12.0bbeb6f4.chunk.css.map": "/static/css/12.0bbeb6f4.chunk.css.map",
+    "static/css/13.0bbeb6f4.chunk.css.map": "/static/css/13.0bbeb6f4.chunk.css.map",
+    "static/css/3.37c00e0b.chunk.css.map": "/static/css/3.37c00e0b.chunk.css.map",
+    "static/css/4.af3c1da9.chunk.css.map": "/static/css/4.af3c1da9.chunk.css.map",
+    "static/css/main.0c0a77ae.chunk.css.map": "/static/css/main.0c0a77ae.chunk.css.map",
+    "static/js/7.cf9a3646.chunk.js.LICENSE.txt": "/static/js/7.cf9a3646.chunk.js.LICENSE.txt",
+    "static/js/8.9a2bc177.chunk.js.LICENSE.txt": "/static/js/8.9a2bc177.chunk.js.LICENSE.txt",
+>>>>>>> 3cf2b54... [backend][frontend] fetch favorite books&movies and Read/Watch later
     "static/media/MockCover.png": "/static/media/MockCover.4d59545d.png",
     "static/media/styles.css": "/static/media/revicons.2feb69cc.eot"
   },
   "entrypoints": [
+<<<<<<< HEAD
     "static/js/runtime-main.cca015e2.js",
     "static/js/7.6fabf074.chunk.js",
     "static/css/main.7a4a6115.chunk.css",
     "static/js/main.c1248260.chunk.js"
+=======
+<<<<<<< HEAD
+    "static/js/runtime-main.9b7ee446.js",
+    "static/js/6.2efa13d6.chunk.js",
+    "static/css/main.7a4a6115.chunk.css",
+    "static/js/main.7bfddc22.chunk.js"
+=======
+    "static/js/runtime-main.63200184.js",
+    "static/js/7.cf9a3646.chunk.js",
+    "static/css/main.0c0a77ae.chunk.css",
+    "static/js/main.61b9bab1.chunk.js"
+>>>>>>> 3cf2b54... [backend][frontend] fetch favorite books&movies and Read/Watch later
+>>>>>>> 2cdb75e... [backend][frontend] fetch favorite books&movies and Read/Watch later
   ]
 }

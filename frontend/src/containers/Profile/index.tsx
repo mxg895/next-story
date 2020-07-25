@@ -11,7 +11,6 @@ import { Dispatch } from 'redux';
 import { ProfileState } from '../../constants/profileActionTypes';
 
 const Profile: React.FC<ProfileProps> = ({ profile: { avatar, booksRead, email, message, moviesWatched, name, ...rest }, setProfile }) => {
-  console.log('profile');
   const largeScreen = useMediaQuery('(min-width: 960px)');
   const host = window.location.protocol + '//'+ window.location.host;
 
