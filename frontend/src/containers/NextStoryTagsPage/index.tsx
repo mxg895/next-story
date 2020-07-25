@@ -3,6 +3,7 @@ import Container from '../Container';
 import axios from 'axios';
 import {Box, Typography} from '@material-ui/core';
 import styled from 'styled-components';
+import AddToUserButton from '../../components/AddToUserButton';
 
 const TagDiv = styled.div<{ last: boolean }>`
     border-top: 2px solid ${({ theme }) => theme.palette.grey[400]};
@@ -11,13 +12,12 @@ const TagDiv = styled.div<{ last: boolean }>`
     padding: 10px;
 `;
 
-const host = window.location.protocol + '//'+ window.location.host;
-
 const NextStoryTagsPage: React.FC = () => {
-    const [allTags, setAllTags] = useState([{ tagId: '', tagName: '', tagDescription: '' }]);
+    const [allTags, setAllTags] = useState<Array<{ tagId: string, tagName: string, tagDescription: string }>>([]);
+    const [userFavTags, setUserFavTags] = useState<Array<string>>([]);
 
     useEffect(() => {
-        axios.get(host + '/nextStoryTags')
+        axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
                 const sortedTags = tagData.sort(function(a: any, b: any) {
@@ -32,16 +32,62 @@ const NextStoryTagsPage: React.FC = () => {
             });
     }, []);
 
+    useEffect(() => {
+        const sessionDataString = sessionStorage.getItem('NS-session-data');
+        const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
+        const userId = sessionDataObj?.userId;
+        axios.get(`/users/favoriteNSTags/${userId}`)
+            .then((res: any) => {
+                const userFavTags = res.data;
+                const userFavTagIds = userFavTags.map((t: any) => t.tagId);
+                setUserFavTags(userFavTagIds);
+            })
+            .catch((error: any) => {
+                console.log('Error getting all tags', error);
+            });
+    }, []);
+
+    const addOrRemoveTagFromFavorites = (tag: any, shouldRemove: boolean) => {
+        const sessionDataString = sessionStorage.getItem('NS-session-data');
+        const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
+        const userId = sessionDataObj?.userId;
+        axios.put(`/users/favoriteNSTags/putToFavorites/${userId}/${shouldRemove}`, {tag: tag})
+            .then((res: any) => {
+                console.log(res.data);
+            })
+            .catch((error: any) => {
+                console.log('Error getting all tags', error);
+            });
+    };
+
     return (
         <Container maxWidth='md'>
             <Typography variant={'h1'} gutterBottom>All our story tags!</Typography>
             <Typography variant={'h3'} color={'primary'} gutterBottom>
                 Use these tags to filter stories, or add them to stories yourself
             </Typography>
-            {allTags.map((t, index) => {
+            {allTags.map((t: any, index) => {
+                const isAFavTag = userFavTags.filter((tag: any) => {
+                    return t.tagId === tag;
+                }).length > 0;
+                const shouldRemoveOnClick = isAFavTag;
                 return (
                     <TagDiv key={index} last={index + 1 === allTags.length}>
-                        <Box fontWeight={'fontWeightBold'} fontSize={24} mb={1}>{t.tagName}</Box>
+                        <Box
+                            fontWeight={'fontWeightBold'}
+                            fontSize={24}
+                            mb={1}
+                            display={'flex'}
+                            justifyContent={'space-between'}
+                        >
+                            {t.tagName}
+                            <AddToUserButton
+                                addLabel={'Add to favorites'}
+                                removeLabel={'Remove from favorites'}
+                                isAdded={isAFavTag}
+                                toBackendOnClick={() => addOrRemoveTagFromFavorites(t, shouldRemoveOnClick)}
+                            />
+                        </Box>
                         <Typography>{t.tagDescription}</Typography>
                     </TagDiv>
                 );
