@@ -169,7 +169,7 @@ export default function Login() {
                     <FaceIcon />
                 </Avatar>
                 <Typography component='h1' variant='h5'>
-                    Login
+                    {isLoggedIn ? 'Logout' : 'Login'}
                 </Typography>
                 {!isLoggedIn ? <form className={classes.form} noValidate onSubmit={handleLogin}>
                     <TextField
@@ -240,13 +240,7 @@ export default function Login() {
                 :
                     <>
                         <div style={{ 'color': 'red', 'margin': '20px' }}>
-                        You are already signed in
-                        </div>
-                        <Link href='/' variant='body2'>
-                        Go to home
-                        </Link>
-                        <div style={{ 'margin': '10px' }}>
-                        Or
+                        Click here to logout:
                         </div>
                         {isGoogleLogin ? <GoogleLogout
                                 clientId='279438615331-cvlr0tk0j35i4s9df4m51o9sb5uj8k3s.apps.googleusercontent.com'

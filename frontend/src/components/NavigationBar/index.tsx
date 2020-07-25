@@ -73,12 +73,8 @@ const NavigationBar = () => {
             case 'tags':
                 history.push('/allStoryTags');
                 break;
-            case 'login':
+            case 'logout':
                 history.push('/login');
-                break;
-            case 'signup':
-                // do something when the signup tab is clicked
-                history.push('/signup');
                 break;
             case 'profile':
                 // do something when the profile tab is clicked
@@ -124,8 +120,7 @@ const NavigationBar = () => {
         open={isMenuOpen}
         onClose={closeMenu}
         >
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'logout')}>Logout</MenuItem>
         </Menu>
     );
 
@@ -142,9 +137,8 @@ const NavigationBar = () => {
         >
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'tags')}>Tags</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'explore')}>Explore</MenuItem>
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'login')}>Login</MenuItem>
-            <MenuItem onClick={(ev) => handleMenuClose(ev, 'signup')}>Signup</MenuItem>
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'profile')}>Profile</MenuItem>
+            <MenuItem onClick={(ev) => handleMenuClose(ev, 'logout')}>Logout</MenuItem>
         </Menu>
     );
 
@@ -194,12 +188,13 @@ const NavigationBar = () => {
                         aria-label='profile'
                         aria-haspopup='true'
                         color='inherit'
+                        onClick={() => history.push('/profile')}
                     >
                         <AccountCircle />
                     </IconButton>
                     <IconButton
                         edge='end'
-                        aria-label='login signup'
+                        aria-label='logout'
                         aria-controls={menuId}
                         aria-haspopup='true'
                         onClick={handleDesktopMenuOpen}
