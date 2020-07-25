@@ -77,7 +77,7 @@ const NavigationBar = () => {
                 history.push('/login');
                 break;
             case 'profile':
-                // do something when the profile tab is clicked
+                history.push('/profile');
                 break;
             default:
                 break;
