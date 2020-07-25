@@ -33,6 +33,10 @@ const FavPeopleDropDown = (props: FavPeopleDropDownProps) => {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center'
+                }}
             >
                 {people.map((p, index) => {
                     return <MenuItem key={index} onClick={handleClose}>{p}</MenuItem>;

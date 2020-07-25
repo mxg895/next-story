@@ -107,7 +107,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             id: 'movie-001',
                             mediaType: MediaType.movie,
                             image: MockCover,
-                            people: ['J.K. Rowling'],
+                            people: ['J.K. Rowling', 'person1', 'person2', 'person3'],
                             genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
                             blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                             avgRating: reviewRatingRes.data.average,
@@ -315,7 +315,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <Typography variant='h1'>{title}</Typography>
                         <Box fontStyle='italic'>
                             <Typography variant='subtitle1' gutterBottom>
-                                {people}
+                                {people.join(', ')}
                                 <FavPeopleDropDown people={people} />
                             </Typography>
                         </Box>
