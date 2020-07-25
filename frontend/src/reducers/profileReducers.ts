@@ -4,7 +4,6 @@ const initialProfileState: ProfileState = {
   avatar: '',
   booksRead: [],
   email: '',
-//   encrypted: '',
   favoriteAuthors: [],
   favoriteBooks: [],
   favoriteDirectors: [],
@@ -24,7 +23,6 @@ const initialProfileState: ProfileState = {
 const profileReducer = (state = initialProfileState, action: ProfileActionTypes): ProfileState => {
   switch (action.type) {
     case SET_PROFILE:
-      console.log('setprofile called: ', action.profile);
       return { ...action.profile };
     default:
       return state;
