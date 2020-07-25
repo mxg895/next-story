@@ -12,6 +12,8 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
 import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
+import AddToUserButton from '../../components/AddToUserButton';
+import FavPeopleDropDown from "../../components/FavPeopleDropDown";
 
 const StyledImage = styled.img`
     width: 100%;
@@ -36,18 +38,6 @@ const CenteredDiv = styled.div`
     margin-bottom: 10px;
 `;
 
-const AddToUserButton = styled.button<{ isAddedToUser: boolean }>`
-    background-color: ${({ theme, isAddedToUser }) => isAddedToUser ? theme.palette.grey[300] : theme.palette.primary.light};
-    border: none;
-    outline: none;
-    font-size: 16px;
-    border-radius: 5px;
-    padding: 5px;
-    cursor: pointer;
-    margin: 5px;
-    color: ${({ isAddedToUser }) => isAddedToUser ? 'black' : 'white'};
-`;
-
 const StyledFormControl = styled(FormControl)`
     width: 100%;
     margin: 5px !important;
@@ -63,7 +53,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
         id: id,
         mediaType: MediaType.movie,
         image: '',
-        people: '',
+        people: [''],
         genres: [''],
         blurb: '',
         avgRating: 0,
@@ -117,7 +107,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             id: 'movie-001',
                             mediaType: MediaType.movie,
                             image: MockCover,
-                            people: 'J.K. Rowling',
+                            people: ['J.K. Rowling'],
                             genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
                             blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                             avgRating: reviewRatingRes.data.average,
@@ -297,27 +287,27 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             </CenteredDiv>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveWatchOrRead(id)}
-                                    isAddedToUser={watchedOrRead}
-                                >
-                                    {`${watchedOrRead ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveWatchOrRead(id)}
+                                    isAdded={watchedOrRead}
+                                    addLabel={`Add to ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
+                                    removeLabel={`Remove from ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
+                                />
                             </div>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveWatchReadLater(id)}
-                                    isAddedToUser={isForLater}
-                                >
-                                    {`${isForLater ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveWatchReadLater(id)}
+                                    isAdded={isForLater}
+                                    addLabel={`Add to ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
+                                    removeLabel={`Remove from ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
+                                />
                             </div>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveFavorites(id)}
-                                    isAddedToUser={isFavorite}
-                                >
-                                    {isFavorite ? 'Remove favorite' : 'Add favorite'}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveFavorites(id)}
+                                    isAdded={isFavorite}
+                                    addLabel={'Add favorite'}
+                                    removeLabel={'Remove favorite'}
+                                />
                             </div>
                         </div>
                     </StyledGridItem>
@@ -326,6 +316,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <Box fontStyle='italic'>
                             <Typography variant='subtitle1' gutterBottom>
                                 {people}
+                                <FavPeopleDropDown people={people} />
                             </Typography>
                         </Box>
                         <VerticallyCenteredDiv>
