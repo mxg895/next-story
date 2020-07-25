@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
 import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
 import AddToUserButton from '../../components/AddToUserButton';
-import FavPeopleDropDown from "../../components/FavPeopleDropDown";
+import FavPeopleDropDown from '../../components/FavPeopleDropDown';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -316,7 +316,12 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <Box fontStyle='italic'>
                             <Typography variant='subtitle1' gutterBottom>
                                 {people.join(', ')}
-                                <FavPeopleDropDown people={people} />
+                                <FavPeopleDropDown
+                                    allPeople={people}
+                                    favoritePeople={MediaType.movie ? userLists.favoriteDirectors : userLists.favoriteAuthors}
+                                    userId={userId}
+                                    favKey={MediaType.movie ? 'favoriteDirectors' : 'favoriteAuthors'}
+                                />
                             </Typography>
                         </Box>
                         <VerticallyCenteredDiv>
