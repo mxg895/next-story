@@ -5,11 +5,18 @@ import {
     Tabs,
     Hidden,
 } from '@material-ui/core'
+import {connect} from 'react-redux';
+import { changeHomePageFilter } from '../../actions/homePageFilterActions';
+import {
+    ALL,
+    MOVIES,
+    BOOKS,
+} from '../../constants/homePageFilterConstants';
 
 const DeskTopFilters = styled(Tabs)`
 `;
 
-const HomePageDesktopFilter = () => {
+const HomePageDesktopFilter: React.FC = (props: any) => {
     const [storyType, setStoryType] = React.useState<string>('all');
     const handleChange = (event: React.ChangeEvent<{}>, newType: string) => {
         setStoryType(newType);
@@ -19,12 +26,15 @@ const HomePageDesktopFilter = () => {
         switch (storyType) {
             case 'all':
                 //show popular and recommend books and movies
+                props.changeHomePageFilter(ALL);
                 break;
             case 'movies':
                 //show popular and recommend movies
+                props.changeHomePageFilter(MOVIES);
                 break;
             case 'books':
                 //show popular and recommend books
+                props.changeHomePageFilter(BOOKS);
                 break;
             default:
                 break;
@@ -59,4 +69,4 @@ const HomePageDesktopFilter = () => {
     );
 };
 
-export default HomePageDesktopFilter;
+export default connect(null, { changeHomePageFilter })(HomePageDesktopFilter);
