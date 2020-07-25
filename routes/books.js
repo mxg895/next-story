@@ -18,7 +18,12 @@ router.get('/:bookId', (req, res) => {
 router.put('/updateNextStoryTags/:bookId', (req, res) => {
     const bookId = req.params.bookId;
     const { tagsArray } = req.body;
-    Books.findOneAndUpdate({ movieId: bookId }, { nextStoryTags: tagsArray }, { new: true })
+    let query = { bookId: bookId };
+    let update = {
+        $setOnInsert: {bookId:  bookId},
+        nextStoryTags: tagsArray // or $push
+    }
+    Books.findOneAndUpdate(query, update, {upsert:true})
         .then(book => {
             console.log('the updated book: ', book);
             res.status(200).json(book);
