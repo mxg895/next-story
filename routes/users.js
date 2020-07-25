@@ -68,7 +68,7 @@ router.put('/favoriteNSTags/putToFavorites/:userId/:shouldRemove', (req, res) =>
             { new:true, multi:true })
             .then(user => {
                 console.log('Success. Removed tag from user fav tags: ', user );
-                res.status(200).json(user);
+                res.status(200).json(user.favoriteNextStoryTags);
             })
             .catch((err) => {
                 console.log('Error removing from user fav tags: ', err);
@@ -83,7 +83,7 @@ router.put('/favoriteNSTags/putToFavorites/:userId/:shouldRemove', (req, res) =>
             { new:true, multi:true })
             .then(user => {
                 console.log('Success. Added to user fav tags: ', user);
-                res.status(200).json(user);
+                res.status(200).json(user.favoriteNextStoryTags);
             })
             .catch((err) => {
                 console.log('Error adding favorite tag: ', err);
