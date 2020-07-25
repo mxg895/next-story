@@ -12,6 +12,8 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
 import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
+import AddToUserButton from '../../components/AddToUserButton';
+import FavPeopleDropDown from '../../components/FavPeopleDropDown';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -36,18 +38,6 @@ const CenteredDiv = styled.div`
     margin-bottom: 10px;
 `;
 
-const AddToUserButton = styled.button<{ isAddedToUser: boolean }>`
-    background-color: ${({ theme, isAddedToUser }) => isAddedToUser ? theme.palette.grey[300] : theme.palette.primary.light};
-    border: none;
-    outline: none;
-    font-size: 16px;
-    border-radius: 5px;
-    padding: 5px;
-    cursor: pointer;
-    margin: 5px;
-    color: ${({ isAddedToUser }) => isAddedToUser ? 'black' : 'white'};
-`;
-
 const StyledFormControl = styled(FormControl)`
     width: 100%;
     margin: 5px !important;
@@ -63,7 +53,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
         id: id,
         mediaType: MediaType.movie,
         image: '',
-        people: '',
+        people: [''],
         genres: [''],
         blurb: '',
         avgRating: 0,
@@ -101,13 +91,11 @@ const MediaPage: React.FC<{}> = (props: any) => {
         userHasReviewText
     } = mediaObject;
 
-    const host = window.location.protocol + '//'+ window.location.host;
-
     useEffect(() => {
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
-        axios.get(host + `/${mediaRouteType}/${id}`)
+        axios.get(`/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
-                axios.get(host + `/reviewRatings/${mediaType}/${id}`)
+                axios.get(`/reviewRatings/${mediaType}/${id}`)
                     .then((reviewRatingRes: any) => {
                         const reviews = reviewRatingRes.data.reviewArray;
                         props.loadAllReviewsAction(reviews);
@@ -119,7 +107,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             id: 'movie-001',
                             mediaType: MediaType.movie,
                             image: MockCover,
-                            people: 'J.K. Rowling',
+                            people: ['J.K. Rowling', 'person1', 'person2', 'person3'],
                             genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
                             blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                             avgRating: reviewRatingRes.data.average,
@@ -139,7 +127,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
-        axios.get(host + `/users/userLists/${userId}`)
+        axios.get(`/users/userLists/${userId}`)
             .then((response: any) => {
                 const userLists = response.data;
                 if (mediaType === MediaType.movie) {
@@ -216,7 +204,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     };
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
-        axios.put(host + `/users/${key}/${mediaId}/${userId}`, {
+        axios.put(`/users/${key}/${mediaId}/${userId}`, {
             action:action
         }).then((response: any) => {
             console.log(response);
@@ -263,14 +251,18 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const handleAddTag = (event: any) => {
         console.log(event.target.value);
         const newAddedTags = [...addedStoryTags, event.target.value];
+        const filteredDeleteTags = unaddedStoryTags.filter((t: any) => t.tagId !== event.target.value.tagId);
         setAddedStoryTags(newAddedTags);
+        setUnaddedStoryTags(filteredDeleteTags);
         updateMediaInDB(newAddedTags);
     };
 
     const handleDeleteTag = (event: any) => {
         console.log(event.target.value);
         const filteredStoryTags = addedStoryTags.filter((t: any) => t.tagId !== event.target.value.tagId);
+        const newDeleteTags = [...unaddedStoryTags, event.target.value];
         setAddedStoryTags(filteredStoryTags);
+        setUnaddedStoryTags(newDeleteTags);
         updateMediaInDB(filteredStoryTags);
     };
 
@@ -295,27 +287,27 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             </CenteredDiv>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveWatchOrRead(id)}
-                                    isAddedToUser={watchedOrRead}
-                                >
-                                    {`${watchedOrRead ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveWatchOrRead(id)}
+                                    isAdded={watchedOrRead}
+                                    addLabel={`Add to ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
+                                    removeLabel={`Remove from ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
+                                />
                             </div>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveWatchReadLater(id)}
-                                    isAddedToUser={isForLater}
-                                >
-                                    {`${isForLater ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveWatchReadLater(id)}
+                                    isAdded={isForLater}
+                                    addLabel={`Add to ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
+                                    removeLabel={`Remove from ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
+                                />
                             </div>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveFavorites(id)}
-                                    isAddedToUser={isFavorite}
-                                >
-                                    {isFavorite ? 'Remove favorite' : 'Add favorite'}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveFavorites(id)}
+                                    isAdded={isFavorite}
+                                    addLabel={'Add favorite'}
+                                    removeLabel={'Remove favorite'}
+                                />
                             </div>
                         </div>
                     </StyledGridItem>
@@ -323,7 +315,13 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <Typography variant='h1'>{title}</Typography>
                         <Box fontStyle='italic'>
                             <Typography variant='subtitle1' gutterBottom>
-                                {people}
+                                {people.join(', ')}
+                                <FavPeopleDropDown
+                                    allPeople={people}
+                                    favoritePeople={MediaType.movie ? userLists.favoriteDirectors : userLists.favoriteAuthors}
+                                    userId={userId}
+                                    favKey={MediaType.movie ? 'favoriteDirectors' : 'favoriteAuthors'}
+                                />
                             </Typography>
                         </Box>
                         <VerticallyCenteredDiv>

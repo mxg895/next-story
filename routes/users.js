@@ -19,6 +19,19 @@ router.get('/:userId', function(req, res, next) {
         })
 });
 
+router.get('/favoriteNSTags/:userId', function(req, res, next) {
+    const userId = req.params.userId;
+    Profile.findOne({ userId : userId })
+        .then((user) => {
+            const tags = user.favoriteNextStoryTags || [];
+            res.status(200).json(tags);
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500);
+        })
+});
+
 router.get('/userLists/:userId', function(req, res, next) {
     const userId = req.params.userId;
     Profile.findOne({ userId : userId })
@@ -40,6 +53,43 @@ router.get('/userLists/:userId', function(req, res, next) {
             console.log(error);
             res.status(500);
         })
+});
+
+router.put('/favoriteNSTags/putToFavorites/:userId/:shouldRemove', (req, res) => {
+    const { userId, shouldRemove } = req.params;
+    const { tag } = req.body;
+    if (shouldRemove === 'true') {
+        const tagId = tag.tagId;
+        Profile.findOneAndUpdate({ userId: userId},
+            {
+                $pull :{
+                    favoriteNextStoryTags : { tagId: tagId }
+                }},
+            { new:true, multi:true })
+            .then(user => {
+                console.log('Success. Removed tag from user fav tags: ', user );
+                res.status(200).json(user.favoriteNextStoryTags);
+            })
+            .catch((err) => {
+                console.log('Error removing from user fav tags: ', err);
+                res.status(500);
+            });
+    } else {
+        Profile.findOneAndUpdate({ userId: userId},
+            {
+                $push :{
+                    favoriteNextStoryTags: tag
+                }},
+            { new:true, multi:true })
+            .then(user => {
+                console.log('Success. Added to user fav tags: ', user);
+                res.status(200).json(user.favoriteNextStoryTags);
+            })
+            .catch((err) => {
+                console.log('Error adding favorite tag: ', err);
+                res.status(500);
+            });
+    }
 });
 
 /* REMOVE a favorite movies or books. */

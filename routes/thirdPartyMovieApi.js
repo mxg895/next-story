@@ -74,7 +74,8 @@ router.get('/tmdbMovies/searchOne/:query', (req, res) => {
                 image:   'https://image.tmdb.org/t/p/w342/' + foundItem.poster_path,
                 genres: foundItem.genre_ids,
                 blurb: foundItem.overview,
-                publishedDate: foundItem.release_date
+                publishedDate: foundItem.release_date,
+                avgRating: foundItem.vote_average
             }
             returnObject.people = [];
             console.log('Succeeded getting book from googleBooks:', returnObject);
@@ -90,7 +91,7 @@ router.get('/tmdbMovies/popularMovies', (req, res) => {
         .then((response) => {
             console.log(response);
             const numberFound = response.data.results.length;
-            const numberToGet = numberFound >= 10 ? 10 : numberFound;
+            const numberToGet = numberFound >= 100 ? 100 : numberFound;
             const returnList = [];
             let genresMap = new Map();
             for(let i = 0; i < genres.length; i++){
@@ -111,7 +112,8 @@ router.get('/tmdbMovies/popularMovies', (req, res) => {
                     image:   'https://image.tmdb.org/t/p/w342/' + foundItem.poster_path,
                     genres: resGenres,
                     blurb: foundItem.overview,
-                    publishedDate: foundItem.release_date
+                    publishedDate: foundItem.release_date,
+                    avgRating: foundItem.vote_average
                 }
                 returnObject.people = people;
                 returnList.push(returnObject);
@@ -120,6 +122,70 @@ router.get('/tmdbMovies/popularMovies', (req, res) => {
 
             console.log('Succeeded getting movies from tmdbApi:', returnList);
             res.status(200).json(returnList);
+        })
+        .catch((error) => console.log(error));
+});
+
+
+//  movies recommendation
+router.get('/tmdbMovies/moviesRecommendation', (req, res) => {
+    const movieQuery = req.params.query;
+    axios.get(`${baseUrl}/3/movie/top_rated?api_key=${tmdbApiKey}&language=en-US&query=${movieQuery}&page=1&include_adult=false`)
+        .then((response) => {
+            console.log(response);
+            const numberFound = response.data.results.length;
+            const numberToGet = numberFound >= 100 ? 100 : numberFound;
+            const returnList = [];
+            let genresMap = new Map();
+            for(let i = 0; i < genres.length; i++){
+                genresMap[genres[i].id] = genres[i].name;
+            }
+            let i = 0;
+            while (i < numberToGet) {
+                let people = [];
+                const foundItem = response.data.results[i];
+                let resGenres = [];
+                for(let i = 0; i < foundItem.genre_ids.length; i++){
+                    resGenres.push(genresMap[foundItem.genre_ids[i]]);
+                }
+                const returnObject = {
+                    id: foundItem.id,
+                    title:  foundItem.title,
+                    mediaType: 'movie',
+                    image:   'https://image.tmdb.org/t/p/w342/' + foundItem.poster_path,
+                    genres: resGenres,
+                    blurb: foundItem.overview,
+                    publishedDate: foundItem.release_date,
+                    avgRating: foundItem.vote_average
+                }
+                returnObject.people = people;
+                returnList.push(returnObject);
+                i++;
+            }
+
+            console.log('Succeeded getting movies from tmdbApi:', returnList);
+            res.status(200).json(returnList);
+        })
+        .catch((error) => console.log(error));
+});
+
+//  get Director/Directors
+router.get('/tmdbMovies/movieDirector/:movieId', (req, res) => {
+    const movieId = req.params.movieId;
+    axios
+        .get(`${baseUrl}/3/movie/${movieId}/credits`, {
+            params: { api_key: tmdbApiKey }
+        })
+        .then((response) => {
+            people = [];
+            for(let i = 0; i < response.data.crew.length; i++){
+                if(response.data.crew[i].department === 'Directing'){
+                    // console.log(response.data.crew[i]);
+                    people.push("Director-" + response.data.crew[i].name);
+                }
+            }
+            //console.log(response.data.crew);
+            res.status(200).json(people);
         })
         .catch((error) => console.log(error));
 });

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 
 function Copyright() {
     return (
@@ -57,22 +57,9 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isGoogleLogin, setIsGoogleLogin] = useState(false);
-
     const history = useHistory();
 
     const host = window.location.protocol + '//'+ window.location.host;
-
-    useEffect(() => {
-        const sessionDataString = sessionStorage.getItem('NS-session-data');
-        const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
-        const loginExpiry = sessionDataObj?.expiry;
-        const loggedIn = loginExpiry && new Date(loginExpiry) > new Date();
-        const googleLogin = sessionDataObj?.isGoogleLogin;
-        setIsLoggedIn(loggedIn);
-        setIsGoogleLogin(googleLogin);
-    }, []);
 
     const postNewUser = (newUserObject: any, isGoogle: boolean) => {
         axios.post(host + `/users/signUp`, newUserObject)
@@ -156,20 +143,6 @@ export default function SignUp() {
         setSignUpError(true);
     };
 
-    const handleLogout = () => {
-        console.log('logout success');
-        sessionStorage.removeItem('NS-session-data');
-        setIsLoggedIn(false);
-        setIsGoogleLogin(false);
-    };
-
-    const handleGoogleLogout = () => {
-        console.log('google logout success');
-        sessionStorage.removeItem('NS-session-data');
-        setIsLoggedIn(false);
-        setIsGoogleLogin(false);
-    };
-
     return (
         <Container component='main' maxWidth='xs'>
             <CssBaseline />
@@ -180,7 +153,7 @@ export default function SignUp() {
                 <Typography component='h1' variant='h5'>
                     Sign up
                 </Typography>
-                {!isLoggedIn ? <form
+                <form
                     className={classes.form}
                     noValidate
                     onSubmit={handleSignUp}
@@ -274,29 +247,6 @@ export default function SignUp() {
                         </Grid>
                     </Grid>
                 </form>
-                :
-                    <>
-                        <div style={{ 'color': 'red', 'margin': '20px' }}>
-                            You are already signed in
-                        </div>
-                        <Link href='/' variant='body2'>
-                        Go to home
-                        </Link>
-                        <div style={{ 'margin': '10px' }}>
-                            Or
-                        </div>
-                        {isGoogleLogin ? <GoogleLogout
-                            clientId='279438615331-cvlr0tk0j35i4s9df4m51o9sb5uj8k3s.apps.googleusercontent.com'
-                            buttonText='Logout'
-                            onLogoutSuccess={handleGoogleLogout}
-                        />
-                        :
-                        <Button color={'primary'} onClick={handleLogout} >
-                            Logout
-                        </Button>
-                        }
-                    </>
-                }
             </div>
             <Box mt={5}>
                 <Copyright />
