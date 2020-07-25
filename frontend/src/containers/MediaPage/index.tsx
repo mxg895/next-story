@@ -101,13 +101,11 @@ const MediaPage: React.FC<{}> = (props: any) => {
         userHasReviewText
     } = mediaObject;
 
-    const host = window.location.protocol + '//'+ window.location.host;
-
     useEffect(() => {
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
-        axios.get(host + `/${mediaRouteType}/${id}`)
+        axios.get(`/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
-                axios.get(host + `/reviewRatings/${mediaType}/${id}`)
+                axios.get(`/reviewRatings/${mediaType}/${id}`)
                     .then((reviewRatingRes: any) => {
                         const reviews = reviewRatingRes.data.reviewArray;
                         props.loadAllReviewsAction(reviews);
@@ -139,7 +137,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
-        axios.get(host + `/users/userLists/${userId}`)
+        axios.get(`/users/userLists/${userId}`)
             .then((response: any) => {
                 const userLists = response.data;
                 if (mediaType === MediaType.movie) {
@@ -216,7 +214,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     };
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
-        axios.put(host + `/users/${key}/${mediaId}/${userId}`, {
+        axios.put(`/users/${key}/${mediaId}/${userId}`, {
             action:action
         }).then((response: any) => {
             console.log(response);
@@ -263,14 +261,18 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const handleAddTag = (event: any) => {
         console.log(event.target.value);
         const newAddedTags = [...addedStoryTags, event.target.value];
+        const filteredDeleteTags = unaddedStoryTags.filter((t: any) => t.tagId !== event.target.value.tagId);
         setAddedStoryTags(newAddedTags);
+        setUnaddedStoryTags(filteredDeleteTags);
         updateMediaInDB(newAddedTags);
     };
 
     const handleDeleteTag = (event: any) => {
         console.log(event.target.value);
         const filteredStoryTags = addedStoryTags.filter((t: any) => t.tagId !== event.target.value.tagId);
+        const newDeleteTags = [...unaddedStoryTags, event.target.value];
         setAddedStoryTags(filteredStoryTags);
+        setUnaddedStoryTags(newDeleteTags);
         updateMediaInDB(filteredStoryTags);
     };
 
