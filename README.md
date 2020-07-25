@@ -1,4 +1,8 @@
 # NextStory
+## High Level Project Description:
+- A website that allows users to search books and movies, get recommendations, and add them to personal lists.
+- Users can also add reviews and ratings and add our app specific tags. 
+
 ## Project Description: 
 Write 3-5 sentences on your project topic. (try to address all points below)
 - The project is for anyone who wants to get good recommendations for their 
@@ -12,21 +16,20 @@ for movies, seeing ‘friend’ information, or add books/movies to a ‘Watch l
 
 ## Project task requirements:
 - 3-5 minimal requirements (will definitely complete)
-  1. Users should be able to register for, log in to & log out of a regular user/admin account and have/be able to update a profile
-  1. Users should be able to search & filter books & movies of interest
+  1. Users should be able to register for, log in to & log out of an account and have/be able to update a profile
+  1. Users should be able to search & filter books & movies of interest (search/explore page)
   1. Users should be able to see a Home page (see 2-5 smaller requirements)
   1. Each book/movie should have a media page that displays more details about it
   1. Set up a database
 
 - 3-7 "standard" requirements (will most likely complete)
-  1. Note: probably won't do anymore: Admins should be able to add new book/movie manually
   1. Allow users to add and remove story tags from a movie or book
-  1. The website should be able to update its book/movie list via external API endpoints
+  1. The website should be able to fetch its book/movie data via external API endpoints
   1. Allow users to add a review & ratings (out of 5 starts) for a book/movie
   1. Users should be able to add a book or movie to a personal 'Watch later' list
 
 - 2-3 stretch requirements (plan to complete 1!)
-  1. Locate a theater showing chosen movies
+  1. Add Google login and sign up options
   1. Users should be able to see information of ‘friends’ on the app
 
 ## Pick 2 of your minimal requirements and break each of them down into ~2-5 smaller tasks!
