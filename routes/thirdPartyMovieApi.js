@@ -86,8 +86,7 @@ router.get('/tmdbMovies/searchOne/:query', (req, res) => {
 
 // popular movies
 router.get('/tmdbMovies/popularMovies', (req, res) => {
-    const movieQuery = req.params.query;
-    axios.get(`${baseUrl}/3/movie/popular?api_key=${tmdbApiKey}&language=en-US&query=${movieQuery}&page=1&include_adult=false`)
+    axios.get(`${baseUrl}/3/movie/popular?api_key=${tmdbApiKey}&language=en-US&page=1&include_adult=false`)
         .then((response) => {
             console.log(response);
             const numberFound = response.data.results.length;
@@ -128,9 +127,8 @@ router.get('/tmdbMovies/popularMovies', (req, res) => {
 
 
 //  movies recommendation
-router.get('/tmdbMovies/moviesRecommendation', (req, res) => {
-    const movieQuery = req.params.query;
-    axios.get(`${baseUrl}/3/movie/top_rated?api_key=${tmdbApiKey}&language=en-US&query=${movieQuery}&page=1&include_adult=false`)
+router.get('/tmdbMovies/movieRecommendations', (req, res) => {
+    axios.get(`${baseUrl}/3/movie/top_rated?api_key=${tmdbApiKey}&language=en-US&page=1&include_adult=false`)
         .then((response) => {
             console.log(response);
             const numberFound = response.data.results.length;

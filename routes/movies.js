@@ -47,7 +47,8 @@ router.get('/:movieId', (req, res) => {
                                 people.push(response.data.crew[i].name);
                             }
                         }
-                        movie.people = people.join(', ');
+                        movie.people = people;
+                        console.log(people);
                         //console.log(response.data.crew);
                         res.status(200).json(movie);
                     })
@@ -72,7 +73,6 @@ router.put('/updateNextStoryTags/:movieId', (req, res) => {
     Movies.findOneAndUpdate(query, update, {upsert:true})
         .then(movie => {
             console.log('the updated movie: ', movie);
-            console.log('troll');
             res.status(200).json(movie);
     }).catch((err) => {
             console.log('Error deleting a nextStoryTag from a movie: ', err);

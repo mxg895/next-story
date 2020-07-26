@@ -103,8 +103,6 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     const isShort = useMediaQuery('(max-height:500px)');
 
     function goToPage() {
-        //TODO
-        //create movie if not exist in mongo
         const { id, mediaType } = modalData;
         history.push(`/${mediaType}/${id}`);
         setModalOpen(false);

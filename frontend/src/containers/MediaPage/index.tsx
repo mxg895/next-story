@@ -12,6 +12,8 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
 import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
+import AddToUserButton from '../../components/AddToUserButton';
+import FavPeopleDropDown from '../../components/FavPeopleDropDown';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -36,18 +38,6 @@ const CenteredDiv = styled.div`
     margin-bottom: 10px;
 `;
 
-const AddToUserButton = styled.button<{ isAddedToUser: boolean }>`
-    background-color: ${({ theme, isAddedToUser }) => isAddedToUser ? theme.palette.grey[300] : theme.palette.primary.light};
-    border: none;
-    outline: none;
-    font-size: 16px;
-    border-radius: 5px;
-    padding: 5px;
-    cursor: pointer;
-    margin: 5px;
-    color: ${({ isAddedToUser }) => isAddedToUser ? 'black' : 'white'};
-`;
-
 const StyledFormControl = styled(FormControl)`
     width: 100%;
     margin: 5px !important;
@@ -63,7 +53,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
         id: id,
         mediaType: MediaType.start,
         image: '',
-        people: '',
+        people: [''],
         genres: [''],
         blurb: '',
         avgRating: 0,
@@ -183,6 +173,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
+                console.log(tagData);
                 const sortedTags = tagData.sort(function(a: any, b: any) {
                     if(a.tagName < b.tagName) { return -1; }
                     if(a.tagName > b.tagName) { return 1; }
@@ -299,27 +290,27 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             </CenteredDiv>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveWatchOrRead(id)}
-                                    isAddedToUser={watchedOrRead}
-                                >
-                                    {`${watchedOrRead ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveWatchOrRead(id)}
+                                    isAdded={watchedOrRead}
+                                    addLabel={`Add to ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
+                                    removeLabel={`Remove from ${mediaType === MediaType.movie ? 'watched' : 'read'}`}
+                                />
                             </div>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveWatchReadLater(id)}
-                                    isAddedToUser={isForLater}
-                                >
-                                    {`${isForLater ? 'Remove from' : 'Add to'} ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveWatchReadLater(id)}
+                                    isAdded={isForLater}
+                                    addLabel={`Add to ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
+                                    removeLabel={`Remove from ${mediaType === MediaType.movie ? 'watch' : 'read'} later`}
+                                />
                             </div>
                             <div>
                                 <AddToUserButton
-                                    onClick={() => addOrRemoveFavorites(id)}
-                                    isAddedToUser={isFavorite}
-                                >
-                                    {isFavorite ? 'Remove favorite' : 'Add favorite'}
-                                </AddToUserButton>
+                                    toBackendOnClick={() => addOrRemoveFavorites(id)}
+                                    isAdded={isFavorite}
+                                    addLabel={'Add favorite'}
+                                    removeLabel={'Remove favorite'}
+                                />
                             </div>
                         </div>
                     </StyledGridItem>
@@ -327,7 +318,13 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <Typography variant='h1'>{title}</Typography>
                         <Box fontStyle='italic'>
                             <Typography variant='subtitle1' gutterBottom>
-                                {people}
+                                {people.join(', ')}
+                                <FavPeopleDropDown
+                                    allPeople={people}
+                                    favoritePeople={MediaType.movie ? userLists.favoriteDirectors : userLists.favoriteAuthors}
+                                    userId={userId}
+                                    favKey={MediaType.movie ? 'favoriteDirectors' : 'favoriteAuthors'}
+                                />
                             </Typography>
                         </Box>
                         <VerticallyCenteredDiv>
