@@ -77,14 +77,14 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
     const transformedNSTags = nextStoryTags.map((tag) => {
       return tag.tagName;
     });
-    return <MediaCard key={bookId} cardData={{ ...mockCardData, avgRating: avgRating, id: bookId, mediaType: MediaType.book, nextStoryTags: transformedNSTags }} />;
+    return <MediaCard key={bookId} cardData={{ ...mockCardData, avgRating, id: bookId, mediaType: MediaType.book, nextStoryTags: transformedNSTags }} />;
   });
 
   const movieCards = mediaData.movies.map(({ movieId, avgRating, nextStoryTags }) => {
     const transformedNSTags = nextStoryTags.map((tag) => {
       return tag.tagName;
     });
-    return <MediaCard key={movieId} cardData={{ ...mockCardData, avgRating: avgRating, id: movieId, mediaType: MediaType.movie, nextStoryTags: transformedNSTags }} />;
+    return <MediaCard key={movieId} cardData={{ ...mockCardData, avgRating, id: movieId, mediaType: MediaType.movie, nextStoryTags: transformedNSTags }} />;
   });
 
   const cards = [...bookCards, movieCards];
