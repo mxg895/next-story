@@ -64,16 +64,16 @@ router.get('/googleBooks/popularBooks', (req, res) => {
 
 
             //handle top 10 best rating books
-            let filterUndefinedBooks = response.data.items.filter(function(element){
+            let filterUndefinedBooks = response.data.items && response.data.items.filter(function(element){
                 return element.volumeInfo.averageRating !== undefined;
             })
-            const sortedBooks = filterUndefinedBooks.sort(function(a, b) {
+            const sortedBooks = filterUndefinedBooks && filterUndefinedBooks.sort(function(a, b) {
                 // console.log(a);
                 if(a.volumeInfo.averageRating < b.volumeInfo.averageRating) { return 1; }
                 if(a.volumeInfo.averageRating > b.volumeInfo.averageRating) { return -1; }
                 return 0;
             });
-            const numberFound = sortedBooks.length;
+            const numberFound = sortedBooks && sortedBooks.length || 0;
             const numberToGet = numberFound >= 10 ? 10 : numberFound;
             const returnList = [];
             let i = 0;

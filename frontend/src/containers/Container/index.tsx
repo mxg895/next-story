@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
     margin-top: 85px;
+    margin-bottom: 85px;
 `;
 
 interface MarginContainerProps {

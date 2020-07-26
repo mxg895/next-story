@@ -7,57 +7,59 @@ const tmdbApiKey = process.env.TMDBAPI_URL;
 
 router.get('/:movieId', (req, res) => {
     const movieId = req.params.movieId;
-    Movies.findOne({ movieId: movieId }).then(movie => {
-            console.log('Got a movie', movie);
-            // turn moogooseDoc to Json Object
-            if(movie!==null){
-                movie = movie.toObject();
-            }
-            else{
-                movie = {};
-            }
-        axios
-            .get(`${baseUrl}/3/movie/${movieId}`, {
-                params: { api_key: tmdbApiKey }
-            })
-            .then((response) => {
-                console.log(response.data);
-                var movieData = response.data;
-                movie.title = movieData.title;
-                movie.mediaType = 'movie';
-                movie.blurb = movieData.overview;
-                movie.genres = [];
-                movie.image = 'https://image.tmdb.org/t/p/w342/' + movieData.poster_path;
-                movie.publishedDate = movieData.release_date;
-                for(let i=0; i < movieData.genres.length; i++){
-                    movie.genres[i] = movieData.genres[i].name;
-                }
-                movie.avgRating = movieData.vote_average;
-                console.log(movie);
-
-                axios
-                    .get(`${baseUrl}/3/movie/${movieId}/credits`, {
-                        params: { api_key: tmdbApiKey }
-                    })
-                    .then((response) => {
-                        people = [];
-                        for(let i = 0; i < response.data.crew.length; i++){
-                            if(response.data.crew[i].department === 'Directing'){
-                                // console.log(response.data.crew[i]);
-                                people.push(response.data.crew[i].name);
-                            }
-                        }
-                        movie.people = people;
-                        console.log(people);
-                        //console.log(response.data.crew);
-                        res.status(200).json(movie);
-                    })
-                    .catch((error) => console.log(error));
-            })
-            .catch((error) => console.log(error));
+    let movie = {};
+    axios
+        .get(`${baseUrl}/3/movie/${movieId}`, {
+            params: { api_key: tmdbApiKey }
         })
-        .catch((err) => {
-            console.log('Error fetching movie: ', err);
+        .then((response) => {
+            console.log(response.data);
+            var movieData = response.data;
+            movie.title = movieData.title;
+            movie.mediaType = 'movie';
+            movie.blurb = movieData.overview;
+            movie.genres = [];
+            movie.image = 'https://image.tmdb.org/t/p/w342/' + movieData.poster_path;
+            movie.publishedDate = movieData.release_date;
+            for(let i=0; i < movieData.genres.length; i++){
+                movie.genres[i] = movieData.genres[i].name;
+            }
+            movie.avgRating = movieData.vote_average;
+            console.log(movie);
+
+            axios
+                .get(`${baseUrl}/3/movie/${movieId}/credits`, {
+                    params: { api_key: tmdbApiKey }
+                })
+                .then((response) => {
+                    people = [];
+                    for(let i = 0; i < response.data.crew.length; i++){
+                        if(response.data.crew[i].department === 'Directing'){
+                            // console.log(response.data.crew[i]);
+                            people.push(response.data.crew[i].name);
+                        }
+                    }
+                    movie.people = people;
+                    // console.log(people);
+                    //console.log(response.data.crew);
+                    res.status(200).json(movie);
+                })
+                .catch((error) => console.log(error));
+        })
+        .catch((error) => console.log(error));
+});
+
+router.get('/tags/:movieId', (req, res) => {
+    const movieId = req.params.movieId;
+    Movies.findOne({ movieId: movieId }).then(movie => {
+        console.log('Got a movie', movie);
+        const retMovie = {
+            movieId: movieId,
+            nextStoryTags: movie.nextStoryTags
+        }
+        res.status(200).json(retMovie);
+    }).catch((err) => {
+            console.log('Error fetching movie from mongodb: ', err);
             res.status(500);
         });
 });

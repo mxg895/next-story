@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="22af87dc-03d7-4836-a42b-60281c059e7f" name="Default Changelist" comment="separate out fetching from mongo and fetching from third party">
+      <change beforePath="$PROJECT_DIR$/frontend/src/containers/Container/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/containers/Container/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/containers/MediaPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/containers/MediaPage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/books.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/books.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/movies.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/movies.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/nextStoryTags.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/nextStoryTags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/thridPartyBookApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/thridPartyBookApi.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="TypeScript File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="ProjectId" id="1eCdJ0mvEziw9z8iUXRbSnopNTW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../the_assignment_app" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="ts.external.directory.path" value="C:\Users\mmayk\Current BCS courses\CPSC 436I\next-story\frontend\node_modules\typescript\lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mmayk\Current BCS courses\CPSC 436I\next-story\frontend\src\components\FavPeopleDropDown" />
+      <recent name="C:\Users\mmayk\Current BCS courses\CPSC 436I\next-story" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mmayk\Current BCS courses\CPSC 436I\next-story\backend\frontend" />
+      <recent name="C:\Users\mmayk\Current BCS courses\CPSC 436I\next-story\frontend" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="22af87dc-03d7-4836-a42b-60281c059e7f" name="Default Changelist" comment="" />
+      <created>1593829433029</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1593829433029</updated>
+      <workItem from="1593829436509" duration="4014000" />
+      <workItem from="1593835699408" duration="15424000" />
+      <workItem from="1593851166664" duration="29846000" />
+      <workItem from="1593991977131" duration="3925000" />
+      <workItem from="1594155261870" duration="19850000" />
+      <workItem from="1594339071269" duration="3186000" />
+      <workItem from="1594445273166" duration="6276000" />
+      <workItem from="1594619358201" duration="670000" />
+      <workItem from="1594769745616" duration="681000" />
+      <workItem from="1594781727961" duration="17447000" />
+      <workItem from="1594840906697" duration="20391000" />
+      <workItem from="1595038090536" duration="163000" />
+      <workItem from="1595203351207" duration="1288000" />
+      <workItem from="1595374411699" duration="3395000" />
+      <workItem from="1595397749613" duration="79481000" />
+    </task>
+    <task id="LOCAL-00007" summary="get reviews from backend">
+      <created>1593928425252</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1593928425252</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fixed some warnings, made backend for reviewRatings">
+      <created>1593932382281</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1593932382281</updated>
+    </task>
+    <task id="LOCAL-00009" summary="allow deletion of reviews">
+      <created>1593936491691</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1593936491691</updated>
+    </task>
+    <task id="LOCAL-00010" summary="edited backend readme">
+      <created>1593938328404</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1593938328404</updated>
+    </task>
+    <task id="LOCAL-00011" summary="got review backend to work">
+      <created>1593940977048</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1593940977048</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix a star rating bug">
+      <created>1593941412795</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1593941412795</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fix a star rating bug">
+      <created>1593941495129</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1593941495129</updated>
+    </task>
+    <task id="LOCAL-00014" summary="hook up stars with backend">
+      <created>1593942808214</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1593942808214</updated>
+    </task>
+    <task id="LOCAL-00015" summary="delete a console.log">
+      <created>1593942824139</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1593942824139</updated>
+    </task>
+    <task id="LOCAL-00016" summary="delete some unused parameters, install axios to backend">
+      <created>1593993693631</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1593993693631</updated>
+    </task>
+    <task id="LOCAL-00017" summary="finish read watch later button, get favorite button loading state on load">
+      <created>1594159533979</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1594159533980</updated>
+    </task>
+    <task id="LOCAL-00018" summary="add watched/read button to media page">
+      <created>1594160063426</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1594160063426</updated>
+    </task>
+    <task id="LOCAL-00019" summary="examples for 3 different book apis">
+      <created>1594276092883</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1594276092884</updated>
+    </task>
+    <task id="LOCAL-00020" summary="google books looks like the way to go... doesn't have popular though">
+      <created>1594285388590</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1594285388590</updated>
+    </task>
+    <task id="LOCAL-00021" summary="serchOne -&gt; searchTen">
+      <created>1594341154585</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1594341154585</updated>
+    </task>
+    <task id="LOCAL-00022" summary="implement searchOne">
+      <created>1594345032749</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1594345032750</updated>
+    </task>
+    <task id="LOCAL-00023" summary="hashed signin and login">
+      <created>1594795783428</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1594795783428</updated>
+    </task>
+    <task id="LOCAL-00024" summary="added protected routes">
+      <created>1594799944853</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1594799944853</updated>
+    </task>
+    <task id="LOCAL-00025" summary="implemented login with sessionStorage">
+      <created>1594878636090</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1594878636091</updated>
+    </task>
+    <task id="LOCAL-00026" summary="fix media page bug, get route params from path instead of match.params now">
+      <created>1594880252649</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1594880252649</updated>
+    </task>
+    <task id="LOCAL-00027" summary="delete logout from nav bar">
+      <created>1594880330201</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1594880330201</updated>
+    </task>
+    <task id="LOCAL-00028" summary="add missing dependency">
+      <created>1594880451526</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1594880451526</updated>
+    </task>
+    <task id="LOCAL-00029" summary="allow users to add tags">
+      <created>1595408009319</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1595408009319</updated>
+    </task>
+    <task id="LOCAL-00030" summary="add frontend/build">
+      <created>1595464009727</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1595464009727</updated>
+    </task>
+    <task id="LOCAL-00031" summary="edit frontend/build">
+      <created>1595465698485</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1595465698485</updated>
+    </task>
+    <task id="LOCAL-00032" summary="shorten a relative url and re-build">
+      <created>1595466140788</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1595466140788</updated>
+    </task>
+    <task id="LOCAL-00033" summary="add build folder to backend/frontend/build">
+      <created>1595466525634</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1595466525634</updated>
+    </task>
+    <task id="LOCAL-00034" summary="restructure directories to deploy whole app">
+      <created>1595470998990</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1595470998990</updated>
+    </task>
+    <task id="LOCAL-00035" summary="include package-lock.json">
+      <created>1595471016072</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1595471016072</updated>
+    </task>
+    <task id="LOCAL-00036" summary="add res.sendFile for '/' and Procfile">
+      <created>1595471353103</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1595471353103</updated>
+    </task>
+    <task id="LOCAL-00037" summary="move res.sendFile">
+      <created>1595471541023</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1595471541023</updated>
+    </task>
+    <task id="LOCAL-00038" summary="added engines to package.json and moved devdeps to deps in package-lock.json">
+      <created>1595472004318</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1595472004318</updated>
+    </task>
+    <task id="LOCAL-00039" summary="comment out redux devtools">
+      <created>1595472342070</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1595472342070</updated>
+    </task>
+    <task id="LOCAL-00040" summary="add to README.md">
+      <created>1595639529207</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1595639529207</updated>
+    </task>
+    <task id="LOCAL-00041" summary="hookup profile to navbar, login/signin menu -&gt; logout">
+      <created>1595643742343</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1595643742343</updated>
+    </task>
+    <task id="LOCAL-00042" summary="add profile click to menu as well">
+      <created>1595648808897</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1595648808897</updated>
+    </task>
+    <task id="LOCAL-00043" summary="allow adding tags to favorites, fix add delete tag on media page bug">
+      <created>1595657546265</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1595657546265</updated>
+    </task>
+    <task id="LOCAL-00044" summary="keep from sending back entire user as response">
+      <created>1595657866907</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1595657866907</updated>
+    </task>
+    <task id="LOCAL-00045" summary="remove build from gitignore">
+      <created>1595658046165</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1595658046165</updated>
+    </task>
+    <task id="LOCAL-00046" summary="delete build from gitignore">
+      <created>1595658425203</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1595658425203</updated>
+    </task>
+    <task id="LOCAL-00047" summary="add add to fav button (no backend yet)">
+      <created>1595662438895</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1595662438895</updated>
+    </task>
+    <task id="LOCAL-00048" summary="make media page take in people array">
+      <created>1595662905818</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1595662905818</updated>
+    </task>
+    <task id="LOCAL-00049" summary="connect favorite people dropdown to backend">
+      <created>1595665588464</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1595665588464</updated>
+    </task>
+    <task id="LOCAL-00050" summary="delete forgot password link">
+      <created>1595796945114</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1595796945115</updated>
+    </task>
+    <task id="LOCAL-00051" summary="separate out fetching from mongo and fetching from third party">
+      <created>1595806436404</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1595806436404</updated>
+    </task>
+    <task id="LOCAL-00052" summary="do backend for single search for movies and books (genre, person, search bar)">
+      <created>1595828285038</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1595828285038</updated>
+    </task>
+    <task id="LOCAL-00053" summary="add call to third party movie api in search page">
+      <created>1595828529269</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1595828529269</updated>
+    </task>
+    <task id="LOCAL-00054" summary="implement search bar, infinite scroll for single results page">
+      <created>1595836004530</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1595836004530</updated>
+    </task>
+    <task id="LOCAL-00055" summary="make the scroll its own component">
+      <created>1595836510774</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1595836510774</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="query-by-tag-button" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="allow-user-to-add-tags" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="shorten a relative url and re-build" />
+    <MESSAGE value="add build folder to backend/frontend/build" />
+    <MESSAGE value="restructure directories to deploy whole app" />
+    <MESSAGE value="include package-lock.json" />
+    <MESSAGE value="add res.sendFile for '/' and Procfile" />
+    <MESSAGE value="move res.sendFile" />
+    <MESSAGE value="added engines to package.json and moved devdeps to deps in package-lock.json" />
+    <MESSAGE value="comment out redux devtools" />
+    <MESSAGE value="add to README.md" />
+    <MESSAGE value="hookup profile to navbar, login/signin menu -&gt; logout" />
+    <MESSAGE value="add profile click to menu as well" />
+    <MESSAGE value="allow adding tags to favorites, fix add delete tag on media page bug" />
+    <MESSAGE value="keep from sending back entire user as response" />
+    <MESSAGE value="npm run build project_5" />
+    <MESSAGE value="remove build from gitignore" />
+    <MESSAGE value="delete build from gitignore" />
+    <MESSAGE value="add add to fav button (no backend yet)" />
+    <MESSAGE value="make media page take in people array" />
+    <MESSAGE value="connect favorite people dropdown to backend" />
+    <MESSAGE value="delete forgot password link" />
+    <MESSAGE value="separate out fetching from mongo and fetching from third party" />
+    <MESSAGE value="do backend for single search for movies and books (genre, person, search bar)" />
+    <MESSAGE value="add call to third party movie api in search page" />
+    <MESSAGE value="implement search bar, infinite scroll for single results page" />
+    <MESSAGE value="make the scroll its own component" />
+    <option name="LAST_COMMIT_MESSAGE" value="make the scroll its own component" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="489" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1595811087534">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="489" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1595811087534" />
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1593940303373">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1593940303373" />
+    <state x="21" y="0" width="1515" height="824" key="CommitChangelistDialog2" timestamp="1595836510141">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="21" y="0" width="1515" height="824" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1595836510141" />
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1595828248911">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1595828248911" />
+    <state x="210" y="184" key="FileChooserDialogImpl" timestamp="1595721741088">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="210" y="184" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595721741088" />
+    <state width="1515" height="210" key="GridCell.Tab.0.bottom" timestamp="1595397730319">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595397730319" />
+    <state width="1515" height="210" key="GridCell.Tab.0.center" timestamp="1595397730319">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595397730319" />
+    <state width="1515" height="210" key="GridCell.Tab.0.left" timestamp="1595397730319">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595397730319" />
+    <state width="1515" height="210" key="GridCell.Tab.0.right" timestamp="1595397730319">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595397730319" />
+    <state x="226" y="53" key="MergeDialog" timestamp="1595837020472">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="226" y="53" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1595837020472" />
+    <state x="245" y="0" width="1203" height="800" key="MultipleFileMergeDialog" timestamp="1595837023404">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="245" y="0" width="1203" height="800" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1595837023404" />
+    <state x="111" y="100" width="1245" height="810" key="dock-window-1" timestamp="1595471970212">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="111" y="100" width="1245" height="810" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1595471970212" />
+    <state x="478" y="145" width="579" height="534" key="find.popup" timestamp="1595825150040">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="478" y="145" width="579" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1595825150040" />
+    <state x="425" y="66" width="672" height="676" key="search.everywhere.popup" timestamp="1595643172196">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="66" width="672" height="676" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1595643172196" />
+  </component>
+</project>
