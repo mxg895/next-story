@@ -10,10 +10,14 @@ router.get('/:movieId', (req, res) => {
     Movies.findOne({ movieId: movieId }).then(movie => {
             console.log('Got a movie', movie);
             // turn moogooseDoc to Json Object
-            movie = movie.toObject();
-            const id = '8619';
+            if(movie!==null){
+                movie = movie.toObject();
+            }
+            else{
+                movie = {};
+            }
         axios
-            .get(`${baseUrl}/3/movie/${id}`, {
+            .get(`${baseUrl}/3/movie/${movieId}`, {
                 params: { api_key: tmdbApiKey }
             })
             .then((response) => {
@@ -32,7 +36,7 @@ router.get('/:movieId', (req, res) => {
                 console.log(movie);
 
                 axios
-                    .get(`${baseUrl}/3/movie/${id}/credits`, {
+                    .get(`${baseUrl}/3/movie/${movieId}/credits`, {
                         params: { api_key: tmdbApiKey }
                     })
                     .then((response) => {
@@ -40,10 +44,11 @@ router.get('/:movieId', (req, res) => {
                         for(let i = 0; i < response.data.crew.length; i++){
                             if(response.data.crew[i].department === 'Directing'){
                                 // console.log(response.data.crew[i]);
-                                people.push("Director-" + response.data.crew[i].name);
+                                people.push(response.data.crew[i].name);
                             }
                         }
                         movie.people = people;
+                        console.log(people);
                         //console.log(response.data.crew);
                         res.status(200).json(movie);
                     })
@@ -60,7 +65,12 @@ router.get('/:movieId', (req, res) => {
 router.put('/updateNextStoryTags/:movieId', (req, res) => {
     const movieId = req.params.movieId;
     const { tagsArray } = req.body;
-    Movies.findOneAndUpdate({ movieId: movieId }, { nextStoryTags: tagsArray }, { new: true })
+    let query = { movieId: movieId };
+    let update = {
+        $setOnInsert: {movieId:  movieId},
+         nextStoryTags: tagsArray // or $push
+    }
+    Movies.findOneAndUpdate(query, update, {upsert:true})
         .then(movie => {
             console.log('the updated movie: ', movie);
             res.status(200).json(movie);

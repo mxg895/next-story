@@ -1,6 +1,7 @@
 export enum MediaType {
     movie = 'movie',
-    book = 'book'
+    book = 'book',
+    start = ''
 }
 
 export type CardData = {

@@ -121,7 +121,7 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                         <MediaImage src={modalData?.image} isShort={isShort} />
                         <TopLeftContainer>
                             <Typography variant='h3' gutterBottom>{modalData?.title}</Typography>
-                            <Typography variant='caption' gutterBottom>Avg Rating: {modalData?.avgRating?.toString()}</Typography>
+                            <Typography variant='caption' gutterBottom>Movie Rating: {modalData?.avgRating?.toString()}</Typography>
                             <MediaTags>
                                 <Typography>{modalData?.genres?.join(', ')}</Typography>
                             </MediaTags>

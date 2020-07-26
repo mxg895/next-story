@@ -51,7 +51,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const [mediaObject, setMediaObject] = useState({
         title: '',
         id: id,
-        mediaType: MediaType.movie,
+        mediaType: MediaType.start,
         image: '',
         people: [''],
         genres: [''],
@@ -95,6 +95,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
         axios.get(`/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
+                const mediaData = mediaRes.data;
+                console.log(mediaData);
                 axios.get(`/reviewRatings/${mediaType}/${id}`)
                     .then((reviewRatingRes: any) => {
                         const reviews = reviewRatingRes.data.reviewArray;
@@ -103,13 +105,13 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         const userRating = userRatingReviewArr.length > 0 ? userRatingReviewArr[0].rating : undefined;
                         const userHasReviewText = userRatingReviewArr.length > 0 && !!userRatingReviewArr[0].text;
                         setMediaObject({
-                            title: 'Mock Title Harry Potter',
-                            id: 'movie-001',
+                            title: mediaData.title,
+                            id: id,
                             mediaType: MediaType.movie,
-                            image: MockCover,
-                            people: ['J.K. Rowling', 'person1', 'person2', 'person3'],
-                            genres: ['fantasy', 'action', 'sci-fi', 'superheroes', 'tag1', 'tag2', 'tag3'],
-                            blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                            image: mediaData.image,
+                            people: mediaData.people,
+                            genres: mediaData.genres,
+                            blurb:  mediaData.blurb,
                             avgRating: reviewRatingRes.data.average,
                             userRating: userRating,
                             userHasReviewText: userHasReviewText
@@ -171,6 +173,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
+                console.log(tagData);
                 const sortedTags = tagData.sort(function(a: any, b: any) {
                     if(a.tagName < b.tagName) { return -1; }
                     if(a.tagName > b.tagName) { return 1; }
@@ -325,7 +328,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             </Typography>
                         </Box>
                         <VerticallyCenteredDiv>
-                            <Typography variant='subtitle2' >Avg rating: </Typography>
+                            <Typography variant='subtitle2' >Avg Members rating: </Typography>
                             <StarRater readOnlyRating={avgRating} readonly />
                         </VerticallyCenteredDiv>
                         <Typography variant='body1'>{blurb}</Typography>
