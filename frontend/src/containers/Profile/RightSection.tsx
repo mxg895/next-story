@@ -36,7 +36,7 @@ const RightSection: React.FC<RightSectionProps> = ({ favoriteAuthors, favoriteBo
           <TagsSection tags={[...favoriteAuthors, ...favoriteDirectors]} />
         </SubSectionContainer>
         <SubSectionContainer>
-          <RegWidthCarousel bookIds={favoriteBooks} bMSource='favorite' movieIds={favoriteMovies} title={`User's Favourite Books:`} updateMethod={setFavorites}/>
+          <RegWidthCarousel bookIds={favoriteBooks} bMSource='favorite' movieIds={favoriteMovies} title={`User's Favourite Books/Movies:`} updateMethod={setFavorites}/>
         </SubSectionContainer>
         <SubSectionContainer>
           <RegWidthCarousel bMSource='later' title={`User's Read/Watched List`} bookIds={readLater} movieIds={watchLater} withSearchSelect updateMethod={setLater}/>

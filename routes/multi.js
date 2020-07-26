@@ -11,13 +11,19 @@ router.get('/booksAndMovies', async(req, res) => {
         $match: { movieId:{ $in: movies }}
       },
       {
-        $lookup: { from: 'reviewRatings', as: 'rating', let:{ movieId: '$movieId' },
+        $lookup: { from: 'reviewRatings', as: 'rating', let: { movieId: '$movieId' },
           pipeline:[
             {
               $match: { $expr:{ $eq:['$id', '$$movieId'] }}
             },
             {
               $group: { _id: '$id', avgRating: { $avg: '$rating' }}
+            },
+            {
+              $project: {
+                _id: 1,
+                avgRating: {$round: ['$avgRating', 2]}
+              }
             }
           ]
         }
@@ -41,6 +47,12 @@ router.get('/booksAndMovies', async(req, res) => {
           },
           {
             $group: { _id: '$id', avgRating: { $avg: '$rating' }}
+          },
+          {
+            $project: {
+              _id: 1,
+              avgRating: {$round: ['$avgRating', 2]}
+            }
           }
         ]
         }
