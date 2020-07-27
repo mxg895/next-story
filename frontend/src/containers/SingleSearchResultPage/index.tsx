@@ -33,10 +33,17 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 console.log('search tag first');
                 break;
             case SingleQueryType.genre:
-                console.log('search third party genre');
-                break;
             case SingleQueryType.person:
                 console.log('search third party person');
+                axios.get(`/thirdPartyMovieApi/tmdbMovies/singleQuery/${queryType}/${query}/${bookQueryStartIndex}`)
+                    .then((res: any) => {
+                        const movies = res.data;
+                        console.log(movies);
+                        setMovieResults(movies);
+                    })
+                    .catch((error: any) => {
+                        console.log('Error getting third party movies', error);
+                    });
                 break;
             default:
                 break;
