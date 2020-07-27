@@ -3,11 +3,11 @@ import RegWidthCarousel from '../../components/RegWidthCarousel';
 import styled from 'styled-components';
 import TagsSection from '../../components/TagsSection';
 import Typography from '@material-ui/core/Typography';
-import { Tag } from '../../constants/dataTypes';
-import { connect } from 'react-redux';
-import { CombinedMoviesBooksInfo } from '../../constants/BooksMoviesActionTypes';
-import { Dispatch } from 'redux';
-import { updateFavorites, updateLaterList } from '../../actions/booksMoviesActions';
+import {SingleQueryType, Tag} from '../../constants/dataTypes';
+import {connect} from 'react-redux';
+import {CombinedMoviesBooksInfo} from '../../constants/BooksMoviesActionTypes';
+import {Dispatch} from 'redux';
+import {updateFavorites, updateLaterList} from '../../actions/booksMoviesActions';
 
 const StyledDiv = styled.div`
   > * {
@@ -28,12 +28,12 @@ const RightSection: React.FC<RightSectionProps> = ({ favoriteAuthors, favoriteBo
       <>
         <SubSectionContainer>
           <Typography variant='h4'>Favourite Genres</Typography>
-          <TagsSection tags={[...favoriteGenres]} />
-          <TagsSection tagObjects={[...favoriteNextStoryTags]}/>
+          <TagsSection tags={[...favoriteGenres]} singleQueryType={SingleQueryType.genre}/>
+          <TagsSection tagObjects={[...favoriteNextStoryTags]} singleQueryType={SingleQueryType.tag}/>
         </SubSectionContainer>
         <SubSectionContainer>
           <Typography variant='h4'>Favourite Authors/Directors:</Typography>
-          <TagsSection tags={[...favoriteAuthors, ...favoriteDirectors]} />
+          <TagsSection tags={[...favoriteAuthors, ...favoriteDirectors]} singleQueryType={SingleQueryType.person}/>
         </SubSectionContainer>
         <SubSectionContainer>
           <RegWidthCarousel bookIds={favoriteBooks} bMSource='favorite' movieIds={favoriteMovies} title={`User's Favourite Books/Movies:`} updateMethod={setFavorites}/>
