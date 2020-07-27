@@ -5,6 +5,7 @@ import axios from 'axios';
 import {SingleQueryType} from '../../constants/dataTypes';
 import SearchResultBlock from '../../components/SearchResultBlock';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import SearchResultsInfiniteScroll from '../../components/SearchResultsInfiniteScroll';
 
 const getQueryTypeAndQuery = (locationSearch: string) => {
     const trimmedUri = locationSearch.substr(1);
@@ -108,30 +109,11 @@ const SingleSearchResultPage: React.FC = (props: any) => {
         <Container maxWidth='md'>
             <Typography variant='h1'>Search Results</Typography>
             <br/>
-            <InfiniteScroll
-                style={{overflow: 'hidden'}}
-                dataLength={resultsToDisplay.length}
-                scrollThreshold={1}
-                next={doNext}
-                hasMore={hasMoreBookResults || hasMoreMovieResults}
-                loader={<h4 style={{textAlign: 'center'}}>Loading more reviews...</h4>}
-                endMessage={
-                    <p style={{textAlign: 'center'}}>
-                        <b>No more reviews</b>
-                    </p>
-                }>
-                {resultsToDisplay.map((result, index) =>
-                    <SearchResultBlock
-                        key={index}
-                        image={result.image}
-                        title={result.title}
-                        blurb={result.blurb}
-                        genres={result.genres}
-                        mediaType={result.mediaType}
-                        mediaId={result.id}
-                    />)
-                }
-            </InfiniteScroll>
+            <SearchResultsInfiniteScroll
+                resultsToDisplay={resultsToDisplay}
+                hasMore={hasMoreMovieResults || hasMoreBookResults}
+                doNext={doNext}
+            />
         </Container>
     );
 };
