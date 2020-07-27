@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Grid, Typography, useMediaQuery} from '@material-ui/core';
+import {Grid, Link, useMediaQuery} from '@material-ui/core';
 import {MediaType, SingleQueryType} from '../../constants/dataTypes';
 import TagsSection from '../TagsSection';
 import {useHistory} from 'react-router';
@@ -34,6 +34,16 @@ const StyledImage = styled.img<{isSmall: boolean}>`
     }
 `;
 
+const StyledTitle = styled.div`
+    margin-bottom: 5px;
+`;
+
+const StyledLink = styled(Link)`
+    &:hover {
+        cursor: pointer;
+    }
+`;
+
 const SearchResultBlock: React.FC<SearchResultBlockProps> = (props: SearchResultBlockProps) => {
     const { image, title, blurb, genres, mediaType, mediaId } = props;
     const history = useHistory();
@@ -51,11 +61,13 @@ const SearchResultBlock: React.FC<SearchResultBlockProps> = (props: SearchResult
                         <StyledImage src={image} onClick={goToPage} isSmall={isSmall}/>
                     </Grid>
                     <Grid item sm={6}>
-                        <Typography variant={'h5'}>
-                            <strong>
-                                {title}
-                            </strong>
-                        </Typography>
+                        <StyledTitle>
+                            <StyledLink variant={'h5'} onClick={goToPage} color={'textPrimary'} gutterBottom>
+                                <strong>
+                                    {title}
+                                </strong>
+                            </StyledLink>
+                        </StyledTitle>
                         {blurb}
                     </Grid>
                     <Grid item sm={3}>
