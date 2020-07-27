@@ -14,11 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-<<<<<<< HEAD
-  "/precache-manifest.7ce271b94e2dad7e741c140846bb486d.js"
-=======
-  "/precache-manifest.2009d09d248a60774841448fead596d4.js"
->>>>>>> d18cdcb... [backend][frontend] fix package.json & git ignore after massive rebase
+  "/precache-manifest.2e61e27df2788aafe8a5cf156fb94d0c.js"
 );
 
 self.addEventListener('message', (event) => {
@@ -39,5 +35,5 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/index.html"), {
   
-  blacklist: [/^\/_/,/\/[^/?]+\.[^/]+$/],
+  blacklist: [/^\/_/,/\/[^\/?]+\.[^\/]+$/],
 });
