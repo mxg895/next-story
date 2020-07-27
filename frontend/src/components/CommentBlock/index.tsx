@@ -75,14 +75,12 @@ const VerticallyCenteredDiv = styled.div`
     margin-bottom: 10px;
 `;
 
-const host = window.location.protocol + '//'+ window.location.host;
-
 function deleteReview(props: any) {
     const userId = props.review.userId;
     const reviewUserName = props.review.userName;
     props.deleteReviewAction(userId);
     if (props.userRating) { // if a rating exists, don't delete from db
-        axios.put(host + '/reviewRatings/review',
+        axios.put('/reviewRatings/review',
             {
                 mediaId: props.mediaId,
                 mediaType: props.mediaType,
@@ -98,7 +96,7 @@ function deleteReview(props: any) {
                 console.log(err);
             });
     } else { // if no rating, then delete whole reviewRating document from db
-        axios.delete(host + `/reviewRatings`
+        axios.delete(`/reviewRatings`
         + `/${props.mediaType}/${props.mediaId}/${props.review.userId}`)
             .then((res: any) => {
                 console.log('successfully deleted the reviewRating', res);
@@ -129,7 +127,7 @@ const CommentBlock: React.FC<CommentBlockProps> = (props: CommentBlockProps) => 
             setHasOverflow(false);
         }
     }, [review]);
-    // TODO only show the edit and delete buttons if the userId matches with the current user's id
+
     return (
         <>
             <Review isCurrentUserComment={isCurrentUserComment}>

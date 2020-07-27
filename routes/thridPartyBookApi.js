@@ -148,10 +148,11 @@ router.get('/googleBooks/bookRecommendations', (req, res) => {
 
 // gets a first 10 books of this subject, needs to add &startIndex=${startIndex}
 // to get results past first 10 in increments of 10 starting from the startIndex
-router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex', (req, res) => {
+router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex/:increaseIndexBy', (req, res) => {
     const queryType = req.params.queryType;
     const subject = req.params.subject;
-    const startIndex = req.params.startIndex;
+    const startIndex = req.params.startIndex
+    const increaseIndexBy = req.params.increaseIndexBy;
     let searchSpecify = '';
     switch (queryType) {
         case 'genre':
@@ -164,7 +165,7 @@ router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex', (req, res
         default:
             break;
     }
-    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchSpecify}${subject}&startIndex=${startIndex}`)
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchSpecify}${subject}&maxResults=${increaseIndexBy}&startIndex=${startIndex}`)
         .then((response) => {
             const books = response.data.items;
             const bookObjectList = books.map((book) => {

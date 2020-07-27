@@ -188,17 +188,18 @@ router.get('/tmdbMovies/movieDirector/:movieId', (req, res) => {
         .catch((error) => console.log(error));
 });
 
-router.get('/tmdbMovies/singleQuery/:queryType/:query/:startIndex', (req, res) => {
+router.get('/tmdbMovies/singleQuery/:queryType/:query/:startIndex/:increaseIndexBy', (req, res) => {
     const queryType = req.params.queryType;
     const query = req.params.query;
     const startIndex = req.params.startIndex;
+    const increaseIndexBy = req.params.increaseIndexBy;
 
     const discover = (discoverUri) => {
         axios.get(discoverUri)
             .then((response) => {
                 const allMovies = response.data.results;
                 const paginatedMovies = [];
-                const endIndex = allMovies.length >= startIndex + 10 ? startIndex + 10 : allMovies.length;
+                const endIndex = allMovies.length >= startIndex + increaseIndexBy ? startIndex + increaseIndexBy : allMovies.length;
                 for(let i = startIndex; i < endIndex; i++){
                     paginatedMovies.push(allMovies[i]);
                 }

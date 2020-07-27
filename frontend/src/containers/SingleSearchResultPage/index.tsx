@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import {SingleQueryType} from '../../constants/dataTypes';
+import SearchResultBlock from '../../components/SearchResultBlock';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const getQueryTypeAndQuery = (locationSearch: string) => {
     const trimmedUri = locationSearch.substr(1);
@@ -15,8 +17,7 @@ const getQueryTypeAndQuery = (locationSearch: string) => {
 const SingleSearchResultPage: React.FC = (props: any) => {
     const searchUri = decodeURI(props.location.search);
     const [queryType, query] = getQueryTypeAndQuery(searchUri);
-    console.log(queryType);
-    console.log(query);
+    const increaseIndexBy = 5;
 
     const [bookQueryStartIndex, setBookQueryStartIndex] = useState(0);
     const [movieQueryStartIndex, setMovieQueryStartIndex] = useState(0);
@@ -26,20 +27,44 @@ const SingleSearchResultPage: React.FC = (props: any) => {
     const [movieResults, setMovieResults] = useState<Array<any>>([]);
     const [bookResults, setBookResults] = useState<Array<any>>([]);
 
-    // movies
+    const [allResults, setAllResults] = useState<Array<any>>([]);
+    const [filterState, setFilterState] = useState<'all' | 'books' | 'movies'>('all');
+
+    const [hasMoreMovieResults, setHasMoreMovieResults] = useState<boolean>(true);
+    const [hasMoreBookResults, setHasMoreBookResults] = useState<boolean>(true);
+
     useEffect(() => {
         switch (queryType) {
             case SingleQueryType.tag:
                 console.log('search tag first');
                 break;
+            case SingleQueryType.searchBar:
             case SingleQueryType.genre:
             case SingleQueryType.person:
                 console.log('search third party person');
-                axios.get(`/thirdPartyMovieApi/tmdbMovies/singleQuery/${queryType}/${query}/${bookQueryStartIndex}`)
+                axios.get(`/thirdPartyMovieApi/tmdbMovies/singleQuery/${queryType}/${query}/${bookQueryStartIndex}/${increaseIndexBy}`)
                     .then((res: any) => {
                         const movies = res.data;
                         console.log(movies);
-                        setMovieResults(movies);
+                        if (movies.length === 0) {
+                            setHasMoreMovieResults(false);
+                        } else {
+                            setMovieResults(movies);
+                        }
+                        axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${bookQueryStartIndex}/${increaseIndexBy}`)
+                            .then((res: any) => {
+                                const books = res.data;
+                                console.log(books);
+                                if (books.length === 0) {
+                                    setHasMoreBookResults(false);
+                                } else {
+                                    setBookResults(books);
+                                    setAllResults([...allResults, ...movies, ...books]);
+                                }
+                            })
+                            .catch((error: any) => {
+                                console.log('Error getting third party books', error);
+                            });
                     })
                     .catch((error: any) => {
                         console.log('Error getting third party movies', error);
@@ -50,34 +75,63 @@ const SingleSearchResultPage: React.FC = (props: any) => {
         }
     }, [queryType, query, movieQueryStartIndex]);
 
-    // books
-    useEffect(() => {
-        switch (queryType) {
-            case SingleQueryType.tag:
-                console.log('search tag first');
+    const resultsToDisplay = useMemo(() => {
+        switch(filterState) {
+            case 'movies':
+                return movieResults;
+            case 'books':
+                return bookResults;
+            case 'all':
+            default:
+                return allResults;
+        }
+    }, [filterState, movieResults, bookResults, allResults]);
+
+    const doNext = () => {
+        switch(filterState) {
+            case 'movies':
+                setMovieQueryStartIndex(movieQueryStartIndex + increaseIndexBy);
                 break;
-            case SingleQueryType.genre:
-            case SingleQueryType.person:
-                console.log('search third party person or genre (fall through)');
-                // TODO uncomment this after implementing the movies, commented out to not waste google queries
-                // axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${bookQueryStartIndex}`)
-                //     .then((res: any) => {
-                //         const books = res.data;
-                //         console.log(books);
-                //         setBookResults(books);
-                //     })
-                //     .catch((error: any) => {
-                //         console.log('Error getting media', error);
-                //     });
+            case 'books':
+                setBookQueryStartIndex(bookQueryStartIndex + increaseIndexBy);
+                break;
+            case 'all':
+                setBookQueryStartIndex(bookQueryStartIndex + increaseIndexBy);
+                setMovieQueryStartIndex(movieQueryStartIndex + increaseIndexBy);
                 break;
             default:
-                break;
+                return allResults;
         }
-    }, [queryType, query, bookQueryStartIndex]);
+    };
 
     return (
         <Container maxWidth='md'>
-            <Typography variant='h1'>Single Search Result</Typography>
+            <Typography variant='h1'>Search Results</Typography>
+            <br/>
+            <InfiniteScroll
+                style={{overflow: 'hidden'}}
+                dataLength={resultsToDisplay.length}
+                scrollThreshold={1}
+                next={doNext}
+                hasMore={hasMoreBookResults || hasMoreMovieResults}
+                loader={<h4 style={{textAlign: 'center'}}>Loading more reviews...</h4>}
+                endMessage={
+                    <p style={{textAlign: 'center'}}>
+                        <b>No more reviews</b>
+                    </p>
+                }>
+                {resultsToDisplay.map((result, index) =>
+                    <SearchResultBlock
+                        key={index}
+                        image={result.image}
+                        title={result.title}
+                        blurb={result.blurb}
+                        genres={result.genres}
+                        mediaType={result.mediaType}
+                        mediaId={result.id}
+                    />)
+                }
+            </InfiniteScroll>
         </Container>
     );
 };
