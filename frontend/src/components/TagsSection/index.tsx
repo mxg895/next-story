@@ -1,8 +1,10 @@
 import React from 'react';
 import TagButton from '../TagButton';
 import styled from 'styled-components';
+import {SingleQueryType} from '../../constants/dataTypes';
 
 interface TagsSectionProps {
+    singleQueryType: SingleQueryType;
     tags?: string[],
     tagObjects?: Array<{ tagId: string, tagName: string }>
 }
@@ -12,11 +14,13 @@ const StyledTagsSection = styled.div`
 `;
 
 const TagsSection: React.FC<TagsSectionProps> = (props: TagsSectionProps) => {
-    const { tags, tagObjects } = props;
+    const { singleQueryType, tags, tagObjects } = props;
     return (
         <StyledTagsSection>
-            { tags && tags.map((tag, index) => <TagButton key={index} tag={tag}/>) }
-            { !tags && tagObjects && tagObjects.map((tagObject, index) => <TagButton key={index} tag={tagObject.tagName}/>) }
+            { tags && tags.map((tag, index) => <TagButton key={index} label={tag} singleQueryType={singleQueryType}/>) }
+            { !tags && tagObjects && tagObjects.map((tagObject, index) => {
+                return <TagButton key={index} label={tagObject.tagName} singleQueryType={singleQueryType}/>;
+            }) }
         </StyledTagsSection>
     );
 };

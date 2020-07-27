@@ -2,15 +2,14 @@ import React, {useEffect, useState} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import ReviewList from '../../components/ReviewList';
-import { MediaType } from '../../constants/dataTypes';
+import {MediaType, SingleQueryType} from '../../constants/dataTypes';
 import styled from 'styled-components';
-import {Box, Grid} from '@material-ui/core';
+import {Box, FormControl, Grid, InputLabel, MenuItem, Select} from '@material-ui/core';
 import TagsSection from '../../components/TagsSection';
 import StarRater from '../../components/StarRater';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
-import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
 import AddToUserButton from '../../components/AddToUserButton';
 import FavPeopleDropDown from '../../components/FavPeopleDropDown';
 
@@ -365,9 +364,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     </Grid>
                     <Grid item sm={3}>
                         Genres:
-                        <TagsSection tags={genres}/>
+                        <TagsSection tags={genres} singleQueryType={SingleQueryType.genre}/>
                         Tags:
-                        <TagsSection tagObjects={addedStoryTags}/>
+                        <TagsSection tagObjects={addedStoryTags} singleQueryType={SingleQueryType.tag}/>
                         <StyledFormControl variant='outlined'>
                             <InputLabel id='demo-simple-select-outlined-label'>Add a tag</InputLabel>
                             <Select

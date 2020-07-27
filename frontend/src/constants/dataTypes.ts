@@ -4,6 +4,13 @@ export enum MediaType {
     start = ''
 }
 
+export enum SingleQueryType {
+    person = 'person',
+    genre = 'genre',
+    tag = 'tag',
+    searchBar = 'searchBar'
+}
+
 export type CardData = {
     title: string,
     id: string,

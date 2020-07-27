@@ -146,5 +146,44 @@ router.get('/googleBooks/bookRecommendations', (req, res) => {
         .catch((error) => console.log(error));
 });
 
+// gets a first 10 books of this subject, needs to add &startIndex=${startIndex}
+// to get results past first 10 in increments of 10 starting from the startIndex
+router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex', (req, res) => {
+    const queryType = req.params.queryType;
+    const subject = req.params.subject;
+    const startIndex = req.params.startIndex;
+    let searchSpecify = '';
+    switch (queryType) {
+        case 'genre':
+            searchSpecify = 'subject:';
+            break;
+        case 'person':
+            searchSpecify = 'inauthor:';
+            break;
+        case 'searchBar':
+        default:
+            break;
+    }
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchSpecify}${subject}&startIndex=${startIndex}`)
+        .then((response) => {
+            const books = response.data.items;
+            const bookObjectList = books.map((book) => {
+                return {
+                    id: book.id,
+                    title: book.volumeInfo && book.volumeInfo.title,
+                    mediaType: 'book',
+                    image: book.volumeInfo && book.volumeInfo.imageLinks
+                         && book.volumeInfo.imageLinks.thumbnail,
+                    genres: book.volumeInfo && book.volumeInfo.categories,
+                    blurb: book.volumeInfo && book.volumeInfo.description,
+                    people: book.volumeInfo && book.volumeInfo.authors,
+                    publishedDate: book.volumeInfo && book.volumeInfo.publishedDate
+                }
+            });
+            res.status(200).json(bookObjectList);
+        })
+        .catch((error) => console.log(error));
+});
+
 
 module.exports = router;

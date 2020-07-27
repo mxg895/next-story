@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useHistory} from 'react-router';
+import {SingleQueryType} from '../../constants/dataTypes';
 
 interface TagsButtonProps {
-    tag: string;
+    label: string;
+    singleQueryType: SingleQueryType;
 }
 
 const StyledTagButton = styled.button`
@@ -21,10 +24,22 @@ const StyledTagButton = styled.button`
 `;
 
 const TagButton: React.FC<TagsButtonProps> = (props: TagsButtonProps) => {
-    const { tag } = props;
+    const { label, singleQueryType } = props;
+    const history = useHistory();
+
+    const goToSingleQuery = () => {
+        history.push(`/searchResult/param?singleQueryType=${singleQueryType}&query=${label}`);
+    };
+
     return (
         <>
-            {tag && <StyledTagButton>{tag}</StyledTagButton>}
+            {label &&
+                <StyledTagButton
+                    onClick={goToSingleQuery}
+                >
+                    {label}
+                </StyledTagButton>
+            }
         </>
     );
 };
