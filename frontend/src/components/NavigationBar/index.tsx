@@ -50,6 +50,7 @@ const DesktopNavigationTabs = styled(Tabs)`
 
 const SearchInputArea = styled(InputBase)`
     background-color: white;
+    padding-left: 5px;
 `;
 
 const SearchButton = styled(Button)`
@@ -59,7 +60,15 @@ const NavigationBar = () => {
     const [page, setPage] = React.useState<boolean | string>(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [searchBarText, setSearchBarText] = React.useState<string>('');
     const history = useHistory();
+
+    const handleSearchBarTextChange = (event: any) => {
+        setSearchBarText(event.target.value);
+    };
+    const handleSearch = () => {
+        history.push(`/searchResult/param?singleQueryType=searchBar&query=${searchBarText}`);
+    };
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setPage(newValue);
@@ -112,13 +121,13 @@ const NavigationBar = () => {
     const menuId = 'desktop-menu';
     const renderMenu = (
         <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        id={menuId}
-        keepMounted
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={closeMenu}
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMenuOpen}
+            onClose={closeMenu}
         >
             <MenuItem onClick={(ev) => handleMenuClose(ev, 'logout')}>Logout</MenuItem>
         </Menu>
@@ -174,8 +183,9 @@ const NavigationBar = () => {
                     <SearchInputArea
                         placeholder='Search…'
                         inputProps={{ 'aria-label': 'search' }}
+                        onChange={handleSearchBarTextChange}
                     />
-                    <SearchButton>
+                    <SearchButton onClick={handleSearch}>
                         <SearchIcon/>
                     </SearchButton>
                 </SearchArea>

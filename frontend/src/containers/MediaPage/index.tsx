@@ -2,16 +2,14 @@ import React, {useEffect, useState} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import ReviewList from '../../components/ReviewList';
-import { MediaType } from '../../constants/dataTypes';
-import MockCover from '../../assets/MockCover.png';
+import {MediaType, SingleQueryType} from '../../constants/dataTypes';
 import styled from 'styled-components';
-import {Box, Grid} from '@material-ui/core';
+import {Box, FormControl, Grid, InputLabel, MenuItem, Select} from '@material-ui/core';
 import TagsSection from '../../components/TagsSection';
 import StarRater from '../../components/StarRater';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
-import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
 import AddToUserButton from '../../components/AddToUserButton';
 import FavPeopleDropDown from '../../components/FavPeopleDropDown';
 
@@ -19,6 +17,17 @@ const StyledImage = styled.img`
     width: 100%;
     max-width: 300px;
     margin-bottom: 15px;
+`;
+
+const ImagePlaceholder = styled.div`
+    width: 100%;
+    max-width: 300px;
+    min-height: 300px;
+    margin-bottom: 15px;
+    background-color: ${({ theme }) => theme.palette.grey[300]};
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const StyledGridItem = styled(Grid)`
@@ -49,13 +58,15 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const [isFavorite, setFavorite] = useState(false);
     const [watchedOrRead, setWatchedOrRead] = useState(false);
     const [mediaObject, setMediaObject] = useState({
-        title: '',
+        title: 'No title',
         id: id,
         mediaType: MediaType.start,
         image: '',
         people: [''],
         genres: [''],
-        blurb: '',
+        blurb: 'No description'
+    });
+    const [reviewsObject, setReviewsObject] = useState({
         avgRating: 0,
         userRating: 0,
         userHasReviewText: false
@@ -85,11 +96,14 @@ const MediaPage: React.FC<{}> = (props: any) => {
         image,
         people,
         blurb,
-        genres,
+        genres
+    } = mediaObject;
+
+    const {
         avgRating,
         userRating,
         userHasReviewText
-    } = mediaObject;
+    } = reviewsObject;
 
     useEffect(() => {
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
@@ -97,35 +111,51 @@ const MediaPage: React.FC<{}> = (props: any) => {
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
                 console.log(mediaData);
-                axios.get(`/reviewRatings/${mediaType}/${id}`)
-                    .then((reviewRatingRes: any) => {
-                        const reviews = reviewRatingRes.data.reviewArray;
-                        props.loadAllReviewsAction(reviews);
-                        const userRatingReviewArr = reviews.filter((r: any) => r.userId === userId);
-                        const userRating = userRatingReviewArr.length > 0 ? userRatingReviewArr[0].rating : undefined;
-                        const userHasReviewText = userRatingReviewArr.length > 0 && !!userRatingReviewArr[0].text;
-                        setMediaObject({
-                            title: mediaData.title,
-                            id: id,
-                            mediaType: MediaType.movie,
-                            image: mediaData.image,
-                            people: mediaData.people,
-                            genres: mediaData.genres,
-                            blurb:  mediaData.blurb,
-                            avgRating: reviewRatingRes.data.average,
-                            userRating: userRating,
-                            userHasReviewText: userHasReviewText
-                        });
-                        setStoryTags(mediaRes.data.nextStoryTags);
-                    })
-                    .catch((error: any) => {
-                        console.log('Error getting reviews', error);
-                    });
+                setMediaObject({
+                    title: mediaData.title || 'No title',
+                    id: id,
+                    mediaType: mediaType,
+                    image: mediaData.image,
+                    people: mediaData.people,
+                    genres: mediaData.genres,
+                    blurb:  mediaData.blurb || 'No description'
+                });
             })
             .catch((error: any) => {
                 console.log('Error getting media', error);
             });
-        // TODO get the media info from an api call using the media id
+    }, [props, id, mediaType, userId]);
+
+    useEffect(() => {
+        const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
+        axios.get(`/${mediaRouteType}/tags/${id}`)
+            .then((mediaRes: any) => {
+                const mediaData = mediaRes.data;
+                console.log(mediaData);
+                setStoryTags(mediaData.nextStoryTags);
+            })
+            .catch((error: any) => {
+                console.log('Error getting media', error);
+            });
+    }, [props, id, mediaType, userId]);
+
+    useEffect(() => {
+        axios.get(`/reviewRatings/${mediaType}/${id}`)
+            .then((reviewRatingRes: any) => {
+                const reviews = reviewRatingRes.data.reviewArray;
+                props.loadAllReviewsAction(reviews);
+                const userRatingReviewArr = reviews.filter((r: any) => r.userId === userId);
+                const userRating = userRatingReviewArr.length > 0 ? userRatingReviewArr[0].rating : undefined;
+                const userHasReviewText = userRatingReviewArr.length > 0 && !!userRatingReviewArr[0].text;
+                setReviewsObject({
+                    avgRating: reviewRatingRes.data.average,
+                    userRating: userRating,
+                    userHasReviewText: userHasReviewText
+                });
+            })
+            .catch((error: any) => {
+                console.log('Error getting reviews', error);
+            });
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
@@ -173,7 +203,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
-                console.log(tagData);
                 const sortedTags = tagData.sort(function(a: any, b: any) {
                     if(a.tagName < b.tagName) { return -1; }
                     if(a.tagName > b.tagName) { return 1; }
@@ -274,7 +303,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
             <Container maxWidth='lg'>
                 <Grid container direction={'row'}  spacing={5}>
                     <StyledGridItem item sm={3}>
-                        <StyledImage src={image} />
+                        {image ? <StyledImage src={image}/> : <ImagePlaceholder>No Image</ImagePlaceholder>}
                         <div>
                             Your rating:
                             <CenteredDiv>
@@ -318,13 +347,13 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <Typography variant='h1'>{title}</Typography>
                         <Box fontStyle='italic'>
                             <Typography variant='subtitle1' gutterBottom>
-                                {people.join(', ')}
-                                <FavPeopleDropDown
+                                {people?.join(', ')}
+                                {people && people[0] !== '' && <FavPeopleDropDown
                                     allPeople={people}
                                     favoritePeople={MediaType.movie ? userLists.favoriteDirectors : userLists.favoriteAuthors}
                                     userId={userId}
                                     favKey={MediaType.movie ? 'favoriteDirectors' : 'favoriteAuthors'}
-                                />
+                                />}
                             </Typography>
                         </Box>
                         <VerticallyCenteredDiv>
@@ -335,9 +364,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     </Grid>
                     <Grid item sm={3}>
                         Genres:
-                        <TagsSection tags={genres}/>
+                        <TagsSection tags={genres} singleQueryType={SingleQueryType.genre}/>
                         Tags:
-                        <TagsSection tagObjects={addedStoryTags}/>
+                        <TagsSection tagObjects={addedStoryTags} singleQueryType={SingleQueryType.tag}/>
                         <StyledFormControl variant='outlined'>
                             <InputLabel id='demo-simple-select-outlined-label'>Add a tag</InputLabel>
                             <Select

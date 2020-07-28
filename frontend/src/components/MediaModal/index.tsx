@@ -99,7 +99,7 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     const { isOpen, modalData, setModalOpen } = props;
     const history = useHistory();
 
-    const isSmall = useMediaQuery('(max-width:450px)'); // TODO-MK figure out if we want this special or override Mui breakpoints
+    const isSmall = useMediaQuery('(max-width:450px)');
     const isShort = useMediaQuery('(max-height:500px)');
 
     function goToPage() {

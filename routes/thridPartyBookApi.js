@@ -64,16 +64,16 @@ router.get('/googleBooks/popularBooks', (req, res) => {
 
 
             //handle top 10 best rating books
-            let filterUndefinedBooks = response.data.items.filter(function(element){
+            let filterUndefinedBooks = response.data.items && response.data.items.filter(function(element){
                 return element.volumeInfo.averageRating !== undefined;
             })
-            const sortedBooks = filterUndefinedBooks.sort(function(a, b) {
+            const sortedBooks = filterUndefinedBooks && filterUndefinedBooks.sort(function(a, b) {
                 // console.log(a);
                 if(a.volumeInfo.averageRating < b.volumeInfo.averageRating) { return 1; }
                 if(a.volumeInfo.averageRating > b.volumeInfo.averageRating) { return -1; }
                 return 0;
             });
-            const numberFound = sortedBooks.length;
+            const numberFound = sortedBooks && sortedBooks.length || 0;
             const numberToGet = numberFound >= 10 ? 10 : numberFound;
             const returnList = [];
             let i = 0;
@@ -142,6 +142,46 @@ router.get('/googleBooks/bookRecommendations', (req, res) => {
             }
             //console.log('Succeeded getting book from googleBooks:', returnList);
             res.status(200).json(returnList);
+        })
+        .catch((error) => console.log(error));
+});
+
+// gets a first 10 books of this subject, needs to add &startIndex=${startIndex}
+// to get results past first 10 in increments of 10 starting from the startIndex
+router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex/:increaseIndexBy', (req, res) => {
+    const queryType = req.params.queryType;
+    const subject = req.params.subject;
+    const startIndex = req.params.startIndex
+    const increaseIndexBy = req.params.increaseIndexBy;
+    let searchSpecify = '';
+    switch (queryType) {
+        case 'genre':
+            searchSpecify = 'subject:';
+            break;
+        case 'person':
+            searchSpecify = 'inauthor:';
+            break;
+        case 'searchBar':
+        default:
+            break;
+    }
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchSpecify}${subject}&maxResults=${increaseIndexBy}&startIndex=${startIndex}`)
+        .then((response) => {
+            const books = response.data.items;
+            const bookObjectList = books.map((book) => {
+                return {
+                    id: book.id,
+                    title: book.volumeInfo && book.volumeInfo.title,
+                    mediaType: 'book',
+                    image: book.volumeInfo && book.volumeInfo.imageLinks
+                         && book.volumeInfo.imageLinks.thumbnail,
+                    genres: book.volumeInfo && book.volumeInfo.categories,
+                    blurb: book.volumeInfo && book.volumeInfo.description,
+                    people: book.volumeInfo && book.volumeInfo.authors,
+                    publishedDate: book.volumeInfo && book.volumeInfo.publishedDate
+                }
+            });
+            res.status(200).json(bookObjectList);
         })
         .catch((error) => console.log(error));
 });

@@ -188,6 +188,69 @@ router.get('/tmdbMovies/movieDirector/:movieId', (req, res) => {
         .catch((error) => console.log(error));
 });
 
+router.get('/tmdbMovies/singleQuery/:queryType/:query/:startIndex/:increaseIndexBy', (req, res) => {
+    const queryType = req.params.queryType;
+    const query = req.params.query;
+    const startIndex = req.params.startIndex;
+    const increaseIndexBy = req.params.increaseIndexBy;
+
+    const discover = (discoverUri) => {
+        axios.get(discoverUri)
+            .then((response) => {
+                const allMovies = response.data.results;
+                const paginatedMovies = [];
+                const endIndex = allMovies.length >= startIndex + increaseIndexBy ? startIndex + increaseIndexBy : allMovies.length;
+                for(let i = startIndex; i < endIndex; i++){
+                    paginatedMovies.push(allMovies[i]);
+                }
+                const movieObjectList = paginatedMovies.map((movie) => {
+                    let genres = [];
+                    movie.genre_ids.forEach((id) => {
+                        if (Object.keys(genreValueLookUp).includes(id.toString())) {
+                            const genreName = genreValueLookUp[id];
+                            genres.push(genreName);
+                        }
+                    });
+                    return {
+                        id: movie.id,
+                        title: movie.original_title,
+                        mediaType: 'movie',
+                        image: 'https://image.tmdb.org/t/p/w342/' + movie.poster_path,
+                        genres: genres,
+                        blurb: movie.overview,
+                        publishedDate: movie.release_date
+                    }
+                });
+                res.status(200).json(movieObjectList);
+            })
+            .catch((error) => console.log(error));
+    }
+
+    let queryUri = '';
+    switch (queryType) {
+        case 'genre':
+            queryUri = `${baseUrl}/3/discover/movie?api_key=${tmdbApiKey}&language=en-US&page=1&include_adult=false&with_genres=${genreKeyLookUp[query]}`;
+            discover(queryUri);
+            break;
+        case 'person':
+            const personUri = `${baseUrl}/3/search/person?api_key=${tmdbApiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
+            axios.get(personUri).then((response) => {
+                const personId = response.data.results[0] && response.data.results[0].id || '';
+                queryUri = `${baseUrl}/3/discover/movie?api_key=${tmdbApiKey}&language=en-US&page=1&include_adult=false&with_people=${personId}`;
+                discover(queryUri);
+            }).catch((e) => console.log('error getting movie person: ', e));
+
+            break;
+        case 'searchBar':
+            queryUri = `${baseUrl}/3/search/movie?api_key=${tmdbApiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
+            discover(queryUri);
+            break;
+        default:
+            discover(queryUri);
+            break;
+    }
+});
+
 const genres = [
     {
         "id": 28,
@@ -266,6 +329,48 @@ const genres = [
         "name": "Western"
     }
 ];
+
+const genreKeyLookUp = {
+    Action: 28,
+    Adventure: 12,
+    Animation: 16,
+    Comedy: 35,
+    Crime: 80,
+    Documentary: 99,
+    Drama: 18,
+    Family: 10751,
+    Fantasy: 14,
+    History: 36,
+    Horror: 27,
+    Music: 10402,
+    Mystery: 9648,
+    Romance: 10749,
+    "Science Fiction": 878,
+    "TV Movie": 10770,
+    War: 10752,
+    Western: 37
+}
+
+const genreValueLookUp = {
+    28: "Action",
+    12: "Adventure",
+    16: "Animation",
+    35: "Comedy",
+    80: "Crime",
+    99: "Documentary",
+    18: "Drama",
+    10751: "Family",
+    14: "Fantasy",
+    36: "History",
+    27: "Horror",
+    10402: "Music",
+    9648: "Mystery",
+    10749: "Romance",
+    878: "Science Fiction",
+    10770: "TV Movie",
+    10752: "War",
+    37: "Western"
+}
 
 module.exports = router;
 
