@@ -3,21 +3,23 @@ import styled from 'styled-components';
 import {
     Tab,
     Tabs,
-    Hidden,
-} from '@material-ui/core'
+    Hidden
+} from '@material-ui/core';
 import {connect} from 'react-redux';
 import { changeHomePageFilter } from '../../actions/homePageFilterActions';
 import {
     ALL,
     MOVIES,
-    BOOKS,
+    BOOKS
 } from '../../constants/homePageFilterConstants';
+import {changeSingleSearchPageFilter} from '../../actions/singleSearchPageFilterActions';
 
 const DeskTopFilters = styled(Tabs)`
 `;
 
-const HomePageDesktopFilter: React.FC = (props: any) => {
+const DesktopFilter = (props: any) => {
     const [storyType, setStoryType] = React.useState<string>('all');
+    const { isSearchPage } = props;
     const handleChange = (event: React.ChangeEvent<{}>, newType: string) => {
         setStoryType(newType);
     };
@@ -25,16 +27,13 @@ const HomePageDesktopFilter: React.FC = (props: any) => {
     useEffect(() => {
         switch (storyType) {
             case 'all':
-                //show popular and recommend books and movies
-                props.changeHomePageFilter(ALL);
+                isSearchPage ? props.changeSingleSearchPageFilter(ALL) : props.changeHomePageFilter(ALL);
                 break;
             case 'movies':
-                //show popular and recommend movies
-                props.changeHomePageFilter(MOVIES);
+                isSearchPage ? props.changeSingleSearchPageFilter(MOVIES) : props.changeHomePageFilter(MOVIES);
                 break;
             case 'books':
-                //show popular and recommend books
-                props.changeHomePageFilter(BOOKS);
+                isSearchPage ? props.changeSingleSearchPageFilter(BOOKS) : props.changeHomePageFilter(BOOKS);
                 break;
             default:
                 break;
@@ -46,7 +45,7 @@ const HomePageDesktopFilter: React.FC = (props: any) => {
             <DeskTopFilters
                 value={storyType}
                 onChange={handleChange}
-                aria-label="home-page-filter"
+                aria-label='home-page-filter'
                 centered
             >
                 <Tab
@@ -69,4 +68,4 @@ const HomePageDesktopFilter: React.FC = (props: any) => {
     );
 };
 
-export default connect(null, { changeHomePageFilter })(HomePageDesktopFilter);
+export default connect(null, { changeHomePageFilter, changeSingleSearchPageFilter })(DesktopFilter);

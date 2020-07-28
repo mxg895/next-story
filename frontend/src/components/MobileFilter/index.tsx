@@ -3,18 +3,19 @@ import styled from 'styled-components';
 import {
     Hidden,
     BottomNavigation,
-    BottomNavigationAction,
+    BottomNavigationAction
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MovieIcon from '@material-ui/icons/Movie';
 import BookIcon from '@material-ui/icons/Book';
 import {connect} from 'react-redux';
 import { changeHomePageFilter } from '../../actions/homePageFilterActions';
+import { changeSingleSearchPageFilter } from '../../actions/singleSearchPageFilterActions';
 import {
     ALL,
     MOVIES,
-    BOOKS,
-} from '../../constants/homePageFilterConstants'
+    BOOKS
+} from '../../constants/homePageFilterConstants';
 
 const MobileFilters = styled(BottomNavigation)`
     width: 100%;
@@ -22,8 +23,9 @@ const MobileFilters = styled(BottomNavigation)`
     bottom: 0;
 `;
 
-const HomePageMobileFilter = (props: any) => {
+const MobileFilter = (props: any) => {
     const [storyType, setStoryType] = React.useState<string>('all');
+    const { isSearchPage } = props;
     const handleChange = (event: React.ChangeEvent<{}>, newType: string) => {
         setStoryType(newType);
     };
@@ -31,16 +33,13 @@ const HomePageMobileFilter = (props: any) => {
     useEffect(() => {
         switch (storyType) {
             case 'all':
-                //show popular and recommend books and movies
-                props.changeHomePageFilter(ALL);
+                isSearchPage ? props.changeSingleSearchPageFilter(ALL) : props.changeHomePageFilter(ALL);
                 break;
             case 'movies':
-                //show popular and recommend movies
-                props.changeHomePageFilter(MOVIES);
+                isSearchPage ? props.changeSingleSearchPageFilter(MOVIES) : props.changeHomePageFilter(MOVIES);
                 break;
             case 'books':
-                //show popular and recommend books
-                props.changeHomePageFilter(BOOKS);
+                isSearchPage ? props.changeSingleSearchPageFilter(BOOKS) : props.changeHomePageFilter(BOOKS);
                 break;
             default:
                 break;
@@ -53,20 +52,20 @@ const HomePageMobileFilter = (props: any) => {
                 value={storyType}
                 onChange={handleChange}
                 showLabels
-                aria-label="home-page-filter"
+                aria-label='home-page-filter'
             >
                 <BottomNavigationAction
-                    label="All"
+                    label='All'
                     icon={<HomeIcon />}
                     value={'all'}
                 />
                 <BottomNavigationAction
-                    label="Movies"
+                    label='Movies'
                     icon={<MovieIcon />}
                     value={'movies'}
                 />
                 <BottomNavigationAction
-                    label="Books"
+                    label='Books'
                     icon={<BookIcon />}
                     value={'books'}
                 />
@@ -75,4 +74,4 @@ const HomePageMobileFilter = (props: any) => {
     );
 };
 
-export default connect(null, { changeHomePageFilter })(HomePageMobileFilter);
+export default connect(null, { changeHomePageFilter, changeSingleSearchPageFilter })(MobileFilter);
