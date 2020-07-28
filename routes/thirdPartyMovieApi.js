@@ -68,7 +68,6 @@ router.get('/tmdbMovies/searchOneById/:query', (req, res) => {
     const id = req.params.query;
     axios.get(`${baseUrl}/3/movie/${id}?api_key=${tmdbApiKey}&language=en-US&include_adult=false`)
         .then((response) => {
-            console.log('RESPONSE!!!!!!!!!!!1', '\n', response , '\n', 'END RESPONSE!!!!!!!!11', '\n');
             if (response.data.status_code === 34) {
                 res.status(404).json({ message: 'Movie not found' });
             } else {

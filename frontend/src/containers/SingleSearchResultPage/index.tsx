@@ -113,6 +113,38 @@ const SingleSearchResultPage: React.FC = (props: any) => {
         return [movieData, bookData];
     }
 
+    async function getFromThirdPartyForTagsAndPeople() {
+        let movies: any[] = [];
+        let books: any[] = [];
+        try {
+            const movieRes = await axios.get(`/thirdPartyMovieApi/tmdbMovies/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`);
+            movies = movieRes.data;
+            console.log('movies', movies);
+            if (movies.length === 0) {
+                setHasMoreMovieResults(false);
+            } else {
+                setMovieResults((movieResults) => [...movieResults, ...movies]);
+                setAllResults((allResults) => [...allResults, ...movies]);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+        try {
+            const bookRes = await axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`);
+            books = bookRes.data;
+            console.log('books', books);
+            if (books.length === 0) {
+                setHasMoreBookResults(false);
+            } else {
+                setBookResults((bookResults) => [...bookResults, ...books]);
+                setAllResults((allResults) => [...allResults, ...books]);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+        return [movies, books];
+    }
+
     useEffect(() => {
         switch (queryType) {
             case SingleQueryType.tag:
@@ -120,43 +152,18 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                     const [mongoMovies, mongoBooks] = res;
                     console.log('mongo movies and books:', res);
                     getFromThirdParty(mongoMovies, mongoBooks).then((res) => {
-                        console.log(res);
                         const [movieData, bookData] = res;
-                        setMovieResults(movieData);
-                        setBookResults(bookData);
+                        console.log([movieData, bookData]);
                     }).catch((e) => console.log(e));
                 }).catch((e) => console.log(e));
                 break;
             case SingleQueryType.searchBar:
             case SingleQueryType.genre:
             case SingleQueryType.person:
-                axios.get(`/thirdPartyMovieApi/tmdbMovies/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`)
-                    .then((res: any) => {
-                        const movies = res.data;
-                        console.log(movies);
-                        if (movies.length === 0) {
-                            setHasMoreMovieResults(false);
-                        } else {
-                            setMovieResults(movies);
-                        }
-                        axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`)
-                            .then((res: any) => {
-                                const books = res.data;
-                                console.log(books);
-                                if (books.length === 0) {
-                                    setHasMoreBookResults(false);
-                                } else {
-                                    setBookResults(books);
-                                    setAllResults((allResults) => [...allResults, ...movies, ...books]);
-                                }
-                            })
-                            .catch((error: any) => {
-                                console.log('Error getting third party books', error);
-                            });
-                    })
-                    .catch((error: any) => {
-                        console.log('Error getting third party movies', error);
-                    });
+                getFromThirdPartyForTagsAndPeople().then((res) => {
+                    const [movies, books] = res;
+                    console.log([movies, books]);
+                }).catch((e) => console.log(e));
                 break;
             default:
                 break;

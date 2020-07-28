@@ -172,19 +172,22 @@ router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex/:increaseIn
     axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchSpecify}${subject}&maxResults=${increaseIndexBy}&startIndex=${startIndex}`)
         .then((response) => {
             const books = response.data.items;
-            const bookObjectList = books.map((book) => {
-                return {
-                    id: book.id,
-                    title: book.volumeInfo && book.volumeInfo.title,
-                    mediaType: 'book',
-                    image: book.volumeInfo && book.volumeInfo.imageLinks
-                         && book.volumeInfo.imageLinks.thumbnail,
-                    genres: book.volumeInfo && book.volumeInfo.categories,
-                    blurb: book.volumeInfo && book.volumeInfo.description,
-                    people: book.volumeInfo && book.volumeInfo.authors,
-                    publishedDate: book.volumeInfo && book.volumeInfo.publishedDate
-                }
-            });
+            let bookObjectList = [];
+            if (books) {
+                bookObjectList = books.map((book) => {
+                    return {
+                        id: book.id,
+                        title: book.volumeInfo && book.volumeInfo.title,
+                        mediaType: 'book',
+                        image: book.volumeInfo && book.volumeInfo.imageLinks
+                            && book.volumeInfo.imageLinks.thumbnail,
+                        genres: book.volumeInfo && book.volumeInfo.categories,
+                        blurb: book.volumeInfo && book.volumeInfo.description,
+                        people: book.volumeInfo && book.volumeInfo.authors,
+                        publishedDate: book.volumeInfo && book.volumeInfo.publishedDate
+                    }
+                });
+            }
             res.status(200).json(bookObjectList);
         })
         .catch((error) => console.log(error));
