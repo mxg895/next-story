@@ -19,7 +19,7 @@ const SearchResultsInfiniteScroll = (props: SearchResultsInfiniteScrollProps) =>
             scrollThreshold={1}
             next={doNext}
             hasMore={hasMore}
-            loader={<h4 style={{textAlign: 'center'}}>Loading more reviews...</h4>}
+            loader={<h4 style={{textAlign: 'center'}}>Loading more results...</h4>}
             endMessage={
                 <p style={{textAlign: 'center'}}>
                     <b>No more reviews</b>
