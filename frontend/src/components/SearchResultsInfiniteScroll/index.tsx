@@ -22,7 +22,7 @@ const SearchResultsInfiniteScroll = (props: SearchResultsInfiniteScrollProps) =>
             loader={<h4 style={{textAlign: 'center'}}>Loading more results...</h4>}
             endMessage={
                 <p style={{textAlign: 'center'}}>
-                    <b>No more reviews</b>
+                    <b>No more results</b>
                 </p>
             }>
             {resultsToDisplay.map((result, index) =>
