@@ -6,6 +6,7 @@ import {SingleQueryType} from '../../constants/dataTypes';
 interface TagsButtonProps {
     label: string;
     singleQueryType: SingleQueryType;
+    tagId?: string; // needed for if the tag button is being used for nextStoryTags
 }
 
 const StyledTagButton = styled.button`
@@ -24,11 +25,11 @@ const StyledTagButton = styled.button`
 `;
 
 const TagButton: React.FC<TagsButtonProps> = (props: TagsButtonProps) => {
-    const { label, singleQueryType } = props;
+    const { label, tagId, singleQueryType } = props;
     const history = useHistory();
 
     const goToSingleQuery = () => {
-        history.push(`/searchResult/param?singleQueryType=${singleQueryType}&query=${label}`);
+        history.push(`/searchResult/param?singleQueryType=${singleQueryType}&query=${tagId || label}`);
     };
 
     return (

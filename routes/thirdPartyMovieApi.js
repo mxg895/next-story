@@ -57,31 +57,52 @@ router.get('/tmdbMovies/searchTen/:query', (req, res) => {
             console.log('Succeeded getting movies from tmdbApi:', returnList);
             res.status(200).json(returnList);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            res.status(500);
+        });
 });
 
 //note gets first match ...usually only reliable when querying by id
-router.get('/tmdbMovies/searchOne/:query', (req, res) => {
-    const movieQuery = req.params.query;
-    axios.get(`${baseUrl}/3/search/movie?api_key=${tmdbApiKey}&language=en-US&query=${movieQuery}&page=1&include_adult=false`)
+router.get('/tmdbMovies/searchOneById/:query', (req, res) => {
+    const id = req.params.query;
+    axios.get(`${baseUrl}/3/movie/${id}?api_key=${tmdbApiKey}&language=en-US&include_adult=false`)
         .then((response) => {
-            console.log(response);
-            const foundItem = response.data.results[0];
-            const returnObject = {
-                id: foundItem.id,
-                title:  foundItem.title,
-                mediaType: 'movie',
-                image:   'https://image.tmdb.org/t/p/w342/' + foundItem.poster_path,
-                genres: foundItem.genre_ids,
-                blurb: foundItem.overview,
-                publishedDate: foundItem.release_date,
-                avgRating: foundItem.vote_average
+            console.log('RESPONSE!!!!!!!!!!!1', '\n', response , '\n', 'END RESPONSE!!!!!!!!11', '\n');
+            if (response.data.status_code === 34) {
+                res.status(404).json({ message: 'Movie not found' });
+            } else {
+                const movie = response.data;
+                if (movie && movie.id === parseInt(id)) {
+                    let genres = [];
+                    movie.genres.forEach((g) => {
+                        if (Object.keys(genreValueLookUp).includes(g.id.toString())) {
+                            genres.push(g.name);
+                        }
+                    });
+                    const returnObject = {
+                        id: movie.id,
+                        title:  movie.title,
+                        mediaType: 'movie',
+                        image:   'https://image.tmdb.org/t/p/w342/' + response.data.poster_path,
+                        genres: genres,
+                        blurb: movie.overview,
+                        publishedDate: movie.release_date,
+                        avgRating: movie.vote_average
+                    }
+                    console.log('Succeeded getting book from googleBooks with id:', returnObject.id);
+                    res.status(200).json(returnObject);
+                } else {
+                    res.status(404).json({ message: 'Movie not found' });
+                }
             }
-            returnObject.people = [];
-            console.log('Succeeded getting book from googleBooks:', returnObject);
-            res.status(200).json(returnObject);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            if (error.response && error.response.status === 404) {
+                res.status(404).json({ message: 'Movie not found' });
+            }
+        });
 });
 
 // popular movies
@@ -122,7 +143,10 @@ router.get('/tmdbMovies/popularMovies', (req, res) => {
             console.log('Succeeded getting movies from tmdbApi:', returnList);
             res.status(200).json(returnList);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            res.status(500);
+        });
 });
 
 
@@ -164,7 +188,10 @@ router.get('/tmdbMovies/movieRecommendations', (req, res) => {
             console.log('Succeeded getting movies from tmdbApi:', returnList);
             res.status(200).json(returnList);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            res.status(500);
+        });
 });
 
 //  get Director/Directors
@@ -185,21 +212,25 @@ router.get('/tmdbMovies/movieDirector/:movieId', (req, res) => {
             //console.log(response.data.crew);
             res.status(200).json(people);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            res.status(500);
+        });
 });
 
 router.get('/tmdbMovies/singleQuery/:queryType/:query/:startIndex/:increaseIndexBy', (req, res) => {
     const queryType = req.params.queryType;
     const query = req.params.query;
-    const startIndex = req.params.startIndex;
-    const increaseIndexBy = req.params.increaseIndexBy;
+    const startIndex = parseInt(req.params.startIndex);
+    const increaseIndexBy = parseInt(req.params.increaseIndexBy);
 
     const discover = (discoverUri) => {
         axios.get(discoverUri)
             .then((response) => {
                 const allMovies = response.data.results;
                 const paginatedMovies = [];
-                const endIndex = allMovies.length >= startIndex + increaseIndexBy ? startIndex + increaseIndexBy : allMovies.length;
+                const maxEndIndex = startIndex + increaseIndexBy;
+                const endIndex = allMovies.length >= maxEndIndex ? maxEndIndex : allMovies.length;
                 for(let i = startIndex; i < endIndex; i++){
                     paginatedMovies.push(allMovies[i]);
                 }
@@ -223,7 +254,10 @@ router.get('/tmdbMovies/singleQuery/:queryType/:query/:startIndex/:increaseIndex
                 });
                 res.status(200).json(movieObjectList);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error);
+                res.status(500);
+            });
     }
 
     let queryUri = '';
