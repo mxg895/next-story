@@ -12,6 +12,7 @@ interface SearchResultBlockProps {
     genres: Array<string>;
     mediaType: MediaType;
     mediaId: string;
+    nextStoryTags?: Array<any>; // optional
 }
 
 const Block = styled.div`
@@ -45,7 +46,7 @@ const StyledLink = styled(Link)`
 `;
 
 const SearchResultBlock: React.FC<SearchResultBlockProps> = (props: SearchResultBlockProps) => {
-    const { image, title, blurb, genres, mediaType, mediaId } = props;
+    const { image, title, blurb, genres, mediaType, mediaId, nextStoryTags } = props;
     const history = useHistory();
     const isSmall = useMediaQuery('(max-width:450px)');
 
@@ -71,7 +72,14 @@ const SearchResultBlock: React.FC<SearchResultBlockProps> = (props: SearchResult
                         {blurb}
                     </Grid>
                     <Grid item sm={3}>
+                        Genres:
                         <TagsSection tags={genres} singleQueryType={SingleQueryType.genre}/>
+                        {nextStoryTags &&
+                            <>
+                                Tags:
+                                <TagsSection tagObjects={nextStoryTags} singleQueryType={SingleQueryType.tag}/>
+                            </>
+                        }
                     </Grid>
                 </Grid>
             </TopBar>

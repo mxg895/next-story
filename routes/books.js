@@ -59,4 +59,17 @@ router.put('/updateNextStoryTags/:bookId', (req, res) => {
     });
 });
 
+router.get('/withTag/:tagId', (req, res) => {
+    const tagId = req.params.tagId;
+    Books.find({
+        "nextStoryTags.tagId": tagId
+    }).then(books => {
+        console.log('Got books', books, 'for tag', tagId);
+        res.status(200).json(books);
+    }).catch((err) => {
+        console.log('Error fetching movies for tag: ', err);
+        res.status(500);
+    });
+});
+
 module.exports = router;

@@ -344,7 +344,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         </div>
                     </StyledGridItem>
                     <Grid item sm={6}>
-                        <Typography variant='h1'>{title}</Typography>
+                        <Typography variant='h1'>{title} {mediaType === MediaType.movie ? '(Movie)' : '(Book)'}</Typography>
                         <Box fontStyle='italic'>
                             <Typography variant='subtitle1' gutterBottom>
                                 {people?.join(', ')}

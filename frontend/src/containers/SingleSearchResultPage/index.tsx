@@ -3,8 +3,6 @@ import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import {SingleQueryType} from '../../constants/dataTypes';
-import SearchResultBlock from '../../components/SearchResultBlock';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import SearchResultsInfiniteScroll from '../../components/SearchResultsInfiniteScroll';
 
 const getQueryTypeAndQuery = (locationSearch: string) => {
@@ -20,11 +18,8 @@ const SingleSearchResultPage: React.FC = (props: any) => {
     const [queryType, query] = getQueryTypeAndQuery(searchUri);
     const increaseIndexBy = 5;
 
-    const [bookQueryStartIndex, setBookQueryStartIndex] = useState(0);
-    const [movieQueryStartIndex, setMovieQueryStartIndex] = useState(0);
+    const [queryStartIndex, setQueryStartIndex] = useState(0);
 
-    const [movieIdsMatchingTag, setMovieIdsMatchingTag] = useState<Array<string>>([]);
-    const [bookIdsMatchingTag, setBookIdsMatchingTag] = useState<Array<string>>([]);
     const [movieResults, setMovieResults] = useState<Array<any>>([]);
     const [bookResults, setBookResults] = useState<Array<any>>([]);
 
@@ -34,16 +29,95 @@ const SingleSearchResultPage: React.FC = (props: any) => {
     const [hasMoreMovieResults, setHasMoreMovieResults] = useState<boolean>(true);
     const [hasMoreBookResults, setHasMoreBookResults] = useState<boolean>(true);
 
+    async function getMediaForTag() {
+        let mongoMovies = [];
+        let mongoBooks = [];
+        try {
+            const mongoMovieRes = await axios.get(`/movies/withTag/${query}`);
+            mongoMovies = mongoMovieRes.data;
+        } catch (e) {
+            console.log('error fetching movies from mongo for tag', e);
+        }
+        try {
+            const mongoBookRes = await axios.get(`/books/withTag/${query}`);
+            mongoBooks = mongoBookRes.data;
+        } catch (e) {
+            console.log('error fetching movies from mongo for tag', e);
+        }
+        return [mongoMovies, mongoBooks];
+    }
+
+    async function getFromThirdParty(mongoMovies: any[], mongoBooks: any[]) {
+        const bookData: any[] = [];
+        const movieData: any[] = [];
+        const maxEndIndex = queryStartIndex + increaseIndexBy;
+        const movieEndIndex = mongoMovies.length >= maxEndIndex ? maxEndIndex : mongoMovies.length;
+        const bookEndIndex = mongoBooks.length >= maxEndIndex ? maxEndIndex : mongoBooks.length;
+        for(let i = queryStartIndex; i < movieEndIndex; i++){
+            const movieId = mongoMovies[i].movieId;
+            try {
+                const movieRes = await axios.get(`/thirdPartyMovieApi/tmdbMovies/searchOneById/${movieId}`);
+                let movieWithNextStoryTags = movieRes.data;
+                const thisMongoMovieMaybe = mongoMovies.filter((m) => m.movieId === movieId);
+                const thisMongoMovie = thisMongoMovieMaybe.length > 0 && thisMongoMovieMaybe[0];
+                if (thisMongoMovie) {
+                    movieWithNextStoryTags.nextStoryTags = thisMongoMovie.nextStoryTags;
+                } else {
+                    movieWithNextStoryTags.nextStoryTags = [];
+                }
+                movieData.push(movieWithNextStoryTags);
+                setAllResults((allResults) => [...allResults, movieWithNextStoryTags]);
+                setMovieResults((movieResults) => [...movieResults, movieWithNextStoryTags]);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        for(let i = queryStartIndex; i < bookEndIndex; i++){
+            const bookId = mongoBooks[i].bookId;
+            try {
+                const bookRes = await axios.get(`/thirdPartyBookApi/googleBooks/searchOneById/${bookId}`);
+                let bookWithNextStoryTags = bookRes.data;
+                const thisMongoBookMaybe = mongoBooks.filter((b) => b.bookId === bookId);
+                const thisMongoBook = thisMongoBookMaybe.length > 0 && thisMongoBookMaybe[0];
+                if (thisMongoBook) {
+                    bookWithNextStoryTags.nextStoryTags = thisMongoBook.nextStoryTags;
+                } else {
+                    bookWithNextStoryTags.nextStoryTags = [];
+                }
+                bookData.push(bookWithNextStoryTags);
+                setAllResults((allResults) => [...allResults, bookWithNextStoryTags]);
+                setBookResults((bookResults) => [...bookResults, bookWithNextStoryTags]);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        if (movieData.length === 0) {
+            setHasMoreMovieResults(false);
+        }
+        if (bookData.length === 0) {
+            setHasMoreBookResults(false);
+        }
+        return [movieData, bookData];
+    }
+
     useEffect(() => {
         switch (queryType) {
             case SingleQueryType.tag:
-                console.log('search tag first');
+                getMediaForTag().then((res) => {
+                    const [mongoMovies, mongoBooks] = res;
+                    console.log('mongo movies and books:', res);
+                    getFromThirdParty(mongoMovies, mongoBooks).then((res) => {
+                        console.log(res);
+                        const [movieData, bookData] = res;
+                        setMovieResults(movieData);
+                        setBookResults(bookData);
+                    }).catch((e) => console.log(e));
+                }).catch((e) => console.log(e));
                 break;
             case SingleQueryType.searchBar:
             case SingleQueryType.genre:
             case SingleQueryType.person:
-                console.log('search third party person');
-                axios.get(`/thirdPartyMovieApi/tmdbMovies/singleQuery/${queryType}/${query}/${bookQueryStartIndex}/${increaseIndexBy}`)
+                axios.get(`/thirdPartyMovieApi/tmdbMovies/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`)
                     .then((res: any) => {
                         const movies = res.data;
                         console.log(movies);
@@ -52,7 +126,7 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                         } else {
                             setMovieResults(movies);
                         }
-                        axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${bookQueryStartIndex}/${increaseIndexBy}`)
+                        axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`)
                             .then((res: any) => {
                                 const books = res.data;
                                 console.log(books);
@@ -60,7 +134,7 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                                     setHasMoreBookResults(false);
                                 } else {
                                     setBookResults(books);
-                                    setAllResults([...allResults, ...movies, ...books]);
+                                    setAllResults((allResults) => [...allResults, ...movies, ...books]);
                                 }
                             })
                             .catch((error: any) => {
@@ -74,7 +148,7 @@ const SingleSearchResultPage: React.FC = (props: any) => {
             default:
                 break;
         }
-    }, [queryType, query, movieQueryStartIndex]);
+    }, [queryType, query, queryStartIndex]);
 
     const resultsToDisplay = useMemo(() => {
         switch(filterState) {
@@ -89,20 +163,8 @@ const SingleSearchResultPage: React.FC = (props: any) => {
     }, [filterState, movieResults, bookResults, allResults]);
 
     const doNext = () => {
-        switch(filterState) {
-            case 'movies':
-                setMovieQueryStartIndex(movieQueryStartIndex + increaseIndexBy);
-                break;
-            case 'books':
-                setBookQueryStartIndex(bookQueryStartIndex + increaseIndexBy);
-                break;
-            case 'all':
-                setBookQueryStartIndex(bookQueryStartIndex + increaseIndexBy);
-                setMovieQueryStartIndex(movieQueryStartIndex + increaseIndexBy);
-                break;
-            default:
-                return allResults;
-        }
+        console.log('set next');
+        setQueryStartIndex(queryStartIndex + increaseIndexBy);
     };
 
     return (

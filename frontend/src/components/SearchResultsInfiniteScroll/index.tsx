@@ -32,6 +32,7 @@ const SearchResultsInfiniteScroll = (props: SearchResultsInfiniteScrollProps) =>
                     title={result.title}
                     blurb={result.blurb}
                     genres={result.genres}
+                    nextStoryTags={result.nextStoryTags}
                     mediaType={result.mediaType}
                     mediaId={result.id}
                 />)

@@ -17,9 +17,22 @@ const TagsSection: React.FC<TagsSectionProps> = (props: TagsSectionProps) => {
     const { singleQueryType, tags, tagObjects } = props;
     return (
         <StyledTagsSection>
-            { tags && tags.map((tag, index) => <TagButton key={index} label={tag} singleQueryType={singleQueryType}/>) }
+            { tags && tags.map((tag, index) => {
+                return (
+                    <TagButton
+                        key={index}
+                        label={tag}
+                        singleQueryType={singleQueryType}
+                    />);
+            }) }
             { !tags && tagObjects && tagObjects.map((tagObject, index) => {
-                return <TagButton key={index} label={tagObject.tagName} singleQueryType={singleQueryType}/>;
+                return (
+                    <TagButton
+                        key={index}
+                        label={tagObject.tagName}
+                        singleQueryType={singleQueryType}
+                        tagId={tagObject.tagId}
+                    />);
             }) }
         </StyledTagsSection>
     );
