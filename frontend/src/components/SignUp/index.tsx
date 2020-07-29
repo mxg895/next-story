@@ -85,9 +85,14 @@ export default function SignUp() {
             });
     };
 
+    function checkValidEmail(email: string) {
+        const regex = /\S+@\S+\.\S+/;
+        return regex.test(email);
+    }
+
     const handleSignUp = (event: any) => {
         event.preventDefault();
-        if (!userName || ! email || !password || !confirmPass) {
+        if (!userName || !email || !password || !confirmPass) {
             setSignUpError(true);
             setErrorMsg('All fields must be filled in');
             return;
@@ -95,6 +100,12 @@ export default function SignUp() {
         if (password !== confirmPass) {
             setSignUpError(true);
             setErrorMsg('Passwords do not match');
+            return;
+        }
+        const isValidEmail = checkValidEmail(email);
+        if (!isValidEmail) {
+            setSignUpError(true);
+            setErrorMsg('Invalid email');
             return;
         }
         setSignUpError(false);
