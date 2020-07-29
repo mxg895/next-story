@@ -13,7 +13,6 @@ router.get('/:movieId', (req, res) => {
             params: { api_key: tmdbApiKey }
         })
         .then((response) => {
-            console.log(response.data);
             var movieData = response.data;
             movie.title = movieData.title;
             movie.mediaType = 'movie';
@@ -25,7 +24,6 @@ router.get('/:movieId', (req, res) => {
                 movie.genres[i] = movieData.genres[i].name;
             }
             movie.avgRating = movieData.vote_average;
-            console.log(movie);
 
             axios
                 .get(`${baseUrl}/3/movie/${movieId}/credits`, {
@@ -35,13 +33,10 @@ router.get('/:movieId', (req, res) => {
                     people = [];
                     for(let i = 0; i < response.data.crew.length; i++){
                         if(response.data.crew[i].department === 'Directing'){
-                            // console.log(response.data.crew[i]);
                             people.push(response.data.crew[i].name);
                         }
                     }
                     movie.people = people;
-                    // console.log(people);
-                    //console.log(response.data.crew);
                     res.status(200).json(movie);
                 })
                 .catch((error) => console.log(error));

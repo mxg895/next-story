@@ -7,7 +7,6 @@ router.get('/googleBooks/searchTen/:query', (req, res) => {
     const bookQuery = req.params.query;
     axios.get(` https://www.googleapis.com/books/v1/volumes?q=${bookQuery}`)
         .then((response) => {
-            console.log(response);
             const numberFound = response.data.totalItems;
             const numberToGet = numberFound >= 10 ? 10 : numberFound;
             const returnList = [];

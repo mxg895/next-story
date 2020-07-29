@@ -5,7 +5,6 @@ const NextStoryTags = require('../models/nextStoryTag');
 router.get('/', (req, res) => {
     NextStoryTags.find()
         .then(tags => {
-            // console.log('got all tags', tags);
             res.status(200).json(tags);
         })
         .catch((err) => {
@@ -16,7 +15,6 @@ router.get('/', (req, res) => {
 
 router.get('/:tagId', (req, res) => {
     const tagId = req.params.tagId;
-    console.log('tagId', tagId);
     NextStoryTags.findById(tagId)
         .then(tag => {
             console.log('got a tag', tag);

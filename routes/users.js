@@ -11,7 +11,6 @@ router.get('/:userId', function(req, res, next) {
     const userId = req.params.userId;
     Profile.findOne({ userId : userId }).select('-__v -encrypted')
         .then((user) => {
-            // console.log(user);
             res.status(200).json(user);
         })
         .catch((error) => {

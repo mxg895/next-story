@@ -116,7 +116,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.get(`/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
-                console.log(mediaData);
                 if (!mediaData.title) {
                     numberSubscriptions = 0;
                     history.push('/notFound');
@@ -145,7 +144,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.get(`/${mediaRouteType}/tags/${id}`)
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
-                console.log(mediaData);
                 if (numberSubscriptions) {
                     setStoryTags(mediaData.nextStoryTags);
                     numberSubscriptions = numberSubscriptions - 1;

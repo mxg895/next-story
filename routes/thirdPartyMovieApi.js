@@ -9,11 +9,9 @@ router.get('/tmdbMovies/searchTen/:query', (req, res) => {
     const movieQuery = req.params.query;
     axios.get(`${baseUrl}/3/search/movie?api_key=${tmdbApiKey}&language=en-US&query=${movieQuery}&page=1&include_adult=false`)
         .then((response) => {
-            console.log(response);
             const numberFound = response.data.results.length;
             const numberToGet = numberFound >= 10 ? 10 : numberFound;
             const returnList = [];
-            //let promises = [];
             let i = 0;
             while (i < numberToGet) {
                 let people = [];
@@ -28,28 +26,8 @@ router.get('/tmdbMovies/searchTen/:query', (req, res) => {
                     publishedDate: foundItem.release_date,
                     avgRating: 3
                 }
-                // promises.push(
-                //     axios.get(`${baseUrl}/3/movie/${foundItem.id}/credits`, {
-                //         params: { api_key: tmdbApiKey }
-                //     })
-                //         .then((response) => {
-                //             people = [];
-                //             for(let i = 0; i < response.data.crew.length; i++){
-                //                 if(response.data.crew[i].department === 'Directing'){
-                //                     // console.log(response.data.crew[i]);
-                //                     people.push("Director-" + response.data.crew[i].name);
-                //                 }
-                //             }
-                //             returnList.people = people;
-                //
-                //         })
-                // )
+
                 returnObject.people = people;
-                // Promise.all(promises).then(() => {
-                //     console.log(people)
-                //     console.log(returnList);
-                //
-                // });
                 returnList.push(returnObject);
                 i++;
             }
@@ -108,7 +86,6 @@ router.get('/tmdbMovies/searchOneById/:query', (req, res) => {
 router.get('/tmdbMovies/popularMovies', (req, res) => {
     axios.get(`${baseUrl}/3/movie/popular?api_key=${tmdbApiKey}&language=en-US&page=1&include_adult=false`)
         .then((response) => {
-            console.log(response);
             const numberFound = response.data.results.length;
             const numberToGet = numberFound >= 100 ? 100 : numberFound;
             const returnList = [];
@@ -153,7 +130,6 @@ router.get('/tmdbMovies/popularMovies', (req, res) => {
 router.get('/tmdbMovies/movieRecommendations', (req, res) => {
     axios.get(`${baseUrl}/3/movie/top_rated?api_key=${tmdbApiKey}&language=en-US&page=1&include_adult=false`)
         .then((response) => {
-            console.log(response);
             const numberFound = response.data.results.length;
             const numberToGet = numberFound >= 100 ? 100 : numberFound;
             const returnList = [];
@@ -204,11 +180,9 @@ router.get('/tmdbMovies/movieDirector/:movieId', (req, res) => {
             people = [];
             for(let i = 0; i < response.data.crew.length; i++){
                 if(response.data.crew[i].department === 'Directing'){
-                    // console.log(response.data.crew[i]);
                     people.push("Director-" + response.data.crew[i].name);
                 }
             }
-            //console.log(response.data.crew);
             res.status(200).json(people);
         })
         .catch((error) => {
