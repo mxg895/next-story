@@ -162,7 +162,8 @@ router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex/:increaseIn
         case 'genre':
             searchSpecify = 'subject:';
             break;
-        case 'person':
+        case 'bookPerson':
+        case 'moviePerson':
             searchSpecify = 'inauthor:';
             break;
         case 'searchBar':

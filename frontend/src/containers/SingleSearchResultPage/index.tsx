@@ -12,6 +12,7 @@ import {
     MOVIES,
     BOOKS
 } from '../../constants/homePageFilterConstants';
+import {changeSingleSearchPageFilter} from '../../actions/singleSearchPageFilterActions';
 
 const getQueryTypeAndQuery = (locationSearch: string) => {
     const trimmedUri = locationSearch.substr(1);
@@ -41,6 +42,23 @@ const SingleSearchResultPage: React.FC = (props: any) => {
     useEffect(() => {
         setFilterState(singleSearchPageFilter);
     }, [singleSearchPageFilter]);
+
+    useEffect(() => {
+        switch (queryType) {
+            case SingleQueryType.moviePerson:
+                props.changeSingleSearchPageFilter(MOVIES);
+                break;
+            case SingleQueryType.bookPerson:
+                props.changeSingleSearchPageFilter(BOOKS);
+                break;
+            case SingleQueryType.tag:
+            case SingleQueryType.searchBar:
+            case SingleQueryType.genre:
+            default:
+                props.changeSingleSearchPageFilter(ALL);
+                break;
+        }
+    }, [queryType]);
 
     async function getMediaForTag() {
         let mongoMovies = [];
@@ -119,7 +137,6 @@ const SingleSearchResultPage: React.FC = (props: any) => {
         try {
             const movieRes = await axios.get(`/thirdPartyMovieApi/tmdbMovies/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`);
             movies = movieRes.data;
-            console.log('movies', movies);
             if (movies.length === 0) {
                 setHasMoreMovieResults(false);
             } else {
@@ -132,7 +149,6 @@ const SingleSearchResultPage: React.FC = (props: any) => {
         try {
             const bookRes = await axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`);
             books = bookRes.data;
-            console.log('books', books);
             if (books.length === 0) {
                 setHasMoreBookResults(false);
             } else {
@@ -159,7 +175,8 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 break;
             case SingleQueryType.searchBar:
             case SingleQueryType.genre:
-            case SingleQueryType.person:
+            case SingleQueryType.moviePerson:
+            case SingleQueryType.bookPerson:
                 getFromThirdPartyForTagsAndPeople().then((res) => {
                     const [movies, books] = res;
                     console.log([movies, books]);
@@ -221,4 +238,4 @@ const mapStateToProps = (state: any) => {
     };
 };
 
-export default connect(mapStateToProps)(SingleSearchResultPage);
+export default connect(mapStateToProps, { changeSingleSearchPageFilter })(SingleSearchResultPage);

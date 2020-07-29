@@ -32,8 +32,12 @@ const RightSection: React.FC<RightSectionProps> = ({ favoriteAuthors, favoriteBo
           <TagsSection tagObjects={[...favoriteNextStoryTags]} singleQueryType={SingleQueryType.tag}/>
         </SubSectionContainer>
         <SubSectionContainer>
-          <Typography variant='h4'>Favourite Authors/Directors:</Typography>
-          <TagsSection tags={[...favoriteAuthors, ...favoriteDirectors]} singleQueryType={SingleQueryType.person}/>
+          <Typography variant='h4'>Favourite Authors:</Typography>
+          <TagsSection tags={favoriteAuthors} singleQueryType={SingleQueryType.bookPerson}/>
+        </SubSectionContainer>
+        <SubSectionContainer>
+          <Typography variant='h4'>Favourite Directors:</Typography>
+          <TagsSection tags={favoriteDirectors} singleQueryType={SingleQueryType.moviePerson}/>
         </SubSectionContainer>
         <SubSectionContainer>
           <RegWidthCarousel bookIds={favoriteBooks} bMSource='favorite' movieIds={favoriteMovies} title={`User's Favourite Books/Movies:`} updateMethod={setFavorites}/>

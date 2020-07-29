@@ -18,11 +18,17 @@ const DeskTopFilters = styled(Tabs)`
 `;
 
 const DesktopFilter = (props: any) => {
+    const { singleSearchPageFilter, isSearchPage } = props;
     const [storyType, setStoryType] = React.useState<string>('all');
-    const { isSearchPage } = props;
     const handleChange = (event: React.ChangeEvent<{}>, newType: string) => {
         setStoryType(newType);
     };
+
+    useEffect(() => {
+        if (isSearchPage && singleSearchPageFilter) {
+            setStoryType(singleSearchPageFilter);
+        }
+    }, [singleSearchPageFilter]);
 
     useEffect(() => {
         switch (storyType) {
@@ -68,4 +74,10 @@ const DesktopFilter = (props: any) => {
     );
 };
 
-export default connect(null, { changeHomePageFilter, changeSingleSearchPageFilter })(DesktopFilter);
+const mapStateToProps = (state: any) => {
+    return {
+        singleSearchPageFilter: state.singleSearchPageFilterReducer
+    };
+};
+
+export default connect(mapStateToProps, { changeHomePageFilter, changeSingleSearchPageFilter })(DesktopFilter);
