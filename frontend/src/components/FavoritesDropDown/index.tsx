@@ -65,7 +65,7 @@ const FavoritesDropDown = (props: FavoritesDropDownProps) => {
                 {allOptions.map((o, index) => {
                     const isFav = favs.includes(o);
                     return (
-                        <MenuItem key={index} onClick={() => handleClose(o, isFav)}>
+                        <MenuItem key={index} onClick={() => handleClose(o, isFav)} style={{whiteSpace: 'normal'}}>
                             {o}
                             {isFav && <CheckIcon fontSize={'small'}/>}
                         </MenuItem>);

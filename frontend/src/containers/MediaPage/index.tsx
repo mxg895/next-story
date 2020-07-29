@@ -395,12 +395,14 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     <Grid item sm={3}>
                         Genres:
                         <TagsSection tags={genres} singleQueryType={SingleQueryType.genre}/>
-                        {genres.length > 0 && <FavoritesDropDown
-                            allOptions={genres}
-                            favoriteOptions={userLists.favoriteGenres}
-                            userId={userId}
-                            favKey={'favoriteGenres'}
-                        />}
+                        <div>
+                            {genres.length > 0 && <FavoritesDropDown
+                                allOptions={genres}
+                                favoriteOptions={userLists.favoriteGenres}
+                                userId={userId}
+                                favKey={'favoriteGenres'}
+                            />}
+                        </div>
                         Tags:
                         <TagsSection tagObjects={addedStoryTags} singleQueryType={SingleQueryType.tag}/>
                         {unaddedStoryTags.length > 0 && <StyledFormControl variant='outlined'>
