@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
 import AddToUserButton from '../../components/AddToUserButton';
 import FavPeopleDropDown from '../../components/FavPeopleDropDown';
+import Interweave from 'interweave';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -357,10 +358,10 @@ const MediaPage: React.FC<{}> = (props: any) => {
                             </Typography>
                         </Box>
                         <VerticallyCenteredDiv>
-                            <Typography variant='subtitle2' >Avg Members rating: </Typography>
+                            <Typography variant='subtitle2' >Avg members rating: </Typography>
                             <StarRater readOnlyRating={avgRating} readonly />
                         </VerticallyCenteredDiv>
-                        <Typography variant='body1'>{blurb}</Typography>
+                        <Interweave content={blurb} />
                     </Grid>
                     <Grid item sm={3}>
                         Genres:

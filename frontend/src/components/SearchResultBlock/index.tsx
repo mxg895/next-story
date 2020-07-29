@@ -4,6 +4,7 @@ import {Grid, Link, useMediaQuery} from '@material-ui/core';
 import {MediaType, SingleQueryType} from '../../constants/dataTypes';
 import TagsSection from '../TagsSection';
 import {useHistory} from 'react-router';
+import Interweave from 'interweave';
 
 interface SearchResultBlockProps {
     image: string;
@@ -69,7 +70,7 @@ const SearchResultBlock: React.FC<SearchResultBlockProps> = (props: SearchResult
                                 </strong>
                             </StyledLink>
                         </StyledTitle>
-                        {blurb}
+                        <Interweave content={blurb} />
                     </Grid>
                     <Grid item sm={3}>
                         Genres:

@@ -1,11 +1,13 @@
 import React from 'react';
-import { Modal, useMediaQuery, Typography, Paper, IconButton } from '@material-ui/core';
+import {Modal, useMediaQuery, Typography, Paper, IconButton} from '@material-ui/core';
 import styled from 'styled-components';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { CardData } from '../../constants/dataTypes';
+import {CardData, SingleQueryType} from '../../constants/dataTypes';
+import Interweave from 'interweave';
+import TagsSection from '../TagsSection';
 
 interface MediaModalProps {
     isOpen: boolean,
@@ -121,14 +123,15 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                         <MediaImage src={modalData?.image} isShort={isShort} />
                         <TopLeftContainer>
                             <Typography variant='h3' gutterBottom>{modalData?.title}</Typography>
-                            <Typography variant='caption' gutterBottom>Movie Rating: {modalData?.avgRating?.toString()}</Typography>
+                            {/*<Typography variant='caption' gutterBottom>Movie Rating: {modalData?.avgRating?.toString()}</Typography>*/}
                             <MediaTags>
-                                <Typography>{modalData?.genres?.join(', ')}</Typography>
+                                Genres:
+                                <TagsSection tags={modalData?.genres || []} singleQueryType={SingleQueryType.genre}/>
                             </MediaTags>
                         </TopLeftContainer>
                     </TopContainer>
                     <MediaBlurb isSmall={isSmall} isShort={isShort}>
-                        <Typography variant='body1'>{modalData?.blurb}</Typography>
+                        <Interweave content={modalData?.blurb || ''} />
                     </MediaBlurb>
                 </ModalContent>
                 <ModalFooter elevation={3}>
