@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import {CardData, SingleQueryType} from '../../constants/dataTypes';
+import {CardData, MediaType, SingleQueryType} from '../../constants/dataTypes';
 import Interweave from 'interweave';
 import TagsSection from '../TagsSection';
 
@@ -122,7 +122,7 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                     <TopContainer isShort={isShort}>
                         <MediaImage src={modalData?.image} isShort={isShort} />
                         <TopLeftContainer>
-                            <Typography variant='h3' gutterBottom>{modalData?.title}</Typography>
+                            <Typography variant='h3' gutterBottom>{modalData?.title} {modalData?.mediaType === MediaType.movie ? '(Movie)' : '(Book)'}</Typography>
                             {/*<Typography variant='caption' gutterBottom>Movie Rating: {modalData?.avgRating?.toString()}</Typography>*/}
                             <MediaTags>
                                 Genres:
