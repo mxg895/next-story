@@ -4,43 +4,43 @@ import DetailsIcon from '@material-ui/icons/Details';
 import CheckIcon from '@material-ui/icons/Check';
 import axios from 'axios';
 
-interface FavPeopleDropDownProps {
-    allPeople: Array<string>;
-    favoritePeople: Array<string>;
+interface FavoritesDropDownProps {
+    allOptions: Array<string>;
+    favoriteOptions: Array<string>;
     favKey: string;
     userId: string;
 }
 
-const FavPeopleDropDown = (props: FavPeopleDropDownProps) => {
-    const { allPeople, favoritePeople, favKey, userId } = props;
-    const [favPeople, setFavPeople] = useState<Array<string>>([]);
+const FavoritesDropDown = (props: FavoritesDropDownProps) => {
+    const { allOptions, favoriteOptions, favKey, userId } = props;
+    const [favs, setFavs] = useState<Array<string>>([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     useEffect(() => {
-        setFavPeople(favoritePeople);
-    }, [favoritePeople]);
+        setFavs(favoriteOptions);
+    }, [favoriteOptions]);
 
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (person: string, isFav: boolean) => {
+    const handleClose = (subject: string, isFav: boolean) => {
         setAnchorEl(null);
         if (isFav) {
-            const filteredFavs = favPeople.filter((p) => p !== person);
-            setFavPeople(filteredFavs);
+            const filteredFavs = favs.filter((f) => f !== subject);
+            setFavs(filteredFavs);
         } else {
-            setFavPeople([...favPeople, person]);
+            setFavs([...favs, subject]);
         }
         const act = isFav ? 'REMOVE' : 'ADD';
-        axios.put(`/users/${favKey}/${person}/${userId}`, {
+        const encodedSubject = encodeURIComponent(subject);
+        axios.put(`/users/${favKey}/${encodedSubject}/${userId}`, {
             action: act
         }).then((response: any) => {
             console.log(response);
-        })
-            .catch((error: any) => {
-                console.log('Error getting reviews', error);
-            });
+        }).catch((error: any) => {
+            console.log('Error adding or removing favorite from dropdown', error);
+        });
     };
     const handleMenuClose = () => {
         setAnchorEl(null);
@@ -62,11 +62,11 @@ const FavPeopleDropDown = (props: FavPeopleDropDownProps) => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
             >
-                {allPeople.map((p, index) => {
-                    const isFav = favPeople.includes(p);
+                {allOptions.map((o, index) => {
+                    const isFav = favs.includes(o);
                     return (
-                        <MenuItem key={index} onClick={() => handleClose(p, isFav)}>
-                            {p}
+                        <MenuItem key={index} onClick={() => handleClose(o, isFav)}>
+                            {o}
                             {isFav && <CheckIcon fontSize={'small'}/>}
                         </MenuItem>);
                 })}
@@ -75,4 +75,4 @@ const FavPeopleDropDown = (props: FavPeopleDropDownProps) => {
     );
 };
 
-export default FavPeopleDropDown;
+export default FavoritesDropDown;

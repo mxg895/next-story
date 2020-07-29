@@ -32,7 +32,7 @@ router.get('/tags/:bookId', (req, res) => {
         console.log('Got a book', book);
         const retBook = {
             bookId: bookId,
-            nextStoryTags: book.nextStoryTags
+            nextStoryTags: book && book.nextStoryTags || []
         }
         res.status(200).json(retBook);
     }).catch((err) => {

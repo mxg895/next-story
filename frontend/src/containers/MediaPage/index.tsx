@@ -11,7 +11,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
 import AddToUserButton from '../../components/AddToUserButton';
-import FavPeopleDropDown from '../../components/FavPeopleDropDown';
+import FavoritesDropDown from '../../components/FavoritesDropDown';
 import Interweave from 'interweave';
 import {useHistory} from 'react-router';
 
@@ -81,7 +81,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
         favoriteMovies: [],
         favoriteBooks: [],
         favoriteAuthors: [],
-        favoriteDirectors: []
+        favoriteDirectors: [],
+        favoriteGenres: []
     });
 
     const [storyTags, setStoryTags] = useState([]);
@@ -116,7 +117,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
                 console.log(mediaData);
-                if (!mediaData.id) {
+                if (!mediaData.title) {
                     numberSubscriptions = 0;
                     history.push('/notFound');
                 }
@@ -213,7 +214,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         favoriteMovies: userLists.favoriteMovies,
                         favoriteBooks: userLists.favoriteBooks,
                         favoriteAuthors: userLists.favoriteAuthors,
-                        favoriteDirectors: userLists.favoriteDirectors
+                        favoriteDirectors: userLists.favoriteDirectors,
+                        favoriteGenres: userLists.favoriteGenres
                     });
                     numberSubscriptions = numberSubscriptions - 1;
                 }
@@ -376,9 +378,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <Box fontStyle='italic'>
                             <Typography variant='subtitle1' gutterBottom>
                                 {people?.join(', ')}
-                                {people && people[0] !== '' && <FavPeopleDropDown
-                                    allPeople={people}
-                                    favoritePeople={mediaType === MediaType.movie ? userLists.favoriteDirectors : userLists.favoriteAuthors}
+                                {people && people[0] !== '' && <FavoritesDropDown
+                                    allOptions={people}
+                                    favoriteOptions={mediaType === MediaType.movie ? userLists.favoriteDirectors : userLists.favoriteAuthors}
                                     userId={userId}
                                     favKey={mediaType === MediaType.movie ? 'favoriteDirectors' : 'favoriteAuthors'}
                                 />}
@@ -393,6 +395,12 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     <Grid item sm={3}>
                         Genres:
                         <TagsSection tags={genres} singleQueryType={SingleQueryType.genre}/>
+                        {genres.length > 0 && <FavoritesDropDown
+                            allOptions={genres}
+                            favoriteOptions={userLists.favoriteGenres}
+                            userId={userId}
+                            favKey={'favoriteGenres'}
+                        />}
                         Tags:
                         <TagsSection tagObjects={addedStoryTags} singleQueryType={SingleQueryType.tag}/>
                         {unaddedStoryTags.length > 0 && <StyledFormControl variant='outlined'>
