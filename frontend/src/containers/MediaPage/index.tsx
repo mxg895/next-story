@@ -368,7 +368,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         <TagsSection tags={genres} singleQueryType={SingleQueryType.genre}/>
                         Tags:
                         <TagsSection tagObjects={addedStoryTags} singleQueryType={SingleQueryType.tag}/>
-                        <StyledFormControl variant='outlined'>
+                        {unaddedStoryTags.length > 0 && <StyledFormControl variant='outlined'>
                             <InputLabel id='demo-simple-select-outlined-label'>Add a tag</InputLabel>
                             <Select
                                 labelId='add-tag-label'
@@ -381,8 +381,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
                                     return <MenuItem key={`${index}_add`} value={t}>{t.tagName}</MenuItem>;
                                 })}
                             </Select>
-                        </StyledFormControl>
-                        <StyledFormControl variant='outlined'>
+                        </StyledFormControl>}
+                        {addedStoryTags.length > 0 && <StyledFormControl variant='outlined'>
                             <InputLabel id='demo-simple-select-outlined-label'>Delete a tag</InputLabel>
                             <Select
                                 labelId='delete-tag-label'
@@ -395,7 +395,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                                     return <MenuItem key={`${index}_delete`} value={t}>{t.tagName}</MenuItem>;
                                 })}
                             </Select>
-                        </StyledFormControl>
+                        </StyledFormControl>}
                     </Grid>
                 </Grid>
             </Container>
