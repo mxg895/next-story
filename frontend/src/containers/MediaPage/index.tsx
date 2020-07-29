@@ -13,6 +13,7 @@ import {loadAllReviewsAction} from '../../actions/reviewRatingActions';
 import AddToUserButton from '../../components/AddToUserButton';
 import FavPeopleDropDown from '../../components/FavPeopleDropDown';
 import Interweave from 'interweave';
+import {useHistory} from 'react-router';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -91,6 +92,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
     const userName = sessionDataObj.username;
     const userId = sessionDataObj.userId;
+    const history = useHistory();
 
     const {
         title,
@@ -112,6 +114,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
                 console.log(mediaData);
+                if (!mediaData.id) {
+                    history.push('/notFound');
+                }
                 setMediaObject({
                     title: mediaData.title || 'No title',
                     id: id,
