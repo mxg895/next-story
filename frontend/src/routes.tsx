@@ -25,6 +25,9 @@ class Routes extends React.Component {
         <ProtectedRoute exact key='nextStoryTagPage' path='/allStoryTags'
                         component={(props: any) => <LazyLoader load={() => import('./containers/NextStoryTagsPage')} {...props} />}
         />
+        <ProtectedRoute exact key='notFound' path='/notFound'
+                        component={(props: any) => <LazyLoader load={() => import('./containers/Notfound')} {...props} />}
+        />
         <ProtectedRoute exact key='mediaPage' path='/:mediaType/:id'
                component={(props: any) => <LazyLoader load={() => import('./containers/MediaPage')} {...props} />}
         />
