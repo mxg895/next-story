@@ -55,7 +55,7 @@ router.get('/tags/:movieId', (req, res) => {
         console.log('Got a movie', movie);
         const retMovie = {
             movieId: movieId,
-            nextStoryTags: movie.nextStoryTags
+            nextStoryTags: movie && movie.nextStoryTags || []
         }
         res.status(200).json(retMovie);
     }).catch((err) => {

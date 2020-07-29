@@ -45,7 +45,8 @@ router.get('/userLists/:userId', function(req, res, next) {
                 favoriteMovies: user.favoriteMovies,
                 favoriteBooks: user.favoriteBooks,
                 favoriteAuthors: user.favoriteAuthors,
-                favoriteDirectors: user.favoriteDirectors
+                favoriteDirectors: user.favoriteDirectors,
+                favoriteGenres: user.favoriteGenres
             };
             console.log(lists);
             res.status(200).json(lists);
@@ -94,16 +95,15 @@ router.put('/favoriteNSTags/putToFavorites/:userId/:shouldRemove', (req, res) =>
 });
 
 /* REMOVE a favorite movies or books. */
-router.put('/:key/:mediaId/:userId', (req, res) => {
-    const { mediaId,  userId, key } = req.params;
+router.put('/:key/:encodedSubject/:userId', (req, res) => {
+    const { encodedSubject,  userId, key } = req.params;
+    const subject = decodeURIComponent(encodedSubject);
     const action = JSON.stringify(req.body.action);
-    console.log(key);
-    console.log(mediaId);
     if(action.includes("REMOVE")){
         Profile.findOneAndUpdate({ userId: userId},
             {
                 $pull :{
-                    [key] : {$in: [mediaId]}
+                    [key] : {$in: [subject]}
                 }},
             { new:true, multi:true })
             .then(user => {
@@ -118,7 +118,7 @@ router.put('/:key/:mediaId/:userId', (req, res) => {
         Profile.findOneAndUpdate({ userId: userId},
             {
                 $push :{
-                    [key]: mediaId
+                    [key]: subject
                 }},
             { new:true, multi:true })
             .then(user => {
