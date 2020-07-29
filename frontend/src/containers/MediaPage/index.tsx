@@ -93,6 +93,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const userName = sessionDataObj.username;
     const userId = sessionDataObj.userId;
     const history = useHistory();
+    let numberSubscriptions = 0;
 
     const {
         title,
@@ -109,23 +110,28 @@ const MediaPage: React.FC<{}> = (props: any) => {
     } = reviewsObject;
 
     useEffect(() => {
+        numberSubscriptions = numberSubscriptions + 1;
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
         axios.get(`/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
                 console.log(mediaData);
                 if (!mediaData.id) {
+                    numberSubscriptions = 0;
                     history.push('/notFound');
                 }
-                setMediaObject({
-                    title: mediaData.title || 'No title',
-                    id: id,
-                    mediaType: mediaType,
-                    image: mediaData.image,
-                    people: mediaData.people,
-                    genres: mediaData.genres,
-                    blurb:  mediaData.blurb || 'No description'
-                });
+                if (numberSubscriptions) {
+                    setMediaObject({
+                        title: mediaData.title || 'No title',
+                        id: id,
+                        mediaType: mediaType,
+                        image: mediaData.image,
+                        people: mediaData.people,
+                        genres: mediaData.genres,
+                        blurb:  mediaData.blurb || 'No description'
+                    });
+                    numberSubscriptions = numberSubscriptions - 1;
+                }
             })
             .catch((error: any) => {
                 console.log('Error getting media', error);
@@ -133,12 +139,16 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
+        numberSubscriptions = numberSubscriptions + 1;
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
         axios.get(`/${mediaRouteType}/tags/${id}`)
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
                 console.log(mediaData);
-                setStoryTags(mediaData.nextStoryTags);
+                if (numberSubscriptions) {
+                    setStoryTags(mediaData.nextStoryTags);
+                    numberSubscriptions = numberSubscriptions - 1;
+                }
             })
             .catch((error: any) => {
                 console.log('Error getting media', error);
@@ -146,6 +156,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
+        numberSubscriptions = numberSubscriptions + 1;
         axios.get(`/reviewRatings/${mediaType}/${id}`)
             .then((reviewRatingRes: any) => {
                 const reviews = reviewRatingRes.data.reviewArray;
@@ -153,11 +164,14 @@ const MediaPage: React.FC<{}> = (props: any) => {
                 const userRatingReviewArr = reviews.filter((r: any) => r.userId === userId);
                 const userRating = userRatingReviewArr.length > 0 ? userRatingReviewArr[0].rating : undefined;
                 const userHasReviewText = userRatingReviewArr.length > 0 && !!userRatingReviewArr[0].text;
-                setReviewsObject({
-                    avgRating: reviewRatingRes.data.average,
-                    userRating: userRating,
-                    userHasReviewText: userHasReviewText
-                });
+                if (numberSubscriptions) {
+                    setReviewsObject({
+                        avgRating: reviewRatingRes.data.average,
+                        userRating: userRating,
+                        userHasReviewText: userHasReviewText
+                    });
+                    numberSubscriptions = numberSubscriptions - 1;
+                }
             })
             .catch((error: any) => {
                 console.log('Error getting reviews', error);
@@ -165,40 +179,44 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
+        numberSubscriptions = numberSubscriptions + 1;
         axios.get(`/users/userLists/${userId}`)
             .then((response: any) => {
                 const userLists = response.data;
-                if (mediaType === MediaType.movie) {
-                    if (userLists.watchLater.includes(id)) {
-                        setForLater(true);
+                if (numberSubscriptions) {
+                    if (mediaType === MediaType.movie) {
+                        if (userLists.watchLater.includes(id)) {
+                            setForLater(true);
+                        }
+                        if (userLists.favoriteMovies.includes(id)) {
+                            setFavorite(true);
+                        }
+                        if (userLists.moviesWatched.includes(id)) {
+                            setWatchedOrRead(true);
+                        }
+                    } else {
+                        if (userLists.readLater.includes(id)) {
+                            setForLater(true);
+                        }
+                        if (userLists.favoriteBooks.includes(id)) {
+                            setFavorite(true);
+                        }
+                        if (userLists.booksRead.includes(id)) {
+                            setWatchedOrRead(true);
+                        }
                     }
-                    if (userLists.favoriteMovies.includes(id)) {
-                        setFavorite(true);
-                    }
-                    if (userLists.moviesWatched.includes(id)) {
-                        setWatchedOrRead(true);
-                    }
-                } else {
-                    if (userLists.readLater.includes(id)) {
-                        setForLater(true);
-                    }
-                    if (userLists.favoriteBooks.includes(id)) {
-                        setFavorite(true);
-                    }
-                    if (userLists.booksRead.includes(id)) {
-                        setWatchedOrRead(true);
-                    }
+                    setUserLists({
+                        booksRead: userLists.booksRead,
+                        moviesWatched: userLists.moviesWatched,
+                        watchLater: userLists.watchLater,
+                        readLater: userLists.readLater,
+                        favoriteMovies: userLists.favoriteMovies,
+                        favoriteBooks: userLists.favoriteBooks,
+                        favoriteAuthors: userLists.favoriteAuthors,
+                        favoriteDirectors: userLists.favoriteDirectors
+                    });
+                    numberSubscriptions = numberSubscriptions - 1;
                 }
-                setUserLists({
-                    booksRead: userLists.booksRead,
-                    moviesWatched: userLists.moviesWatched,
-                    watchLater: userLists.watchLater,
-                    readLater: userLists.readLater,
-                    favoriteMovies: userLists.favoriteMovies,
-                    favoriteBooks: userLists.favoriteBooks,
-                    favoriteAuthors: userLists.favoriteAuthors,
-                    favoriteDirectors: userLists.favoriteDirectors
-                });
             })
             .catch((error: any) => {
                 console.log('Error getting media', error);
@@ -206,6 +224,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [userId, mediaType, id]);
 
     useEffect(() => {
+        numberSubscriptions = numberSubscriptions + 1;
         axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
@@ -222,8 +241,11 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         added.push(t);
                     } else unAdded.push(t);
                 });
-                setUnaddedStoryTags(unAdded);
-                setAddedStoryTags(added);
+                if (numberSubscriptions) {
+                    setUnaddedStoryTags(unAdded);
+                    setAddedStoryTags(added);
+                    numberSubscriptions = numberSubscriptions - 1;
+                }
             })
             .catch((error: any) => {
                 console.log('Error getting all story tags', error);
