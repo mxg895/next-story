@@ -18,7 +18,7 @@ router.get('/googleBooks/searchTen/:query', (req, res) => {
                     title: foundItem.volumeInfo && foundItem.volumeInfo.title,
                     mediaType: 'book',
                     image: foundItem.volumeInfo && foundItem.volumeInfo.imageLinks
-                        && foundItem.volumeInfo.imageLinks.thumbnail,
+                        && foundItem.volumeInfo.imageLinks.thumbnail.replace('http','https'),
                     genres: foundItem.volumeInfo && foundItem.volumeInfo.categories,
                     blurb: foundItem.volumeInfo && foundItem.volumeInfo.description,
                     people: foundItem.volumeInfo && foundItem.volumeInfo.authors,
@@ -38,7 +38,6 @@ router.get('/googleBooks/searchOneById/:query', (req, res) => {
     const id = req.params.query;
     axios.get(` https://www.googleapis.com/books/v1/volumes?q=${id}`)
         .then((response) => {
-            console.log(response);
             const foundItem = response.data.items[0];
             if (foundItem && foundItem.id === id) {
                 const returnObject = {
@@ -46,7 +45,7 @@ router.get('/googleBooks/searchOneById/:query', (req, res) => {
                     title: foundItem.volumeInfo && foundItem.volumeInfo.title,
                     mediaType: 'book',
                     image: foundItem.volumeInfo && foundItem.volumeInfo.imageLinks
-                        && foundItem.volumeInfo.imageLinks.thumbnail,
+                        && foundItem.volumeInfo.imageLinks.thumbnail.replace('http','https'),
                     genres: foundItem.volumeInfo && foundItem.volumeInfo.categories,
                     blurb: foundItem.volumeInfo && foundItem.volumeInfo.description,
                     people: foundItem.volumeInfo && foundItem.volumeInfo.authors,
@@ -64,14 +63,11 @@ router.get('/googleBooks/searchOneById/:query', (req, res) => {
 router.get('/googleBooks/popularBooks', (req, res) => {
     axios.get(` https://www.googleapis.com/books/v1/volumes?q=' '`)
         .then((response) => {
-
-
             //handle top 10 best rating books
             let filterUndefinedBooks = response.data.items && response.data.items.filter(function(element){
                 return element.volumeInfo.averageRating !== undefined;
             })
             const sortedBooks = filterUndefinedBooks && filterUndefinedBooks.sort(function(a, b) {
-                // console.log(a);
                 if(a.volumeInfo.averageRating < b.volumeInfo.averageRating) { return 1; }
                 if(a.volumeInfo.averageRating > b.volumeInfo.averageRating) { return -1; }
                 return 0;
@@ -82,14 +78,12 @@ router.get('/googleBooks/popularBooks', (req, res) => {
             let i = 0;
             while (i < numberToGet) {
                 const foundItem = sortedBooks[i];
-                console.log(foundItem.volumeInfo.averageRating);
-               // console.log(foundItem.volumeInfo.ratingsCount);
                 const returnObject = {
                     id: foundItem.id,
                     title: foundItem.volumeInfo && foundItem.volumeInfo.title,
                     mediaType: 'book',
                     image: foundItem.volumeInfo && foundItem.volumeInfo.imageLinks
-                        && foundItem.volumeInfo.imageLinks.thumbnail,
+                        && foundItem.volumeInfo.imageLinks.thumbnail.replace('http','https'),
                     genres: foundItem.volumeInfo && foundItem.volumeInfo.categories,
                     blurb: foundItem.volumeInfo && foundItem.volumeInfo.description,
                     people: foundItem.volumeInfo && foundItem.volumeInfo.authors,
@@ -99,7 +93,6 @@ router.get('/googleBooks/popularBooks', (req, res) => {
                 returnList.push(returnObject);
                 i++;
             }
-            //console.log('Succeeded getting book from googleBooks:', returnList);
             res.status(200).json(returnList);
         })
         .catch((error) => console.log(error));
@@ -115,7 +108,6 @@ router.get('/googleBooks/bookRecommendations', (req, res) => {
                 return element.volumeInfo.ratingsCount !== undefined;
             })
             const sortedBooks = filterUndefinedBooks.sort(function(a, b) {
-                // console.log(a);
                 if(a.volumeInfo.ratingsCount < b.volumeInfo.ratingsCount) { return 1; }
                 if(a.volumeInfo.ratingsCount > b.volumeInfo.ratingsCount) { return -1; }
                 return 0;
@@ -126,14 +118,12 @@ router.get('/googleBooks/bookRecommendations', (req, res) => {
             let i = 0;
             while (i < numberToGet) {
                 const foundItem = sortedBooks[i];
-                console.log(foundItem.volumeInfo.averageRating);
-                // console.log(foundItem.volumeInfo.ratingsCount);
                 const returnObject = {
                     id: foundItem.id,
                     title: foundItem.volumeInfo && foundItem.volumeInfo.title,
                     mediaType: 'book',
                     image: foundItem.volumeInfo && foundItem.volumeInfo.imageLinks
-                        && foundItem.volumeInfo.imageLinks.thumbnail,
+                        && foundItem.volumeInfo.imageLinks.thumbnail.replace('http','https'),
                     genres: foundItem.volumeInfo && foundItem.volumeInfo.categories,
                     blurb: foundItem.volumeInfo && foundItem.volumeInfo.description,
                     people: foundItem.volumeInfo && foundItem.volumeInfo.authors,
@@ -143,7 +133,6 @@ router.get('/googleBooks/bookRecommendations', (req, res) => {
                 returnList.push(returnObject);
                 i++;
             }
-            //console.log('Succeeded getting book from googleBooks:', returnList);
             res.status(200).json(returnList);
         })
         .catch((error) => console.log(error));
@@ -180,7 +169,7 @@ router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex/:increaseIn
                         title: book.volumeInfo && book.volumeInfo.title,
                         mediaType: 'book',
                         image: book.volumeInfo && book.volumeInfo.imageLinks
-                            && book.volumeInfo.imageLinks.thumbnail,
+                            && book.volumeInfo.imageLinks.thumbnail.replace('http','https'),
                         genres: book.volumeInfo && book.volumeInfo.categories,
                         blurb: book.volumeInfo && book.volumeInfo.description,
                         people: book.volumeInfo && book.volumeInfo.authors,

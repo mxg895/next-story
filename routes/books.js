@@ -9,7 +9,6 @@ router.get('/:bookId', (req, res) => {
     fetch('https://www.googleapis.com/books/v1/volumes/' + bookId)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             const foundItem = data;
             book.id= foundItem.id;
             book.title= foundItem.volumeInfo && foundItem.volumeInfo.title;
