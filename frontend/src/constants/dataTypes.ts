@@ -5,7 +5,8 @@ export enum MediaType {
 }
 
 export enum SingleQueryType {
-    person = 'person',
+    bookPerson = 'bookPerson',
+    moviePerson = 'moviePerson',
     genre = 'genre',
     tag = 'tag',
     searchBar = 'searchBar'

@@ -61,7 +61,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
                 mountedRef.current = false;
             };
         }
-    });
+    }, []);
     const renderCards = (filter: any) => {
         switch (filter) {
             case ALL:

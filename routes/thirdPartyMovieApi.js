@@ -68,7 +68,6 @@ router.get('/tmdbMovies/searchOneById/:query', (req, res) => {
     const id = req.params.query;
     axios.get(`${baseUrl}/3/movie/${id}?api_key=${tmdbApiKey}&language=en-US&include_adult=false`)
         .then((response) => {
-            console.log('RESPONSE!!!!!!!!!!!1', '\n', response , '\n', 'END RESPONSE!!!!!!!!11', '\n');
             if (response.data.status_code === 34) {
                 res.status(404).json({ message: 'Movie not found' });
             } else {
@@ -266,7 +265,8 @@ router.get('/tmdbMovies/singleQuery/:queryType/:query/:startIndex/:increaseIndex
             queryUri = `${baseUrl}/3/discover/movie?api_key=${tmdbApiKey}&language=en-US&page=1&include_adult=false&with_genres=${genreKeyLookUp[query]}`;
             discover(queryUri);
             break;
-        case 'person':
+        case 'bookPerson':
+        case 'moviePerson':
             const personUri = `${baseUrl}/3/search/person?api_key=${tmdbApiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
             axios.get(personUri).then((response) => {
                 const personId = response.data.results[0] && response.data.results[0].id || '';

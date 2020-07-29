@@ -13,8 +13,8 @@ import { ThemeProvider } from 'styled-components';
 import allReducers from './reducers/combinedReducers';
 
 const store = createStore(
-    allReducers
-    // (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+    allReducers,
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 ReactDOM.render(

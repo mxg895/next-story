@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Container from '../Container';
 import axios from 'axios';
-import {Box, Typography} from '@material-ui/core';
+import {Box, Link, Typography} from '@material-ui/core';
 import styled from 'styled-components';
 import AddToUserButton from '../../components/AddToUserButton';
+import {useHistory} from 'react-router';
 
 const TagDiv = styled.div<{ last: boolean }>`
     border-top: 2px solid ${({ theme }) => theme.palette.grey[400]};
@@ -12,9 +13,16 @@ const TagDiv = styled.div<{ last: boolean }>`
     padding: 10px;
 `;
 
+const StyledLink = styled(Link)`
+    &:hover {
+        cursor: pointer;
+    }
+`;
+
 const NextStoryTagsPage: React.FC = () => {
     const [allTags, setAllTags] = useState<Array<{ tagId: string, tagName: string, tagDescription: string }>>([]);
     const [userFavTags, setUserFavTags] = useState<Array<string>>([]);
+    const history = useHistory();
 
     useEffect(() => {
         axios.get('/nextStoryTags')
@@ -60,6 +68,10 @@ const NextStoryTagsPage: React.FC = () => {
             });
     };
 
+    const goToSingleQuery = (tagId: string) => {
+        history.push(`/searchResult/param?singleQueryType=tag&query=${tagId}`);
+    };
+
     return (
         <Container maxWidth='md'>
             <Typography variant={'h1'} gutterBottom>All our story tags!</Typography>
@@ -79,8 +91,9 @@ const NextStoryTagsPage: React.FC = () => {
                             mb={1}
                             display={'flex'}
                             justifyContent={'space-between'}
+                            onClick={() => goToSingleQuery(t.tagId)}
                         >
-                            {t.tagName}
+                            <StyledLink color={'textPrimary'}>{t.tagName}</StyledLink>
                             <AddToUserButton
                                 addLabel={'Add to favorites'}
                                 removeLabel={'Remove from favorites'}

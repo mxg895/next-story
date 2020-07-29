@@ -350,9 +350,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                                 {people?.join(', ')}
                                 {people && people[0] !== '' && <FavPeopleDropDown
                                     allPeople={people}
-                                    favoritePeople={MediaType.movie ? userLists.favoriteDirectors : userLists.favoriteAuthors}
+                                    favoritePeople={mediaType === MediaType.movie ? userLists.favoriteDirectors : userLists.favoriteAuthors}
                                     userId={userId}
-                                    favKey={MediaType.movie ? 'favoriteDirectors' : 'favoriteAuthors'}
+                                    favKey={mediaType === MediaType.movie ? 'favoriteDirectors' : 'favoriteAuthors'}
                                 />}
                             </Typography>
                         </Box>

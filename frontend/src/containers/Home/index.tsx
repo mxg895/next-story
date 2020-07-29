@@ -3,8 +3,8 @@ import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import PopularMultiCardCarousel from '../../components/PopularMulitCardCarousel';
 import RecomendationMultiCardCarousel from '../../components/RecommendationMulitCardCarousel';
-import HomePageDesktopFilter from '../../components/HomePageDesktopFilter';
-import HomePageMobileFilter from '../../components/HomePageMobileFilter';
+import HomePageDesktopFilter from '../../components/DesktopFilter';
+import HomePageMobileFilter from '../../components/MobileFilter';
 
 const Home: React.FC = () => {
   return (
