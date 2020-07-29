@@ -5,7 +5,12 @@ const NextStoryTags = require('../models/nextStoryTag');
 router.get('/', (req, res) => {
     NextStoryTags.find()
         .then(tags => {
-            res.status(200).json(tags);
+            const sortedTags = tags.sort(function(a, b) {
+                if(a.tagName < b.tagName) { return -1; }
+                if(a.tagName > b.tagName) { return 1; }
+                return 0;
+            });
+            res.status(200).json(sortedTags);
         })
         .catch((err) => {
             console.log('Error fetching all tags: ', err);

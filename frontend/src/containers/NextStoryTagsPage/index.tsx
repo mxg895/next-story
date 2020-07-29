@@ -28,12 +28,7 @@ const NextStoryTagsPage: React.FC = () => {
         axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
-                const sortedTags = tagData.sort(function(a: any, b: any) {
-                    if(a.tagName < b.tagName) { return -1; }
-                    if(a.tagName > b.tagName) { return 1; }
-                    return 0;
-                });
-                setAllTags(sortedTags);
+                setAllTags(tagData);
             })
             .catch((error: any) => {
                 console.log('Error getting all tags', error);
