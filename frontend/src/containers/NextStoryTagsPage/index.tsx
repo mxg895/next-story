@@ -91,9 +91,10 @@ const NextStoryTagsPage: React.FC = () => {
                             mb={1}
                             display={'flex'}
                             justifyContent={'space-between'}
-                            onClick={() => goToSingleQuery(t.tagId)}
                         >
-                            <StyledLink color={'textPrimary'}>{t.tagName}</StyledLink>
+                            <StyledLink color={'textPrimary'} onClick={() => goToSingleQuery(t.tagId)}>
+                                {t.tagName}
+                            </StyledLink>
                             <AddToUserButton
                                 addLabel={'Add to favorites'}
                                 removeLabel={'Remove from favorites'}
