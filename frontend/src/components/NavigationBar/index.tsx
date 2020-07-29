@@ -67,7 +67,9 @@ const NavigationBar = () => {
         setSearchBarText(event.target.value);
     };
     const handleSearch = () => {
-        history.push(`/searchResult/param?singleQueryType=searchBar&query=${searchBarText}`);
+        if (searchBarText) {
+            history.push(`/searchResult/param?singleQueryType=searchBar&query=${searchBarText}`);
+        }
     };
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
