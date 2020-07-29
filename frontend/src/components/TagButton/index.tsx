@@ -28,8 +28,9 @@ const TagButton: React.FC<TagsButtonProps> = (props: TagsButtonProps) => {
     const { label, tagId, singleQueryType } = props;
     const history = useHistory();
 
+    const encodedSubject = encodeURIComponent(tagId || label);
     const goToSingleQuery = () => {
-        history.push(`/searchResult/param?singleQueryType=${singleQueryType}&query=${tagId || label}`);
+        history.push(`/searchResult/param?singleQueryType=${singleQueryType}&query=${encodedSubject}`);
     };
 
     return (
