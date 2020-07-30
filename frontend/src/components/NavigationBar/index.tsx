@@ -72,6 +72,12 @@ const NavigationBar = () => {
         }
     };
 
+    const handleKeyPress = (event: any) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setPage(newValue);
     };
@@ -186,6 +192,7 @@ const NavigationBar = () => {
                         placeholder='Search…'
                         inputProps={{ 'aria-label': 'search' }}
                         onChange={handleSearchBarTextChange}
+                        onKeyPress={handleKeyPress}
                     />
                     <SearchButton onClick={handleSearch}>
                         <SearchIcon/>
