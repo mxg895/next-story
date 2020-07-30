@@ -14,6 +14,7 @@ import AddToUserButton from '../../components/AddToUserButton';
 import FavoritesDropDown from '../../components/FavoritesDropDown';
 import Interweave from 'interweave';
 import {useHistory} from 'react-router';
+import LoadingSpinner from '../../components/LoadingSign';
 
 const StyledImage = styled.img`
     width: 100%;
@@ -95,6 +96,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const userId = sessionDataObj.userId;
     const history = useHistory();
     let numberSubscriptions = 0;
+    const [isLoading, setIsLoading] = useState(false);
 
     const {
         title,
@@ -112,6 +114,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
 
     useEffect(() => {
         numberSubscriptions = numberSubscriptions + 1;
+        setIsLoading(true);
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
         axios.get(`/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
@@ -131,6 +134,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         blurb:  mediaData.blurb || 'No description'
                     });
                     numberSubscriptions = numberSubscriptions - 1;
+                    setIsLoading(false);
                 }
             })
             .catch((error: any) => {
@@ -328,6 +332,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
 
     return (
         <>
+            {isLoading && <LoadingSpinner/>}
             <Container maxWidth='lg'>
                 <Grid container direction={'row'}  spacing={5}>
                     <StyledGridItem item sm={3}>
