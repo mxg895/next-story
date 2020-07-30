@@ -25,12 +25,14 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     let hasAddedReview = !!currentUserReview;
 
     const [stateReviews, setStateReviews] = useState<Array<any>>([]);
+    const [stateOtherUserReviews, setStateOtherUserReviews] = useState<Array<any>>([]);
 
     const [dateOrRatingSort, setDateOrRatingSort] = useState<'date' | 'rating'>('date');
-    const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | 'recent' | 'old'>('recent');
+    const [sortDirection, setSortDirection] = useState<'lowest' | 'highest' | 'recent' | 'old'>('recent');
 
     useEffect(() => {
-        const rerenderReviews = otherUserReviews?.slice(0,9);
+        setStateOtherUserReviews(otherUserReviews);
+        const rerenderReviews = otherUserReviews?.slice(0, 9);
         setStateReviews(rerenderReviews);
     }, [otherUserReviews]);
 
@@ -38,21 +40,26 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
         setTimeout(() => {
             const currentReviewLength = stateReviews.length;
             const theFetchNum = currentReviewLength + 5;
-            const fetchedReviews = otherUserReviews.slice(0, theFetchNum);
+            const fetchedReviews = stateOtherUserReviews.slice(0, theFetchNum);
             setStateReviews(fetchedReviews);
         }, 1000);
     };
 
     useEffect(() => {
-        console.log('dateOrRatingSort', dateOrRatingSort);
-        console.log('sortDirection', sortDirection);
-        console.log('otherUserReviews', otherUserReviews);
-        let sortedOtherReviews = otherUserReviews;
+        let sortedOtherReviews = [];
         switch (sortDirection) {
-            case 'asc':
-            case 'desc':
-                sortedOtherReviews = otherUserReviews.sort(function(a, b) {
+            case 'lowest':
+            case 'highest':
+                sortedOtherReviews = stateOtherUserReviews.sort(function(a, b) {
                     if(a.rating === b.rating) {
+                        const aDate = a.datePosted && new Date(a.datePosted);
+                        const bDate = b.datePosted && new Date(b.datePosted);
+                        if(aDate > bDate) {
+                            return -1;
+                        }
+                        if(aDate < bDate) {
+                            return 1;
+                        }
                         return 0;
                     }
                     if(!a.rating) {
@@ -61,18 +68,17 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                     if(!b.rating) {
                         return -1;
                     }
-                    if (sortDirection === 'asc') {
-                        return a < b ? -1 : 1;
+                    if (sortDirection === 'highest') {
+                        return a.rating < b.rating ? 1 : -1;
                     }
                     else {
-                        return a < b ? 1 : -1;
+                        return a.rating < b.rating ? -1 : 1;
                     }
                 });
-                setStateReviews(sortedOtherReviews);
                 break;
             case 'recent':
             case 'old':
-                sortedOtherReviews = otherUserReviews.sort(function(a, b) {
+                sortedOtherReviews = stateOtherUserReviews.sort(function(a, b) {
                     const aDate = a.datePosted && new Date(a.datePosted);
                     const bDate = b.datePosted && new Date(b.datePosted);
                     if(aDate > bDate) {
@@ -83,27 +89,25 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                     }
                     return 0;
                 });
-                setStateReviews(sortedOtherReviews);
                 break;
             default:
                 break;
         }
-        console.log('sorted reviews', sortedOtherReviews);
-    }, [otherUserReviews, sortDirection, dateOrRatingSort]);
+        const slicedSortedReviews = sortedOtherReviews.slice(0, 9);
+        setStateReviews([...slicedSortedReviews]);
+    }, [stateOtherUserReviews, sortDirection, dateOrRatingSort]);
 
     const onSortTypeChange = (event: any) => {
-        console.log('onSortTypeChange', event.target.value);
         setDateOrRatingSort(event.target.value);
         if (event.target.value === 'date') {
             setSortDirection('recent');
         }
         if (event.target.value === 'rating') {
-            setSortDirection('desc');
+            setSortDirection('highest');
         }
     };
 
     const onSortDirectionChange = (event: any) => {
-        console.log('onSortDirectionChange', event.target.value);
         setSortDirection(event.target.value);
     };
 
@@ -151,53 +155,56 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
             }
             <br/>
             {otherUserReviews && otherUserReviews.length > 0 &&
-                <div>
-                    <Select variant='outlined'
+                <>
+                    <div>
+                        <Select variant='outlined'
+                                native
+                                style={{ marginBottom: '5px', marginRight: '5px' }}
+                                onChange={onSortTypeChange}
+                        >
+                            <option value={'date'}>Date</option>
+                            <option value={'rating'}>Rating</option>
+                        </Select>
+                        <Select
+                            variant='outlined'
                             native
-                            style={{ marginBottom: '5px', marginRight: '5px' }}
-                            onChange={onSortTypeChange}
-                    >
-                        <option value={'date'}>Date</option>
-                        <option value={'rating'}>Rating</option>
-                    </Select>
-                    <Select
-                        variant='outlined'
-                        native
-                        style={{ marginBottom: '5px' }}
-                        onChange={onSortDirectionChange}
-                        value={sortDirection}
-                    >
-                        <option
-                            value={dateOrRatingSort === 'date' ? 'recent' : 'desc'}
+                            style={{ marginBottom: '5px' }}
+                            onChange={onSortDirectionChange}
+                            value={sortDirection}
                         >
-                            {dateOrRatingSort === 'date' ? 'Recent' : 'Descending'}
-                        </option>
-                        <option
-                            value={dateOrRatingSort === 'date' ? 'old' : 'asc'}
-                        >
-                            {dateOrRatingSort === 'date' ? 'Old' : 'Ascending'}
-                        </option>
-                    </Select>
-                </div>
+                            <option
+                                value={dateOrRatingSort === 'date' ? 'recent' : 'highest'}
+                            >
+                                {dateOrRatingSort === 'date' ? 'Recent' : 'Highest'}
+                            </option>
+                            <option
+                                value={dateOrRatingSort === 'date' ? 'old' : 'lowest'}
+                            >
+                                {dateOrRatingSort === 'date' ? 'Old' : 'Lowest'}
+                            </option>
+                        </Select>
+                    </div>
+                    <InfiniteScroll
+                        dataLength={stateReviews.length}
+                        next={fetchMoreData}
+                        hasMore={stateReviews.length < otherUserReviews.length}
+                        loader={<h4 style={{textAlign: 'center'}}>Loading more reviews...</h4>}
+                        scrollThreshold={1}
+                        endMessage={
+                            <p style={{textAlign: 'center'}}>
+                                <b>No more reviews</b>
+                            </p>
+                        }>
+                        {stateReviews.map((r, index) =>
+                            <CommentBlock
+                                key={index}
+                                review={r}
+                                currentUserId={userId}
+                            />)
+                        }
+                    </InfiniteScroll>
+                </>
             }
-            {otherUserReviews ? <InfiniteScroll
-                dataLength={stateReviews.length}
-                next={fetchMoreData}
-                hasMore={stateReviews.length < otherUserReviews.length}
-                loader={<h4 style={{textAlign: 'center'}}>Loading more reviews...</h4>}
-                endMessage={
-                    <p style={{textAlign: 'center'}}>
-                        <b>No more reviews</b>
-                    </p>
-                }>
-                {stateReviews.map((r, index) =>
-                    <CommentBlock
-                        key={index}
-                        review={r}
-                        currentUserId={userId}
-                    />)
-                }
-            </InfiniteScroll> : null}
         </>
     );
 };
