@@ -14,7 +14,7 @@ router.get('/:bookId', (req, res) => {
             book.title= foundItem.volumeInfo && foundItem.volumeInfo.title;
             book.mediaType= 'book';
             book.image = foundItem.volumeInfo && foundItem.volumeInfo.imageLinks
-                && foundItem.volumeInfo.imageLinks.thumbnail;
+                && foundItem.volumeInfo.imageLinks.thumbnail.rseplace('http','https');
             book.genres = foundItem.volumeInfo && foundItem.volumeInfo.categories;
             book.blurb = foundItem.volumeInfo && foundItem.volumeInfo.description;
             book.people = foundItem.volumeInfo && foundItem.volumeInfo.authors;
