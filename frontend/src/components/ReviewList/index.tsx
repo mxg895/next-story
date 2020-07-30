@@ -44,26 +44,6 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
     };
 
     useEffect(() => {
-        sortReviews();
-    }, [otherUserReviews, sortDirection, dateOrRatingSort]);
-
-    const onSortTypeChange = (event: any) => {
-        console.log('onSortTypeChange', event.target.value);
-        setDateOrRatingSort(event.target.value);
-        if (event.target.value === 'date') {
-            setSortDirection('recent');
-        }
-        if (event.target.value === 'rating') {
-            setSortDirection('desc');
-        }
-    };
-
-    const onSortDirectionChange = (event: any) => {
-        console.log('onSortDirectionChange', event.target.value);
-        setSortDirection(event.target.value);
-    };
-
-    const sortReviews = () => {
         console.log('dateOrRatingSort', dateOrRatingSort);
         console.log('sortDirection', sortDirection);
         console.log('otherUserReviews', otherUserReviews);
@@ -81,7 +61,7 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                     if(!b.rating) {
                         return -1;
                     }
-                    if (sortDirection === 'desc') {
+                    if (sortDirection === 'asc') {
                         return a < b ? -1 : 1;
                     }
                     else {
@@ -109,7 +89,22 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                 break;
         }
         console.log('sorted reviews', sortedOtherReviews);
-        return sortedOtherReviews;
+    }, [otherUserReviews, sortDirection, dateOrRatingSort]);
+
+    const onSortTypeChange = (event: any) => {
+        console.log('onSortTypeChange', event.target.value);
+        setDateOrRatingSort(event.target.value);
+        if (event.target.value === 'date') {
+            setSortDirection('recent');
+        }
+        if (event.target.value === 'rating') {
+            setSortDirection('desc');
+        }
+    };
+
+    const onSortDirectionChange = (event: any) => {
+        console.log('onSortDirectionChange', event.target.value);
+        setSortDirection(event.target.value);
     };
 
     const totalReviews = hasAddedReview ? otherUserReviews.length + 1 : otherUserReviews.length;
