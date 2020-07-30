@@ -39,9 +39,15 @@ router.get('/:movieId', (req, res) => {
                     movie.people = people;
                     res.status(200).json(movie);
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => {
+                    console.log(error);
+                    res.status(500).json({ message: 'Error getting people for movie'});
+                });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            res.status(404).json({ message: 'Could not fetch movie'});
+        });
 });
 
 router.get('/tags/:movieId', (req, res) => {

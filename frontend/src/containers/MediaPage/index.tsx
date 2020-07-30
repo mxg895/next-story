@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import ReviewList from '../../components/ReviewList';
@@ -95,7 +95,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     const userName = sessionDataObj.username;
     const userId = sessionDataObj.userId;
     const history = useHistory();
-    let numberSubscriptions = 0;
+    let ref = useRef({numberSubscriptions: 0});
     const [isLoading, setIsLoading] = useState(false);
 
     const {
@@ -113,17 +113,17 @@ const MediaPage: React.FC<{}> = (props: any) => {
     } = reviewsObject;
 
     useEffect(() => {
-        numberSubscriptions = numberSubscriptions + 1;
+        ref.current.numberSubscriptions++;
         setIsLoading(true);
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
         axios.get(`/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
                 if (!mediaData.title) {
-                    numberSubscriptions = 0;
+                    ref.current.numberSubscriptions = 0;
                     history.push('/notFound');
                 }
-                if (numberSubscriptions) {
+                if (ref.current.numberSubscriptions) {
                     setMediaObject({
                         title: mediaData.title || 'No title',
                         id: id,
@@ -133,24 +133,27 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         genres: mediaData.genres,
                         blurb:  mediaData.blurb || 'No description'
                     });
-                    numberSubscriptions = numberSubscriptions - 1;
+                    ref.current.numberSubscriptions--;
                     setIsLoading(false);
                 }
             })
             .catch((error: any) => {
-                console.log('Error getting media', error);
+                if (error.response.data.message === 'Could not fetch movie') {
+                    ref.current.numberSubscriptions = 0;
+                    history.push('/notFound');
+                }
             });
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
-        numberSubscriptions = numberSubscriptions + 1;
+        ref.current.numberSubscriptions++;
         const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
         axios.get(`/${mediaRouteType}/tags/${id}`)
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
-                if (numberSubscriptions) {
+                if (ref.current.numberSubscriptions) {
                     setStoryTags(mediaData.nextStoryTags);
-                    numberSubscriptions = numberSubscriptions - 1;
+                    ref.current.numberSubscriptions--;
                 }
             })
             .catch((error: any) => {
@@ -159,7 +162,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
-        numberSubscriptions = numberSubscriptions + 1;
+        ref.current.numberSubscriptions++;
         axios.get(`/reviewRatings/${mediaType}/${id}`)
             .then((reviewRatingRes: any) => {
                 const reviews = reviewRatingRes.data.reviewArray;
@@ -167,13 +170,13 @@ const MediaPage: React.FC<{}> = (props: any) => {
                 const userRatingReviewArr = reviews.filter((r: any) => r.userId === userId);
                 const userRating = userRatingReviewArr.length > 0 ? userRatingReviewArr[0].rating : undefined;
                 const userHasReviewText = userRatingReviewArr.length > 0 && !!userRatingReviewArr[0].text;
-                if (numberSubscriptions) {
+                if (ref.current.numberSubscriptions) {
                     setReviewsObject({
                         avgRating: reviewRatingRes.data.average,
                         userRating: userRating,
                         userHasReviewText: userHasReviewText
                     });
-                    numberSubscriptions = numberSubscriptions - 1;
+                    ref.current.numberSubscriptions--;
                 }
             })
             .catch((error: any) => {
@@ -182,11 +185,11 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
-        numberSubscriptions = numberSubscriptions + 1;
+        ref.current.numberSubscriptions++;
         axios.get(`/users/userLists/${userId}`)
             .then((response: any) => {
                 const userLists = response.data;
-                if (numberSubscriptions) {
+                if (ref.current.numberSubscriptions) {
                     if (mediaType === MediaType.movie) {
                         if (userLists.watchLater.includes(id)) {
                             setForLater(true);
@@ -219,7 +222,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         favoriteDirectors: userLists.favoriteDirectors,
                         favoriteGenres: userLists.favoriteGenres
                     });
-                    numberSubscriptions = numberSubscriptions - 1;
+                    ref.current.numberSubscriptions--;
                 }
             })
             .catch((error: any) => {
@@ -228,7 +231,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
     }, [userId, mediaType, id]);
 
     useEffect(() => {
-        numberSubscriptions = numberSubscriptions + 1;
+        ref.current.numberSubscriptions++;
         axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
@@ -240,10 +243,10 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         added.push(t);
                     } else unAdded.push(t);
                 });
-                if (numberSubscriptions) {
+                if (ref.current.numberSubscriptions) {
                     setUnaddedStoryTags(unAdded);
                     setAddedStoryTags(added);
-                    numberSubscriptions = numberSubscriptions - 1;
+                    ref.current.numberSubscriptions--;
                 }
             })
             .catch((error: any) => {
