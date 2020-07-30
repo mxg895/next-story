@@ -1,6 +1,0 @@
-{
-  "watch": ["bin/", "frontend/", "models/", "routes/", "app"],
-  "ext": "js, mjs, json",
-  "ignore": ["*.test.ts"],
-  "delay": "3"
-}
