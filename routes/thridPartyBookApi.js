@@ -36,7 +36,7 @@ router.get('/googleBooks/searchTen/:query', (req, res) => {
 // note gets first match ...usually only reliable when querying by id
 router.get('/googleBooks/searchOneById/:query', (req, res) => {
     const id = req.params.query;
-    axios.get(` https://www.googleapis.com/books/v1/volumes?q=${id}`)
+    axios.get(` https://www.googleapis.com/books/v1/volumes?q=${id}maxResults=1`)
         .then((response) => {
             const foundItem = response.data.items[0];
             if (foundItem && foundItem.id === id) {
@@ -138,8 +138,7 @@ router.get('/googleBooks/bookRecommendations', (req, res) => {
         .catch((error) => console.log(error));
 });
 
-// gets a first 10 books of this subject, needs to add &startIndex=${startIndex}
-// to get results past first 10 in increments of 10 starting from the startIndex
+// to get results in increments of increaseIndexBy starting from the startIndex
 router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex/:increaseIndexBy', (req, res) => {
     const queryType = req.params.queryType;
     const subject = req.params.subject;
@@ -176,6 +175,9 @@ router.get('/googleBooks/singleQuery/:queryType/:subject/:startIndex/:increaseIn
                         publishedDate: book.volumeInfo && book.volumeInfo.publishedDate
                     }
                 });
+                if (queryType === 'bookPerson' || queryType === 'moviePerson') {
+                    bookObjectList = bookObjectList.filter((b) => b.people.includes(subject));
+                }
             }
             res.status(200).json(bookObjectList);
         })
