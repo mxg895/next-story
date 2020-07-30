@@ -62,7 +62,7 @@ const PopularMultiCardCarousel: React.FC = (props: any) => { //should take popul
                 mountedRef.current = false;
             };
         }
-    });
+    }, []);
     const renderCards = (filter: any) => {
         switch (filter) {
             case ALL:
