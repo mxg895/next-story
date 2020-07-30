@@ -14,7 +14,7 @@ const CardContainer = styled(Card)`
 `;
 
 const MediaImage = styled.img`
-    max-height: 250px;
+    height: 100%;
     max-width: 100%;
     cursor: pointer;
     &:hover {
