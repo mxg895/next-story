@@ -170,6 +170,7 @@ const ReviewList: React.FC<ReviewListProps> = (props: ReviewListProps) => {
                         native
                         style={{ marginBottom: '5px' }}
                         onChange={onSortDirectionChange}
+                        value={sortDirection}
                     >
                         <option
                             value={dateOrRatingSort === 'date' ? 'recent' : 'desc'}
