@@ -39,6 +39,46 @@ db.nextStoryTags.insertMany([
             tagId: 'tag-006',
             tagName: 'Mentor Character',
             tagDescription: 'So many stories have a mentor character that guides the fledgling hero to greatness.'
+        },
+        {
+            tagId: 'tag-007',
+            tagName: 'Bittersweet Ending',
+            tagDescription: 'A mix of happy and sad in the end for this one.'
+        },
+        {
+            tagId: 'tag-008',
+            tagName: 'Love Triangle',
+            tagDescription: 'A classic of the romance genre.'
+        },
+        {
+            tagId: 'tag-009',
+            tagName: 'Amnesia',
+            tagDescription: 'At least one of the main characters suffers from amnesia at some point in this story.'
+        },
+        {
+            tagId: 'tag-010',
+            tagName: 'Court Intrigue',
+            tagDescription: 'A large part of these stories take place at court, filled with the schemes and machinations of those who live within it.'
+        },
+        {
+            tagId: 'tag-011',
+            tagName: 'Sibling Rivalry',
+            tagDescription: 'Sibling rivalry is a large part of this story\'s plot.'
+        },
+        {
+            tagId: 'tag-012',
+            tagName: 'Tragic Backstory',
+            tagDescription: 'At least one main character has a tragic backstory that plays a crucial part in the events of the story.'
+        },
+        {
+            tagId: 'tag-013',
+            tagName: 'Evil Empire',
+            tagDescription: 'One of the main antagonistic forces in this story is an evil empire or kingdom.'
+        },
+        {
+            tagId: 'tag-014',
+            tagName: 'Post-Apocalyptic',
+            tagDescription: 'This story takes place after some apocalypse.'
         }
     ]
 );
@@ -72,7 +112,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-001',
+            id: '583083',
             text: 'Worst movie I have ever seen',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -81,7 +121,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-001',
+            id: '583083',
             text: 'amazing movie!',
             userId: 'user-001',
             userName: 'FirstName2 LastName2',
@@ -90,7 +130,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-001',
+            id: '583083',
             text: 'mehLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             userId: 'user-002',
             userName: 'Name = this user does not actually exist :P ',
@@ -99,7 +139,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-003',
+            id: '583083',
             text: 'Worst movie I have ever seen',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -108,7 +148,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-003',
+            id: '583083',
             text: 'amazing movie! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             userId: 'user-001',
             userName: 'FirstName2 LastName2',
@@ -117,7 +157,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-003',
+            id: '516486',
             text: 'meh',
             userId: 'user-002',
             userName: 'Name = this user does not actually exist :P ',
@@ -126,7 +166,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-004',
+            id: '516486',
             text: 'Worst movie I have ever seen Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -135,7 +175,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-004',
+            id: '516486',
             text: 'amazing movie!',
             userId: 'user-001',
             userName: 'FirstName2 LastName2',
@@ -144,7 +184,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-004',
+            id: '516486',
             text: 'meh',
             userId: 'user-002',
             userName: 'Name = this user does not actually exist :P ',
@@ -153,7 +193,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-005',
+            id: '516486',
             text: 'Worst movie I have ever seen',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -162,7 +202,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-005',
+            id: '516486',
             text: 'amazing movie!',
             userId: 'user-001',
             userName: 'FirstName2 LastName2',
@@ -171,7 +211,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-005',
+            id: '181812',
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             userId: 'user-002',
             userName: 'Name = this user does not actually exist :P ',
@@ -180,7 +220,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-006',
+            id: '181812',
             text: 'Worst movie I have ever seen',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -198,7 +238,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
-            id: 'movie-006',
+            id: '181812',
             text: 'meh',
             userId: 'user-002',
             userName: 'Name = this user does not actually exist :P ',
@@ -207,7 +247,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-000',
+            id: '181812',
             text: 'Worst book I have ever read',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -216,7 +256,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-000',
+            id: '5BxI_57l_CkC',
             text: 'amazing book!',
             userId: 'user-001',
             userName: 'FirstName2 LastName2',
@@ -225,7 +265,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-000',
+            id: '5BxI_57l_CkC',
             text: '# Finita donaverit facies\n' +
                 '\n' +
                 '## Facit vastatoremque atria\n' +
@@ -255,7 +295,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-000',
+            id: '5BxI_57l_CkC',
             text: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."\n' +
                 '\n' +
                 'Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC\n' +
@@ -273,7 +313,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-000',
+            id: '5BxI_57l_CkC',
             text: 'meh',
             userId: 'user-004',
             userName: 'Name = this user does not actually exist :P ',
@@ -282,7 +322,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-000',
+            id: '5BxI_57l_CkC',
             text: 'ok',
             userId: 'user-005',
             userName: 'Name = this user does not actually exist :P ',
@@ -291,7 +331,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-001',
+            id: '5BxI_57l_CkC',
             text: 'Worst book I have ever read',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -300,7 +340,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-001',
+            id: '5BxI_57l_CkC',
             text: 'amazing book!',
             userId: 'user-001',
             userName: 'FirstName2 LastName2',
@@ -309,7 +349,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-002',
+            id: '5BxI_57l_CkC',
             text: '# Finita donaverit facies\n' +
                 '\n' +
                 '## Facit vastatoremque atria\n' +
@@ -339,7 +379,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-003',
+            id: '5BxI_57l_CkC',
             text: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."\n' +
                 '\n' +
                 'Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC\n' +
@@ -357,7 +397,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-000',
+            id: '5BxI_57l_CkC',
             text: 'meh',
             userId: 'user-004',
             userName: 'Name = this user does not actually exist :P ',
@@ -366,7 +406,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-004',
+            id: '5BxI_57l_CkC',
             text: 'ok',
             userId: 'user-005',
             userName: 'Name = this user does not actually exist :P ',
@@ -375,7 +415,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-002',
+            id: 'DAAAAAAACAAJ',
             text: 'Worst book I have ever read',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -384,7 +424,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-002',
+            id: 'DAAAAAAACAAJ',
             text: 'amazing book!',
             userId: 'user-001',
             userName: 'FirstName2 LastName2',
@@ -393,7 +433,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-002',
+            id: 'DAAAAAAACAAJ',
             text: '# Finita donaverit facies\n' +
                 '\n' +
                 '## Facit vastatoremque atria\n' +
@@ -423,7 +463,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-002',
+            id: 'DAAAAAAACAAJ',
             text: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."\n' +
                 '\n' +
                 'Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC\n' +
@@ -441,7 +481,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-002',
+            id: 'DAAAAAAACAAJ',
             text: 'meh',
             userId: 'user-004',
             userName: 'Name = this user does not actually exist :P ',
@@ -450,7 +490,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-002',
+            id: 'DAAAAAAACAAJ',
             text: 'ok',
             userId: 'user-005',
             userName: 'Name = this user does not actually exist :P ',
@@ -459,7 +499,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-003',
+            id: 'DAAAAAAACAAJ',
             text: 'Worst book I have ever read',
             userId: 'user-000',
             userName: 'FirstName LastName',
@@ -468,7 +508,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-003',
+            id: 'DAAAAAAACAAJ',
             text: 'amazing book!',
             userId: 'user-001',
             userName: 'FirstName2 LastName2',
@@ -477,7 +517,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-003',
+            id: 'DAAAAAAACAAJ',
             text: '# Finita donaverit facies\n' +
                 '\n' +
                 '## Facit vastatoremque atria\n' +
@@ -507,7 +547,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-000',
+            id: 'DAAAAAAACAAJ',
             text: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."\n' +
                 '\n' +
                 'Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC\n' +
@@ -525,7 +565,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-003',
+            id: 'DAAAAAAACAAJ',
             text: 'meh',
             userId: 'user-004',
             userName: 'Name = this user does not actually exist :P ',
@@ -534,7 +574,7 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'book',
-            id: 'book-003',
+            id: 'DAAAAAAACAAJ',
             text: 'ok',
             userId: 'user-005',
             userName: 'Name = this user does not actually exist :P ',
