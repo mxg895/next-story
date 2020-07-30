@@ -43,23 +43,6 @@ const SingleSearchResultPage: React.FC = (props: any) => {
         setFilterState(singleSearchPageFilter);
     }, [singleSearchPageFilter]);
 
-    useEffect(() => {
-        switch (queryType) {
-            case SingleQueryType.moviePerson:
-                props.changeSingleSearchPageFilter(MOVIES);
-                break;
-            case SingleQueryType.bookPerson:
-                props.changeSingleSearchPageFilter(BOOKS);
-                break;
-            case SingleQueryType.tag:
-            case SingleQueryType.searchBar:
-            case SingleQueryType.genre:
-            default:
-                props.changeSingleSearchPageFilter(ALL);
-                break;
-        }
-    }, [queryType]);
-
     async function getMediaForTag() {
         let mongoMovies = [];
         let mongoBooks = [];
