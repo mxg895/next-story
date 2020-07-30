@@ -232,15 +232,10 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.get('/nextStoryTags')
             .then((res: any) => {
                 const tagData = res.data;
-                const sortedTags = tagData.sort(function(a: any, b: any) {
-                    if(a.tagName < b.tagName) { return -1; }
-                    if(a.tagName > b.tagName) { return 1; }
-                    return 0;
-                });
                 const storyTagNames = storyTags.map((t: any) => t.tagName);
                 const unAdded: Array<{ tagId: string, tagName: string }> = [];
                 const added: Array<{ tagId: string, tagName: string }> = [];
-                sortedTags.forEach((t: any) => {
+                tagData.forEach((t: any) => {
                     if (storyTagNames.includes(t.tagName)) {
                         added.push(t);
                     } else unAdded.push(t);
@@ -272,10 +267,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
             action:action
         }).then((response: any) => {
             console.log(response);
-        })
-            .catch((error: any) => {
+        }).catch((error: any) => {
                 console.log('Error getting reviews', error);
-            });
+        });
     };
 
     const addOrRemoveWatchOrRead = (mediaId: string) => {
@@ -290,7 +284,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
     };
 
     const addOrRemoveWatchReadLater = (mediaId: string) => {
-        console.log('watch or read later, mediaType: ', mediaType, 'id: ', mediaId);
         const key = mediaType === MediaType.movie ? 'watchLater' : 'readLater';
         if (isForLater) {
             setForLater(false);
@@ -313,7 +306,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
     };
 
     const handleAddTag = (event: any) => {
-        console.log(event.target.value);
         const newAddedTags = [...addedStoryTags, event.target.value];
         const filteredDeleteTags = unaddedStoryTags.filter((t: any) => t.tagId !== event.target.value.tagId);
         setAddedStoryTags(newAddedTags);
@@ -322,7 +314,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
     };
 
     const handleDeleteTag = (event: any) => {
-        console.log(event.target.value);
         const filteredStoryTags = addedStoryTags.filter((t: any) => t.tagId !== event.target.value.tagId);
         const newDeleteTags = [...unaddedStoryTags, event.target.value];
         setAddedStoryTags(filteredStoryTags);

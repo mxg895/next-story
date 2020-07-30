@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Modal, useMediaQuery, Typography, Paper, IconButton} from '@material-ui/core';
 import styled from 'styled-components';
 import CloseIcon from '@material-ui/icons/Close';
@@ -8,6 +8,8 @@ import { useHistory } from 'react-router-dom';
 import {CardData, MediaType, SingleQueryType} from '../../constants/dataTypes';
 import Interweave from 'interweave';
 import TagsSection from '../TagsSection';
+import axios from 'axios';
+import StarRater from '../StarRater';
 
 interface MediaModalProps {
     isOpen: boolean,
@@ -53,10 +55,12 @@ const MediaImage = styled.img<{ isShort: boolean }>`
     max-width: ${(props) => props.isShort ? '30%' : '50%'}
 `;
 
-const TopLeftContainer = styled.div`
+const TopLeftContainer = styled.div<{ isShort: boolean }>`
+    max-height: ${(props) => props.isShort ? '80%' : '350px'};
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
 `;
 
 const MediaTags = styled.div`
@@ -101,8 +105,40 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     const { isOpen, modalData, setModalOpen } = props;
     const history = useHistory();
 
+    const [storyTags, setStoryTags] = useState([]);
+    const [averageRating, setAverageRating] = useState(0);
+
     const isSmall = useMediaQuery('(max-width:450px)');
     const isShort = useMediaQuery('(max-height:500px)');
+
+    useEffect(() => {
+        if (isOpen) {
+            const { id, mediaType } = modalData;
+            const mediaRouteType = mediaType === MediaType.book ? 'books' : 'movies';
+            axios.get(`/${mediaRouteType}/tags/${id}`)
+                .then((mediaRes: any) => {
+                    const mediaData = mediaRes.data;
+                    setStoryTags(mediaData.nextStoryTags);
+                })
+                .catch((error: any) => {
+                    console.log('Error getting media', error);
+                });
+        }
+    }, [modalData, isOpen]);
+
+    useEffect(() => {
+        if (isOpen) {
+            const { id, mediaType } = modalData;
+            axios.get(`/reviewRatings/averageRating/${mediaType}/${id}`)
+                .then((mediaRes: any) => {
+                    const averageRatingData = mediaRes.data;
+                    setAverageRating(averageRatingData.average);
+                })
+                .catch((error: any) => {
+                    console.log('Error getting media', error);
+                });
+        }
+    }, [modalData, isOpen]);
 
     function goToPage() {
         const { id, mediaType } = modalData;
@@ -121,12 +157,23 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                 <ModalContent isSmall={isSmall} isShort={isShort}>
                     <TopContainer isShort={isShort}>
                         <MediaImage src={modalData?.image} isShort={isShort} />
-                        <TopLeftContainer>
+                        <TopLeftContainer  isShort={isShort}>
                             <Typography variant='h3' gutterBottom>{modalData?.title} {modalData?.mediaType === MediaType.movie ? '(Movie)' : '(Book)'}</Typography>
-                            {/*<Typography variant='caption' gutterBottom>Movie Rating: {modalData?.avgRating?.toString()}</Typography>*/}
+                            <Typography variant='subtitle2' >Avg members rating: {!averageRating && 'No rating'}</Typography>
+                            {averageRating > 0 && <StarRater readOnlyRating={averageRating} readonly />}
                             <MediaTags>
                                 Genres:
-                                <TagsSection tags={modalData?.genres || []} singleQueryType={SingleQueryType.genre}/>
+                                <TagsSection
+                                    tags={modalData?.genres || []}
+                                    singleQueryType={SingleQueryType.genre}
+                                />
+                                {storyTags.length > 0 && <>
+                                    Tags:
+                                    <TagsSection
+                                        tagObjects={storyTags || []}
+                                        singleQueryType={SingleQueryType.tag}
+                                    />
+                                </>}
                             </MediaTags>
                         </TopLeftContainer>
                     </TopContainer>
