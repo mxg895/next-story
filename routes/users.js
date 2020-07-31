@@ -266,4 +266,23 @@ router.get('/googleLogin/:email', function(req, res, next) {
         });
 });
 
+/* Update Profile */
+router.put('/edit/:id', async(req, res) => {
+  const { id } = req.params;
+  const { avatar, message } = req.body;
+  try {
+    const updatedProfile = await Profile.findOneAndUpdate({ _id: id },
+      { avatar, message },
+      {
+        new: true,
+        runValidators: true,
+        omitUndefined: true
+      }
+    ).exec();
+    res.status(200).json({ avatar: updatedProfile.avatar, message: updatedProfile.message});
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 module.exports = router;

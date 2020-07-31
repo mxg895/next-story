@@ -23,9 +23,16 @@ export interface ProfileState {
 
 export const SET_PROFILE = 'SET_PROFILE';
 
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+
 interface SetProfileAction {
   type: typeof SET_PROFILE;
   profile: ProfileState;
 }
 
-export type ProfileActionTypes = SetProfileAction;
+interface UpdateProfileAction {
+  type: typeof UPDATE_PROFILE;
+  data: Partial<ProfileState>;
+}
+
+export type ProfileActionTypes = SetProfileAction | UpdateProfileAction;
