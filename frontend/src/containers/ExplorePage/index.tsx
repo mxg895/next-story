@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Container from '../Container';
 import { Typography } from '@material-ui/core';
-import styled from 'styled-components';
 import TagFilter from '../../components/TagFilter';
-import axios from 'axios';
 
 const ExplorePage: React.FC = () => {
     return (

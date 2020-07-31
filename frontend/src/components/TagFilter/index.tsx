@@ -1,7 +1,7 @@
 import React, {useEffect, useState}  from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Typography, Checkbox, FormControlLabel, Button, Tabs, Tab, Box } from '@material-ui/core';
+import { Typography, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import SearchResultsInfiniteScroll from '../../components/SearchResultsInfiniteScroll';
 
 const TypeSelector = styled.div`
@@ -19,17 +19,12 @@ const TagFilter: React.FC = () => {
     const [hasMoreMovieResults, setHasMoreMovieResults] = useState<boolean>(true);
     const [hasMoreBookResults, setHasMoreBookResults] = useState<boolean>(true);
     const [allResults, setAllResults] = useState<Array<any>>([]);
+    const [queryStatus, setQueryStatus] = useState<Boolean>(false);
 
     useEffect(() => {
         axios.get('/nextStoryTags')
             .then((res: any) => {
-                const tagData = res.data;
-                const sortedTags = tagData.sort(function(a: any, b: any) {
-                    if(a.tagName < b.tagName) { return -1; }
-                    if(a.tagName > b.tagName) { return 1; }
-                    return 0;
-                });
-                setTags(sortedTags);
+                setTags(res.data);
             })
             .catch((error: any) => {
                 console.log(error);
@@ -123,6 +118,31 @@ const TagFilter: React.FC = () => {
         setQueryStartIndex(queryStartIndex + increaseIndexBy);
     };
 
+    const showFilterResult = () => {
+        if (queryStatus) {
+            if (allResults && allResults.length > 0) {
+                return (
+                    <SearchResultsInfiniteScroll
+                        resultsToDisplay={allResults}
+                        hasMore={hasMoreMovieResults || hasMoreBookResults}
+                        doNext={doNext}
+                    />
+                )
+            } else {
+                return (
+                    <p style={{textAlign: 'center'}}>
+                        <b>Sorry... We Haven't Found What You Are Looking For.</b>
+                    </p>
+                )
+            }
+        }
+        return (
+            <p style={{textAlign: 'center'}}>
+                <b>What's Your Next Story?</b>
+            </p>
+        )
+    }
+
     const tabFilter = (
         <div>
             <TypeSelector>
@@ -165,26 +185,25 @@ const TagFilter: React.FC = () => {
                 <div>
                     {
                         allTags.map(
-                            (tag) => (
+                            (tag, index) => (
                                 <FormControlLabel
-                                    onClick={(event) => event.stopPropagation()}
-                                    onFocus={(event) => event.stopPropagation()}
                                     control={
-                                    <Checkbox 
-                                        name={tag}
-                                        onClick={(event) => {
-                                            event.stopPropagation();
-                                            if (allSelectedTags.includes(tag)) {
-                                                const index = allSelectedTags.indexOf(tag);
-                                                if (index > -1) {
-                                                    allSelectedTags.splice(index, 1)
+                                        <Checkbox 
+                                            name={tag.tagName}
+                                            onClick={() => {
+                                                if (allSelectedTags.includes(tag)) {
+                                                    const index = allSelectedTags.indexOf(tag);
+                                                    if (index > -1) {
+                                                        allSelectedTags.splice(index, 1)
+                                                    }
+                                                } else {
+                                                    selectTags([...allSelectedTags, tag]);
                                                 }
-                                            } else {
-                                                selectTags([...allSelectedTags, tag]);
-                                            }
-                                        }} 
-                                    />}
+                                            }} 
+                                        />
+                                    }
                                     label={tag.tagName}
+                                    key={index}
                                 />
                             )
                         )
@@ -194,8 +213,15 @@ const TagFilter: React.FC = () => {
             <Button 
                 variant="contained"
                 onClick={()=>{
-                    setAllResults([]);
-                    getResultsByTag()
+                    if (!(isMovieSelected || isBookSelected)) {
+                        alert('Please Spicify The Story Type You Are Looking For!')
+                    } else if (!allSelectedTags || allSelectedTags.length === 0) {
+                        alert('Please Spicify The Tags For Your Story!')
+                    } else {
+                        setAllResults([]);
+                        setQueryStatus(true);
+                        getResultsByTag();
+                    }
                 }}
             >
                 Explore
@@ -207,12 +233,10 @@ const TagFilter: React.FC = () => {
         <div>
             {
                 tabFilter
+            }
+            {
+               showFilterResult()
             }                   
-            <SearchResultsInfiniteScroll
-                resultsToDisplay={allResults}
-                hasMore={hasMoreMovieResults || hasMoreBookResults}
-                doNext={doNext}
-            />
         </div>
     )
 };
