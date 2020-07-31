@@ -13,6 +13,9 @@ class Routes extends React.Component {
         <ProtectedRoute exact key='profile' path='/profile'
                component={(props: any) => <LazyLoader load={() => import('./containers/Profile')} {...props} />}
         />
+        <ProtectedRoute exact key='explore' path='/explore'
+               component={(props: any) => <LazyLoader load={() => import('./containers/ExplorePage')} {...props} />}
+        />
         <ProtectedRoute exact key='singleSearchResult' path='/searchResult/:params'
                component={(props: any) => <LazyLoader load={() => import('./containers/SingleSearchResultPage')} {...props} />}
         />

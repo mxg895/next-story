@@ -71,4 +71,17 @@ router.get('/withTag/:tagId', (req, res) => {
     });
 });
 
+router.get('/withTags/:tags', (req, res) => {
+    const tags = req.params.tags.split('&');
+    Books.find({
+        "nextStoryTags.tagId": { $all: tags}
+    }).then(movies => {
+        console.log('Got books', movies);
+        res.status(200).json(movies);
+    }).catch((err) => {
+        console.log('Error fetching books for tag: ', err);
+        res.status(500);
+    });
+});
+
 module.exports = router;
