@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import React from 'react';
+import React, { useState } from 'react';
 import { ProfileState } from '../../constants/profileActionTypes';
 import Avatar from '@material-ui/core/Avatar';
+import EditProfileModal from '../EditProfileModal';
 
 const UserInfoContainer = styled.div`
   flex: 0 1 auto;
@@ -44,9 +45,22 @@ const StyledSectionHeader = styled(Typography)`
   }
 `;
 
-const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, moviesCount, name }) => {
+const ActionDiv = styled.div`
+  cursor: pointer;
+  :hover {
+    & .MuiTypography-root {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, moviesCount, name/* , openModal */ }) => {
+  const [modalOpen, setModalOpen] = useState(true);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
   return (
     <UserInfoContainer id='userinfo'>
+        <EditProfileModal isOpen={modalOpen} handleClose={closeModal}/>
       <PhotoContainer id='profile-pic'>
         <div>
           {avatar
@@ -54,7 +68,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, m
             : <ProfilePicPlaceholder color='disabled' fontSize='large'/>
           }
         </div>
-        <Typography align='center' color='primary' variant='body1'>(Edit Profile)</Typography>
+        <ActionDiv onClick={openModal}><Typography align='center' color='primary' variant='body1'>Edit Profile</Typography></ActionDiv>
       </PhotoContainer>
       <div>
         <Typography variant='body2'>{`User Name: ${name}`}</Typography>
