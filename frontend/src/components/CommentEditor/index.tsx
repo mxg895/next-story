@@ -9,7 +9,7 @@ const TextArea = styled.textarea`
     height: 100px;
     width: 99%;
     resize: vertical;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 `;
 
 export enum CommentEditorAction {

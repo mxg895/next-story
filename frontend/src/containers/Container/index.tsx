@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import Container from '@material-ui/core/Container';
+import React/* , {ReactNode}  */from 'react';
+import Container, { ContainerProps } from '@material-ui/core/Container';
 import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
@@ -7,14 +7,14 @@ const StyledContainer = styled(Container)`
     margin-bottom: 85px;
 `;
 
-interface MarginContainerProps {
+interface MarginContainerProps extends ContainerProps {
     maxWidth: 'lg'
         | 'md'
         | 'sm'
         | 'xl'
         | 'xs'
         | false;
-    children: ReactNode;
+    // children: React.ReactNode;
 }
 
 const MarginContainer: React.FC<MarginContainerProps> = (props: MarginContainerProps) => {
