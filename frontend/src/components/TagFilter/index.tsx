@@ -35,7 +35,7 @@ const TagFilter: React.FC = () => {
         let movieList: Array<any> = [];
         let bookList: Array<any> = [];
         const query: String = allSelectedTags.reduce((acc, curr)=> {
-            return `${acc}&${curr.tagId}`
+            return `${acc}&${curr.tagId}`;
         }, '').substring(1);
 
         if (isMovieSelected) {
@@ -44,7 +44,7 @@ const TagFilter: React.FC = () => {
                 movieList = movieRes.data;
             } catch (e) {
                 console.log('error fetching movies from mongo for tag', e);
-            }         
+            }
         }
 
         if (isBookSelected) {
@@ -60,7 +60,7 @@ const TagFilter: React.FC = () => {
         } catch (e) {
             console.log(e);
         }
-    }
+    };
 
     async function getFromThirdParty(mongoMovies: any[], mongoBooks: any[]) {
         const bookData: any[] = [];
@@ -114,7 +114,6 @@ const TagFilter: React.FC = () => {
     }
 
     const doNext = () => {
-        console.log('set next');
         setQueryStartIndex(queryStartIndex + increaseIndexBy);
     };
 
@@ -127,21 +126,21 @@ const TagFilter: React.FC = () => {
                         hasMore={hasMoreMovieResults || hasMoreBookResults}
                         doNext={doNext}
                     />
-                )
+                );
             } else {
                 return (
                     <p style={{textAlign: 'center'}}>
                         <b>Sorry... We Haven't Found What You Are Looking For.</b>
                     </p>
-                )
+                );
             }
         }
         return (
             <p style={{textAlign: 'center'}}>
                 <b>What's Your Next Story?</b>
             </p>
-        )
-    }
+        );
+    };
 
     const tabFilter = (
         <div>
@@ -154,27 +153,27 @@ const TagFilter: React.FC = () => {
                         onClick={(event) => event.stopPropagation()}
                         onFocus={(event) => event.stopPropagation()}
                         control={
-                        <Checkbox 
-                            name="movie" 
+                        <Checkbox
+                            name='movie'
                             onClick={(event) => {
                                 event.stopPropagation();
                                 selectMovie(!isMovieSelected);
-                            }} 
+                            }}
                         />}
-                        label="Movies"
+                        label='Movies'
                     />
                     <FormControlLabel
                         onClick={(event) => event.stopPropagation()}
                         onFocus={(event) => event.stopPropagation()}
                         control={
                         <Checkbox
-                            name="book"
+                            name='book'
                             onClick={(event) => {
                                 event.stopPropagation();
                                 selectBook(!isBookSelected);
-                            }} 
+                            }}
                         />}
-                        label="Books"
+                        label='Books'
                     />
                 </div>
             </TypeSelector>
@@ -188,18 +187,18 @@ const TagFilter: React.FC = () => {
                             (tag, index) => (
                                 <FormControlLabel
                                     control={
-                                        <Checkbox 
+                                        <Checkbox
                                             name={tag.tagName}
                                             onClick={() => {
                                                 if (allSelectedTags.includes(tag)) {
                                                     const index = allSelectedTags.indexOf(tag);
                                                     if (index > -1) {
-                                                        allSelectedTags.splice(index, 1)
+                                                        allSelectedTags.splice(index, 1);
                                                     }
                                                 } else {
                                                     selectTags([...allSelectedTags, tag]);
                                                 }
-                                            }} 
+                                            }}
                                         />
                                     }
                                     label={tag.tagName}
@@ -210,13 +209,14 @@ const TagFilter: React.FC = () => {
                     }
                 </div>
             </div>
-            <Button 
-                variant="contained"
+            <Button
+                variant='contained'
+                style={{ marginBottom: '5px' }}
                 onClick={()=>{
                     if (!(isMovieSelected || isBookSelected)) {
-                        alert('Please Spicify The Story Type You Are Looking For!')
+                        alert('Please Spicify The Story Type You Are Looking For!');
                     } else if (!allSelectedTags || allSelectedTags.length === 0) {
-                        alert('Please Spicify The Tags For Your Story!')
+                        alert('Please Spicify The Tags For Your Story!');
                     } else {
                         setAllResults([]);
                         setQueryStatus(true);
@@ -228,7 +228,7 @@ const TagFilter: React.FC = () => {
             </Button>
         </div>
     );
-    
+
     return (
         <div>
             {
@@ -236,9 +236,9 @@ const TagFilter: React.FC = () => {
             }
             {
                showFilterResult()
-            }                   
+            }
         </div>
-    )
+    );
 };
 
 export default TagFilter;
