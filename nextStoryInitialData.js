@@ -211,6 +211,95 @@ db.reviewRatings.insertMany([
         },
         {
             mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed May 13 2012 19:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 1
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed May 18 2019 19:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 0
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed Jun 18 2020 18:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 5
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed Jun 29 2020 19:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 3
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed Jun 29 2018 19:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 2
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed Jun 31 2020 19:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 3
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed Jul 08 2020 19:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 4
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed May 11 2020 19:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 2
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed May 12 2014 19:14:30 GMT-0700 (Pacific Daylight Time)',
+            rating: 0
+        },
+        {
+            mediaType: 'movie',
+            id: '516486',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo!',
+            userId: 'user-001',
+            userName: 'FirstName2 LastName2',
+            datePosted: 'Wed Jun 08 2019 19:14:30 GMT-0700 (Pacific Daylight Time)',
+        },
+        {
+            mediaType: 'movie',
             id: '181812',
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             userId: 'user-002',
