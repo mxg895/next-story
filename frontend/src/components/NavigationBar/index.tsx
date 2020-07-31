@@ -77,7 +77,7 @@ const NavigationBar = () => {
     useEffect(() => {
         switch (page) {
             case 'explore':
-                // do something when the explore tab is clicked
+                history.push('/explore');
                 break;
             case 'tags':
                 history.push('/allStoryTags');

@@ -42,7 +42,7 @@ const SingleSearchResultPage: React.FC = (props: any) => {
             const mongoBookRes = await axios.get(`/books/withTag/${query}`);
             mongoBooks = mongoBookRes.data;
         } catch (e) {
-            console.log('error fetching movies from mongo for tag', e);
+            console.log('error fetching books from mongo for tag', e);
         }
         return [mongoMovies, mongoBooks];
     }
