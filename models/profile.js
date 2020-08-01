@@ -1,5 +1,3 @@
-import {MediaItemDTO} from "./mediaItemDTO";
-
 const mongoose = require('mongoose');
 
 const profileSchema = mongoose.Schema({
@@ -18,8 +16,32 @@ const profileSchema = mongoose.Schema({
     favoriteNextStoryTags: [{tagId: String, tagName: String }],
     favoriteMovies: Array,
     favoriteBooks: Array,
+    favoriteMoviesDetails: [MediaItemDTO],
+    favoriteBooksDetails: [MediaItemDTO],
     favoriteAuthors: Array,
     favoriteDirectors: Array
 }, { collection: 'profiles' });
+
+class MediaItemDTO {
+    id;
+    title;
+    mediaType;
+    image;
+    genres;
+    blurb;
+    publishedDate;
+    avgRating;
+
+    constructor(id, title, mediaType,image, genres, blurb, publishedDate,  avgRating){
+        this.id = id;
+        this.title = title;
+        this.mediaType = mediaType;
+        this.image = image;
+        this.genres = genres;
+        this.blurb = blurb;
+        this.publishedDate = publishedDate;
+        this.avgRating = avgRating;
+    }
+}
 
 module.exports = mongoose.model('Profile', profileSchema);
