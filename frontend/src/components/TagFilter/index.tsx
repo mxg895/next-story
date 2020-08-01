@@ -214,9 +214,9 @@ const TagFilter: React.FC = () => {
                 style={{ marginBottom: '5px' }}
                 onClick={()=>{
                     if (!(isMovieSelected || isBookSelected)) {
-                        alert('Please Spicify The Story Type You Are Looking For!');
+                        alert('Please Specify The Story Type You Are Looking For!');
                     } else if (!allSelectedTags || allSelectedTags.length === 0) {
-                        alert('Please Spicify The Tags For Your Story!');
+                        alert('Please Specify The Tags For Your Story!');
                     } else {
                         setAllResults([]);
                         setQueryStatus(true);
