@@ -1,4 +1,4 @@
-import { Tag } from './dataTypes';
+import {CardData, Tag} from './dataTypes';
 
 export interface ProfileState {
   avatar: string;
@@ -10,6 +10,8 @@ export interface ProfileState {
   favoriteDirectors: Array<string>;
   favoriteGenres: Array<string>;
   favoriteMovies: Array<string>;
+  favoriteMoviesDetails: Array<CardData>;
+  favoriteBooksDetails: Array<CardData>;
   favoriteNextStoryTags: Array<Tag>;
   message: string;
   moviesWatched: Array<string>;

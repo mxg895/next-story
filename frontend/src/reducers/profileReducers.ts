@@ -9,6 +9,8 @@ const initialProfileState: ProfileState = {
   favoriteDirectors: [],
   favoriteGenres: [],
   favoriteMovies: [],
+  favoriteMoviesDetails: [],
+  favoriteBooksDetails: [],
   favoriteNextStoryTags: [],
   message: '',
   moviesWatched: [],
