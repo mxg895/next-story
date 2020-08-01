@@ -32,6 +32,7 @@ router.get('/favoriteNSTags/:userId', function(req, res, next) {
         })
 });
 
+
 router.get('/userLists/:userId', function(req, res, next) {
     const userId = req.params.userId;
     Profile.findOne({ userId : userId })
@@ -43,6 +44,12 @@ router.get('/userLists/:userId', function(req, res, next) {
                 readLater: user.readLater,
                 favoriteMovies: user.favoriteMovies,
                 favoriteBooks: user.favoriteBooks,
+                booksReadDetails: user.booksReadDetails,
+                moviesWatchedDetails: user.moviesWatchedDetails,
+                readLaterDetails: user.readLaterDetails,
+                watchLaterDetails: user.watchLaterDetails,
+                favoriteMoviesDetails: user.favoriteMoviesDetails,
+                favoriteBooksDetails: user.favoriteBooksDetails,
                 favoriteAuthors: user.favoriteAuthors,
                 favoriteDirectors: user.favoriteDirectors,
                 favoriteGenres: user.favoriteGenres
@@ -98,12 +105,16 @@ router.put('/:key/:encodedSubject/:userId', (req, res) => {
     const { encodedSubject,  userId, key } = req.params;
     const subject = decodeURIComponent(encodedSubject);
     const action = JSON.stringify(req.body.action);
+    const keyPlusDetails = decodeURIComponent(key)+'Details';
+    const subjectDetails = req.body.mediaObject;
     if(action.includes("REMOVE")){
         Profile.findOneAndUpdate({ userId: userId},
             {
                 $pull :{
-                    [key] : {$in: [subject]}
-                }},
+                    [key] : {$in: [subject]},
+                    [keyPlusDetails] : {id:subject}
+                }
+            },
             { new:true, multi:true })
             .then(user => {
                 console.log('Success. Updated user info: ', user[key] );
@@ -117,7 +128,8 @@ router.put('/:key/:encodedSubject/:userId', (req, res) => {
         Profile.findOneAndUpdate({ userId: userId},
             {
                 $push :{
-                    [key]: subject
+                    [key]: subject,
+                    [keyPlusDetails]: subjectDetails
                 }},
             { new:true, multi:true })
             .then(user => {
@@ -158,6 +170,12 @@ router.post('/signUp', function(req, res, next) {
                                 favoriteNextStoryTags: [],
                                 favoriteMovies: [],
                                 favoriteBooks: [],
+                                booksReadDetails: [],
+                                moviesWatchedDetails: [],
+                                readLaterDetails: [],
+                                watchLaterDetails: [],
+                                favoriteMoviesDetails: [],
+                                favoriteBooksDetails: [],
                                 favoriteAuthors: [],
                                 favoriteDirectors: []
                             }
