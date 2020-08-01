@@ -98,12 +98,19 @@ router.put('/:key/:encodedSubject/:userId', (req, res) => {
     const { encodedSubject,  userId, key } = req.params;
     const subject = decodeURIComponent(encodedSubject);
     const action = JSON.stringify(req.body.action);
+    const keyPlusDetails = decodeURIComponent(key)+'Details';
+    const subjectDetails = req.body.mediaObject;
+    console.log(userId);
+    console.log(key);
+    console.log(encodedSubject);
     if(action.includes("REMOVE")){
         Profile.findOneAndUpdate({ userId: userId},
             {
                 $pull :{
-                    [key] : {$in: [subject]}
-                }},
+                    [key] : {$in: [subject]},
+                    [keyPlusDetails] : {id:subject}
+                }
+            },
             { new:true, multi:true })
             .then(user => {
                 console.log('Success. Updated user info: ', user[key] );
@@ -117,7 +124,8 @@ router.put('/:key/:encodedSubject/:userId', (req, res) => {
         Profile.findOneAndUpdate({ userId: userId},
             {
                 $push :{
-                    [key]: subject
+                    [key]: subject,
+                    [keyPlusDetails]: subjectDetails
                 }},
             { new:true, multi:true })
             .then(user => {

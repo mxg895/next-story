@@ -16,8 +16,8 @@ const profileSchema = mongoose.Schema({
     favoriteNextStoryTags: [{tagId: String, tagName: String }],
     favoriteMovies: Array,
     favoriteBooks: Array,
-    favoriteMoviesDetails: [{id:String, title:String, mediaType:String, image:String, genres:String, blurb:String, publishedDate:String, avgRating:Number}],
-    favoriteBooksDetails: [{id:String, title:String, mediaType:String, image:String, genres:String, blurb:String, publishedDate:String, avgRating:Number}],
+    favoriteMoviesDetails: [{id:String, title:String, mediaType:String, image:String, people:[], genres:[], blurb:String}],
+    favoriteBooksDetails: [{id:String, title:String, mediaType:String, image:String, people:[], genres:[], blurb:String}],
     favoriteAuthors: Array,
     favoriteDirectors: Array
 }, { collection: 'profiles' });

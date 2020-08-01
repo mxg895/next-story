@@ -81,6 +81,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
         readLater: [],
         favoriteMovies: [],
         favoriteBooks: [],
+        favoriteMoviesDetails: [],
+        favoriteBooksDetails: [],
         favoriteAuthors: [],
         favoriteDirectors: [],
         favoriteGenres: []
@@ -218,6 +220,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         readLater: userLists.readLater,
                         favoriteMovies: userLists.favoriteMovies,
                         favoriteBooks: userLists.favoriteBooks,
+                        favoriteMoviesDetails: userLists.favoriteMoviesDetails,
+                        favoriteBooksDetails: userLists.favoriteBooksDetails,
                         favoriteAuthors: userLists.favoriteAuthors,
                         favoriteDirectors: userLists.favoriteDirectors,
                         favoriteGenres: userLists.favoriteGenres
@@ -266,9 +270,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
     };
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
-        axios.put(`/users/${key}/${mediaId}/${userId}`, {
-            action:action
-        }).then((response: any) => {
+        const data = {action:action, mediaObject};
+        axios.put(`/users/${key}/${mediaId}/${userId}`, data).then((response: any) => {
             console.log(response);
         }).catch((error: any) => {
                 console.log('Error getting reviews', error);
