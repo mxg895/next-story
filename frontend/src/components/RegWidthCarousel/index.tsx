@@ -1,5 +1,5 @@
 import Typography from '@material-ui/core/Typography';
-import React, { useEffect, useCallback, useState } from 'react';
+import React, {useEffect, useCallback, useState, useRef} from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import MediaCard from '../MediaCard';
@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import Axios from 'axios';
 import qs from 'qs';
 import { CombinedMoviesBooksInfo } from '../../constants/BooksMoviesActionTypes';
+import axios from "axios";
+import MockBookCover from "../../assets/MockBookCover.jpg";
 
 const StyledCarousel = styled(Carousel)`
   margin-top: 20px;
@@ -52,48 +54,68 @@ const SearchSelect: React.FC = () => {
 };
 
 const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, title, withSearchSelect, updateMethod }) => {
-  const [mediaData, setMediaData] = useState({ books: [], movies: [] } as CombinedMoviesBooksInfo);
-  const host = window.location.protocol + '//'+ window.location.host;
-  const fetchBooksAndMovies = () => {
-    Axios.get(`${host}/multi/booksAndMovies`, {
-      params: { books: bookIds, movies: movieIds },
-      paramsSerializer: (params) => {
-        return qs.stringify(params);
-      }
-    })
-      .then((response)=> {
-        const data: CombinedMoviesBooksInfo = response.data;
-        updateMethod(data);
-        setMediaData(data);
-      })
-      .catch((err) => {
-        console.error('Error fetching books and movie information for media cards: ', err);
-    });
-  };
+    const sessionDataString = sessionStorage.getItem('NS-session-data');
+    const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
+    const userId = sessionDataObj.userId;
+    const [mediaData, setMediaData] = useState([{    title: '',
+        id: '',
+        mediaType: MediaType.start,
+        image: MockBookCover,
+        people: '',
+        genres: [],
+        nextStoryTags: [],
+        blurb: '',
+        avgRating: 0}]);
+    // const [mediaData, setMediaData] = useState({ books: [], movies: [] } as CombinedMoviesBooksInfo);
+    useEffect(() => {
+        axios.get(`/users/userLists/${userId}`)
+            .then((response: any) => {
+                const data = response.data;
+                console.log(title);
+                setMediaData(data.favoriteMoviesDetails);
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
+    }, []);
+  // const host = window.location.protocol + '//'+ window.location.host;
+  // const fetchBooksAndMovies = () => {
+  //   Axios.get(`${host}/multi/booksAndMovies`, {
+  //     params: { books: bookIds, movies: movieIds },
+  //     paramsSerializer: (params) => {
+  //       return qs.stringify(params);
+  //     }
+  //   })
+  //     .then((response)=> {
+  //       const data: CombinedMoviesBooksInfo = response.data;
+  //       updateMethod(data);
+  //       setMediaData(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error fetching books and movie information for media cards: ', err);
+  //   });
+  // };
+  //
+  // const fetchCallback = useCallback(fetchBooksAndMovies, [bookIds, movieIds]);
 
-  const fetchCallback = useCallback(fetchBooksAndMovies, [bookIds, movieIds]);
-
-  const bookCards = mediaData.books.map(({ bookId, avgRating, nextStoryTags }) => {
-    const transformedNSTags = nextStoryTags.map((tag) => {
-      return tag.tagName;
-    });
-    return <MediaCard key={bookId} cardData={{ ...mockCardData, avgRating, id: bookId, mediaType: MediaType.book, nextStoryTags: transformedNSTags }} />;
+  const mediaCards = mediaData.map((cardData:CardData, index) => {
+    return <MediaCard key={index} cardData={cardData} />;
   });
 
-  const movieCards = mediaData.movies.map(({ movieId, avgRating, nextStoryTags }) => {
-    const transformedNSTags = nextStoryTags.map((tag) => {
-      return tag.tagName;
-    });
-    return <MediaCard key={movieId} cardData={{ ...mockCardData, avgRating, id: movieId, mediaType: MediaType.movie, nextStoryTags: transformedNSTags }} />;
-  });
+  // const movieCards = mediaData.movies.map(({ movieId, avgRating, nextStoryTags }) => {
+  //   const transformedNSTags = nextStoryTags.map((tag) => {
+  //     return tag.tagName;
+  //   });
+  //   return <MediaCard key={movieId} cardData={{ ...mockCardData, avgRating, id: movieId, mediaType: MediaType.movie, nextStoryTags: transformedNSTags }} />;
+  // });
 
-  const cards = [...bookCards, movieCards];
+  const cards = [...mediaCards];
 
-  useEffect(() => {
-    if(!!bookIds?.length || !!movieIds?.length) {
-      fetchCallback();
-    }
-  }, [bookIds, movieIds, fetchCallback]);
+  // useEffect(() => {
+  //   if(!!bookIds?.length || !!movieIds?.length) {
+  //     fetchCallback();
+  //   }
+  // }, [bookIds, movieIds, fetchCallback]);
 
   return (
     <>
