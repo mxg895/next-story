@@ -1,5 +1,5 @@
 import Typography from '@material-ui/core/Typography';
-import React, {useEffect, useCallback, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import MediaCard from '../MediaCard';
@@ -13,8 +13,8 @@ import { connect } from 'react-redux';
 import Axios from 'axios';
 import qs from 'qs';
 import { CombinedMoviesBooksInfo } from '../../constants/BooksMoviesActionTypes';
-import axios from "axios";
-import MockBookCover from "../../assets/MockBookCover.jpg";
+import axios from 'axios';
+import MockBookCover from '../../assets/MockBookCover.jpg';
 
 const StyledCarousel = styled(Carousel)`
   margin-top: 20px;
@@ -72,7 +72,29 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
             .then((response: any) => {
                 const data = response.data;
                 console.log(title);
-                setMediaData(data.favoriteMoviesDetails);
+                console.log(data);
+                let finalData: any[] = [];
+                console.log(title);
+                if(title?.includes('Favourite')){
+                    finalData.push.apply(finalData, data.favoriteMoviesDetails);
+                    finalData.push.apply(finalData, data.favoriteBooksDetails);
+                }
+                else{
+                    finalData.push.apply(finalData, data.watchLaterDetails);
+                    finalData.push.apply(finalData, data.readLaterDetails);
+                    finalData.push.apply(finalData, data.booksReadDetails);
+                    finalData.push.apply(finalData, data.moviesWatchedDetails);
+                }
+
+
+                setMediaData(finalData);
+                // setMediaData(data.favoriteMoviesDetails);
+                //setMediaData(data.favoriteBooksDetails);
+               //  setMediaData(data.watchLaterDetails);
+               //  setMediaData(data.readLaterDetails);
+               //  setMediaData(data.booksReadDetails);
+               //  setMediaData(data.moviesWatchedDetails);
+               // setMediaData(data.watchLaterDetails);
             })
             .catch((error: any) => {
                 console.log(error);
