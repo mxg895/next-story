@@ -12,12 +12,16 @@ const profileSchema = mongoose.Schema({
     moviesWatched: Array,
     readLater: Array,
     watchLater: Array,
-    favoriteGenres: Array,
-    favoriteNextStoryTags: [{tagId: String, tagName: String }],
     favoriteMovies: Array,
     favoriteBooks: Array,
+    favoriteGenres: Array,
+    booksReadDetails: [{id:String, title:String, mediaType:String, image:String, people:[], genres:[], blurb:String}],
+    moviesWatchedDetails: [{id:String, title:String, mediaType:String, image:String, people:[], genres:[], blurb:String}],
+    readLaterDetails: [{id:String, title:String, mediaType:String, image:String, people:[], genres:[], blurb:String}],
+    watchLaterDetails: [{id:String, title:String, mediaType:String, image:String, people:[], genres:[], blurb:String}],
     favoriteMoviesDetails: [{id:String, title:String, mediaType:String, image:String, people:[], genres:[], blurb:String}],
     favoriteBooksDetails: [{id:String, title:String, mediaType:String, image:String, people:[], genres:[], blurb:String}],
+    favoriteNextStoryTags: [{tagId: String, tagName: String }],
     favoriteAuthors: Array,
     favoriteDirectors: Array
 }, { collection: 'profiles' });
