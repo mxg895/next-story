@@ -52,7 +52,7 @@ const TopContainer = styled.div<{ isShort: boolean }>`
 `;
 
 const MediaImage = styled.img<{ isShort: boolean }>`
-    max-width: ${(props) => props.isShort ? '30%' : '50%'}
+    max-width: ${(props) => props.isShort ? '30%' : '50%'};
 `;
 
 const TopLeftContainer = styled.div<{ isShort: boolean }>`

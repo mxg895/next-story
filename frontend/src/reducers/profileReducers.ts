@@ -1,4 +1,4 @@
-import { ProfileState, ProfileActionTypes, SET_PROFILE } from '../constants/profileActionTypes';
+import { ProfileState, ProfileActionTypes, SET_PROFILE, UPDATE_PROFILE } from '../constants/profileActionTypes';
 
 const initialProfileState: ProfileState = {
   avatar: '',
@@ -30,6 +30,8 @@ const profileReducer = (state = initialProfileState, action: ProfileActionTypes)
   switch (action.type) {
     case SET_PROFILE:
       return { ...action.profile };
+    case UPDATE_PROFILE:
+      return { ...state, ...action.data };
     default:
       return state;
   }
