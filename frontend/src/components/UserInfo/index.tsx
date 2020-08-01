@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import React, { useState } from 'react';
 import { ProfileState } from '../../constants/profileActionTypes';
-import Avatar from '@material-ui/core/Avatar';
 import EditProfileModal from '../EditProfileModal';
+import ProfilePhotoDisplay from '../ProfilePhotoDisplay';
 
 const UserInfoContainer = styled.div`
   flex: 0 1 auto;
@@ -17,25 +16,11 @@ const UserInfoContainer = styled.div`
   }
 `;
 
-const ProfilePicPlaceholder = styled(AccountBoxIcon)`
-  &.MuiSvgIcon-root {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
 const PhotoContainer = styled.div`
   width: 150px;
   &>:first-child {
-    border: solid 2px #D3D3D3;
+    border: solid 1px #D3D3D3;
     height: 150px;
-  }
-`;
-
-const StyledAvatar = styled(Avatar)`
-  &.MuiAvatar-root {
-    width: 100%;
-    height: 100%;
   }
 `;
 
@@ -55,19 +40,14 @@ const ActionDiv = styled.div`
 `;
 
 const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, moviesCount, name/* , openModal */ }) => {
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   return (
     <UserInfoContainer id='userinfo'>
         <EditProfileModal isOpen={modalOpen} handleClose={closeModal}/>
-      <PhotoContainer id='profile-pic'>
-        <div>
-          {avatar
-            ? <StyledAvatar variant='square'><img alt='profile' src={avatar} width='100%'/></StyledAvatar>
-            : <ProfilePicPlaceholder color='disabled' fontSize='large'/>
-          }
-        </div>
+      <PhotoContainer>
+        <ProfilePhotoDisplay avatar={avatar}/>
         <ActionDiv onClick={openModal}><Typography align='center' color='primary' variant='body1'>Edit Profile</Typography></ActionDiv>
       </PhotoContainer>
       <div>
