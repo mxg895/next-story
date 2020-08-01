@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import ReviewList from '../../components/ReviewList';
-import {MediaType, SingleQueryType} from '../../constants/dataTypes';
+import {CardData, MediaType, SingleQueryType} from '../../constants/dataTypes';
 import styled from 'styled-components';
 import {Box, FormControl, Grid, InputLabel, MenuItem, Select} from '@material-ui/core';
 import TagsSection from '../../components/TagsSection';
@@ -83,6 +83,10 @@ const MediaPage: React.FC<{}> = (props: any) => {
         favoriteBooks: [],
         favoriteMoviesDetails: [],
         favoriteBooksDetails: [],
+        booksReadDetails: [],
+        moviesWatchedDetails: [],
+        readLaterDetails: [],
+        watchLaterDetails: [],
         favoriteAuthors: [],
         favoriteDirectors: [],
         favoriteGenres: []
@@ -222,6 +226,10 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         favoriteBooks: userLists.favoriteBooks,
                         favoriteMoviesDetails: userLists.favoriteMoviesDetails,
                         favoriteBooksDetails: userLists.favoriteBooksDetails,
+                        booksReadDetails: userLists.booksReadDetails,
+                        moviesWatchedDetails: userLists.moviesWatchedDetails,
+                        readLaterDetails: userLists.readLaterDetails,
+                        watchLaterDetails: userLists.watchLaterDetails,
                         favoriteAuthors: userLists.favoriteAuthors,
                         favoriteDirectors: userLists.favoriteDirectors,
                         favoriteGenres: userLists.favoriteGenres

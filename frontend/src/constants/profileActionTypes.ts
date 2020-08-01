@@ -12,6 +12,10 @@ export interface ProfileState {
   favoriteMovies: Array<string>;
   favoriteMoviesDetails: Array<CardData>;
   favoriteBooksDetails: Array<CardData>;
+  booksReadDetails: Array<CardData>,
+  moviesWatchedDetails: Array<CardData>,
+  readLaterDetails: Array<CardData>,
+  watchLaterDetails: Array<CardData>,
   favoriteNextStoryTags: Array<Tag>;
   message: string;
   moviesWatched: Array<string>;

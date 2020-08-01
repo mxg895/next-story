@@ -58,6 +58,10 @@ interface RightSectionProps {
   favoriteMovies: string[];
   favoriteMoviesDetails: Array<CardData>;
   favoriteBooksDetails: Array<CardData>;
+  booksReadDetails: Array<CardData>;
+  moviesWatchedDetails: Array<CardData>;
+  readLaterDetails: Array<CardData>;
+  watchLaterDetails: Array<CardData>;
   favoriteNextStoryTags: Tag[];
   readLater: string[];
   type: string;
