@@ -17,7 +17,6 @@
       }
     },
     "rules": {
-      // line endings:
       "eol-last": 2,
       "no-trailing-spaces": "error",
       "no-multiple-empty-lines": ["error", {
@@ -26,67 +25,13 @@
         "maxBOF": 0
       }],
       "comma-dangle": "error",
-      // arrow functions:
       "arrow-parens": ["error", "always"],
-      // promises -- this one requires another plugin:
-      //   "no-floating-promises": ["error"],
-      // quotes & semicolons， etc.:
       "jsx-quotes": ["error", "prefer-single"],
       "@typescript-eslint/quotes": ["error", "single", {
         "allowTemplateLiterals": true,
         "avoidEscape": true
       }],
       "semi": ["error", "always"],
-    //   "object-curly-spacing": ["warn", "always"],
-    //   "no-unused-vars": [
-        // "warn",
-    //     {
-    //       "vars": "all",
-    //       "args": "none"
-    //     }
-    //   ],
-    //   "@typescript-eslint/no-unused-vars": [
-    //     "warn",
-    //     {
-    //       "vars": "all",
-    //       "args": "none"
-    //     }
-    //   ],
-    //   "@typescript-eslint/no-explicit-any": [
-    //     "error",
-    //     {
-    //       "ignoreRestArgs": true
-    //     }
-    //   ],
-    //   "max-len": [
-    //     "warn",
-    //     {
-    //       "code": 80,
-    //       "ignoreStrings": true,
-    //       "ignoreTemplateLiterals": true,
-    //       "ignoreComments": true
-    //     }
-    //   ],
-    //   "no-plusplus": [
-    //     "error",
-    //     {
-    //       "allowForLoopAfterthoughts": true
-    //     }
-    //   ],
-    //   "react/jsx-key": "error",
-    //   "import/no-extraneous-dependencies": [
-    //     "error",
-    //     {
-    //       "devDependencies": [
-    //         "**/*.test.js",
-    //         "**/*.test.jsx",
-    //         "**/*.test.ts",
-    //         "**/*.test.tsx",
-    //         "src/tests/**/*"
-    //       ],
-    //       "packageDir": "./"
-    //     }
-    //   ],
       "react/jsx-props-no-spreading": "off",
       "import/prefer-default-export": "off",
       "react/jsx-boolean-value": "off",

@@ -152,7 +152,6 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                     console.log('mongo movies and books:', res);
                     getFromThirdParty(mongoMovies, mongoBooks).then((res) => {
                         const [movieData, bookData] = res;
-                        console.log([movieData, bookData]);
                     }).catch((e) => console.log(e));
                 }).catch((e) => console.log(e));
                 break;
