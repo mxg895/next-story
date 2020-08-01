@@ -10,8 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import Select from '../Select';
 import { CardData, MediaType } from '../../constants/dataTypes';
 import { connect } from 'react-redux';
-import Axios from 'axios';
-import qs from 'qs';
 import { CombinedMoviesBooksInfo } from '../../constants/BooksMoviesActionTypes';
 import axios from 'axios';
 import MockBookCover from '../../assets/MockBookCover.jpg';
