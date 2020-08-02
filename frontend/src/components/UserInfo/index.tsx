@@ -56,7 +56,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, m
         <Typography variant='body2'>{`Movies Watched: ${moviesCount}`}</Typography>
       </div>
       <div>
-        <StyledSectionHeader>About Me/Message User</StyledSectionHeader>
+        <StyledSectionHeader>About Me</StyledSectionHeader>
         <Typography variant='body2'>
           {about}
         </Typography>

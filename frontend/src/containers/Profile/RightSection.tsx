@@ -29,6 +29,9 @@ const RightSection: React.FC<RightSectionProps> = ({ favoriteAuthors, favoriteBo
         <SubSectionContainer>
           <Typography variant='h4'>Favourite Genres</Typography>
           <TagsSection tags={[...favoriteGenres]} singleQueryType={SingleQueryType.genre}/>
+        </SubSectionContainer>
+        <SubSectionContainer>
+          <Typography variant='h4'>Favourite Tags</Typography>
           <TagsSection tagObjects={[...favoriteNextStoryTags]} singleQueryType={SingleQueryType.tag}/>
         </SubSectionContainer>
         <SubSectionContainer>
