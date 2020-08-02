@@ -87,7 +87,6 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
             infinite
             keyBoardControl
             minimumTouchDrag={80}
-            slidesToSlide={1}
             swipeable
             centerMode={true}
             removeArrowOnDeviceType={['xxs', 'xs', 'sm']}
@@ -98,6 +97,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
                         min: 1920
                     },
                     items: 6,
+                    slidesToSlide: 4,
                     partialVisibilityGutter: 40
                 },
                 lg: {
@@ -106,6 +106,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
                         min: 1280
                     },
                     items: 5,
+                    slidesToSlide: 3,
                     partialVisibilityGutter: 30
                 },
                 md: {
@@ -114,6 +115,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
                         min: 1100
                     },
                     items: 4,
+                    slidesToSlide: 2,
                     partialVisibilityGutter: 0
                 },
                 xmd: {
@@ -122,6 +124,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
                         min: 900
                     },
                     items: 3,
+                    slidesToSlide: 2,
                     partialVisibilityGutter: 0
                 },
                 sm: {
@@ -130,6 +133,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
                         min: 600
                     },
                     items: 2,
+                    slidesToSlide: 1,
                     partialVisibilityGutter: 0
                 },
                 xs: {
@@ -138,6 +142,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
                         min: 400
                     },
                     items: 1,
+                    slidesToSlide: 1,
                     partialVisibilityGutter: 0
                 },
                 xxs: {
@@ -146,6 +151,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
                         min: 0
                     },
                     items: 0.5,
+                    slidesToSlide: 1,
                     partialVisibilityGutter: 100
                 }
             }}>
