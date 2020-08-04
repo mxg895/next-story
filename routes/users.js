@@ -271,14 +271,20 @@ router.get('/googleLogin/:email', function(req, res, next) {
     const { email } = req.params;
     Profile.findOne({ email : email })
         .then((user) => {
-            const userObj = {
-                name: user.name,
-                userId: user.userId
+            if (user) {
+                const userObj = {
+                    name: user.name,
+                    userId: user.userId
+                }
+                console.log('USER', user);
+                res.status(200).json(userObj);
             }
-            res.status(200).json(userObj);
+            else {
+                res.status(404).json({ message: 'User not found, please sign up or try again' });
+            }
         })
         .catch((error) => {
-            console.log(error);
+            console.log('Error logging in:', error);
             res.status(500);
         });
 });

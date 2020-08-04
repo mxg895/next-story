@@ -58,7 +58,6 @@ export default function Login() {
     const [isGoogleLogin, setIsGoogleLogin] = useState(false);
 
     const history = useHistory();
-    const host = window.location.protocol + '//'+ window.location.host;
     useEffect(() => {
         const sessionDataString = sessionStorage.getItem('NS-session-data');
         const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
@@ -77,7 +76,7 @@ export default function Login() {
             return;
         }
         setLoginError(false);
-        axios.get(host + `/users/notGoogleLogin/${email}/${password}`)
+        axios.get(`/users/notGoogleLogin/${email}/${password}`)
             .then((profile: any) => {
                 const passwordIsCorrect = profile.data.passwordCorrect;
                 if (passwordIsCorrect) {
@@ -115,10 +114,9 @@ export default function Login() {
     };
 
     const onLoginSuccess = (response: any) => {
-        console.log('response: ', response);
         const googleEmail = response.profileObj.email;
         if (googleEmail) {
-            axios.get(host + `/users/googleLogin/${googleEmail}`)
+            axios.get(`/users/googleLogin/${googleEmail}`)
                 .then((profile: any) => {
                     const userId = profile.data.userId;
                     const username = profile.data.name;
