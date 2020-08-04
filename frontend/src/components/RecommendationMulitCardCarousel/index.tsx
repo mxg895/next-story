@@ -3,8 +3,6 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import MediaCard from '../MediaCard';
 import styled from 'styled-components';
-import MockMovieCover from '../../assets/MockCover.png';
-import MockBookCover from '../../assets/MockBookCover.jpg';
 import { CardData, MediaType } from '../../constants/dataTypes';
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -21,7 +19,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
     const [movieData, setMovieData] = useState([{    title: '',
         id: '',
         mediaType: MediaType.start,
-        image: MockMovieCover,
+        image: '',
         people: '',
         genres: [],
         nextStoryTags: [],
@@ -30,7 +28,7 @@ const RecomendationMultiCardCarousel: React.FC = (props: any) => { //should take
     const [bookData, setBookData] = useState([{    title: '',
         id: '',
         mediaType: MediaType.start,
-        image: MockBookCover,
+        image: '',
         people: '',
         genres: [],
         nextStoryTags: [],

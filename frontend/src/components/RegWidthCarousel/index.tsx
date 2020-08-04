@@ -4,7 +4,6 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import MediaCard from '../MediaCard';
 import styled from 'styled-components';
-import MockCover from '../../assets/MockCover.png';
 import SearchBar from '../SearchBar';
 import Grid from '@material-ui/core/Grid';
 import Select from '../Select';
@@ -12,7 +11,6 @@ import { CardData, MediaType } from '../../constants/dataTypes';
 import { connect } from 'react-redux';
 import { CombinedMoviesBooksInfo } from '../../constants/BooksMoviesActionTypes';
 import axios from 'axios';
-import MockBookCover from '../../assets/MockBookCover.jpg';
 
 const StyledCarousel = styled(Carousel)`
   margin-top: 20px;
@@ -47,7 +45,7 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
     const [mediaData, setMediaData] = useState([{    title: '',
         id: '',
         mediaType: MediaType.start,
-        image: MockBookCover,
+        image: '',
         people: '',
         genres: [],
         nextStoryTags: [],
