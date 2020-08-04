@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import ReviewList from '../../components/ReviewList';
-import {CardData, MediaType, SingleQueryType} from '../../constants/dataTypes';
+import {MediaType, SingleQueryType} from '../../constants/dataTypes';
 import styled from 'styled-components';
 import {Box, FormControl, Grid, InputLabel, MenuItem, Select} from '@material-ui/core';
 import TagsSection from '../../components/TagsSection';
