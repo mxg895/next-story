@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
 import ReviewList from '../../components/ReviewList';
-import {CardData, MediaType, SingleQueryType} from '../../constants/dataTypes';
+import {MediaType, SingleQueryType} from '../../constants/dataTypes';
 import styled from 'styled-components';
 import {Box, FormControl, Grid, InputLabel, MenuItem, Select} from '@material-ui/core';
 import TagsSection from '../../components/TagsSection';
@@ -67,7 +67,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
         image: '',
         people: [''],
         genres: [''],
-        blurb: 'No description'
+        blurb: 'No description',
+        publishedDate: '2020-01-01',
+        avgRating: 0
     });
     const [reviewsObject, setReviewsObject] = useState({
         avgRating: 0,
@@ -137,7 +139,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                         image: mediaData.image,
                         people: mediaData.people,
                         genres: mediaData.genres,
-                        blurb:  mediaData.blurb || 'No description'
+                        blurb:  mediaData.blurb || 'No description',
+                        publishedDate: mediaData.publishedDate,
+                        avgRating: mediaData.avgRating
                     });
                     ref.current.numberSubscriptions--;
                     setIsLoading(false);
@@ -278,6 +282,8 @@ const MediaPage: React.FC<{}> = (props: any) => {
     };
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
+        console.log(mediaObject);
+        console.log('troll');
         const data = {action:action, mediaObject};
         axios.put(`/users/${key}/${mediaId}/${userId}`, data).then((response: any) => {
             console.log(response);
