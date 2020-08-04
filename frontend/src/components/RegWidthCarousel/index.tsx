@@ -69,10 +69,7 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
         axios.get(`/users/userLists/${userId}`)
             .then((response: any) => {
                 const data = response.data;
-                console.log(title);
-                console.log(data);
                 let finalData: any[] = [];
-                console.log(title);
                 if(title?.includes('Favourite')){
                     finalData.push.apply(finalData, data.favoriteMoviesDetails);
                     finalData.push.apply(finalData, data.favoriteBooksDetails);

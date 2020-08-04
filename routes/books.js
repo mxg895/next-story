@@ -10,7 +10,6 @@ router.get('/:bookId', (req, res) => {
         .then((response) => response.json())
         .then((data) => {
             const foundItem = data;
-            console.log(data);
             book.id= foundItem.id;
             book.title= foundItem.volumeInfo && foundItem.volumeInfo.title;
             book.mediaType= 'book';

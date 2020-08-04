@@ -54,7 +54,6 @@ router.get('/userLists/:userId', function(req, res, next) {
                 favoriteDirectors: user.favoriteDirectors,
                 favoriteGenres: user.favoriteGenres
             };
-            console.log(lists);
             res.status(200).json(lists);
         })
         .catch((error) => {

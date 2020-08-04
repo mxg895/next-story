@@ -127,8 +127,6 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.get(`/${mediaRouteType}/${id}`)
             .then((mediaRes: any) => {
                 const mediaData = mediaRes.data;
-                console.log(mediaData);
-                console.log('troll');
                 if (!mediaData.title) {
                     ref.current.numberSubscriptions = 0;
                     history.push('/notFound');
