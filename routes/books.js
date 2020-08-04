@@ -10,6 +10,7 @@ router.get('/:bookId', (req, res) => {
         .then((response) => response.json())
         .then((data) => {
             const foundItem = data;
+            console.log(data);
             book.id= foundItem.id;
             book.title= foundItem.volumeInfo && foundItem.volumeInfo.title;
             book.mediaType= 'book';
@@ -19,7 +20,7 @@ router.get('/:bookId', (req, res) => {
             book.blurb = foundItem.volumeInfo && foundItem.volumeInfo.description;
             book.people = foundItem.volumeInfo && foundItem.volumeInfo.authors;
             book.publishedDate = foundItem.volumeInfo && foundItem.volumeInfo.publishedDate;
-
+            book.avgRating = foundItem.volumeInfo && foundItem.volumeInfo.averageRating;
             console.log('Succeeded getting book from googleBooks:', book);
             res.status(200).json(book);
         }).catch((error) => console.log(error));
