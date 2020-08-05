@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { ProfileState } from '../../constants/profileActionTypes';
 import EditProfileModal from '../EditProfileModal';
 import ProfilePhotoDisplay from '../ProfilePhotoDisplay';
+import Button from '@material-ui/core/Button';
+import DeleteAccountModal from '../DeleteAccountModal';
 
 const UserInfoContainer = styled.div`
   flex: 0 1 auto;
@@ -40,15 +42,18 @@ const ActionDiv = styled.div`
 `;
 
 const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, moviesCount, name/* , openModal */ }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const [modalOpen, setModalOpen] = useState({ editProfile: false, deleteAccount: false });
+  const openProfileModal = () => setModalOpen({ ...modalOpen, editProfile: true });
+  const closeProfileModal = () => setModalOpen({ ...modalOpen, editProfile: false });
+  const openDeleteAccountModal = () => setModalOpen({ ...modalOpen, deleteAccount: true });
+  const closeDeleteAccountModal = () => setModalOpen({ ...modalOpen, deleteAccount: false });
   return (
     <UserInfoContainer id='userinfo'>
-        <EditProfileModal isOpen={modalOpen} handleClose={closeModal}/>
+      <EditProfileModal isOpen={modalOpen.editProfile} handleClose={closeProfileModal}/>
+      <DeleteAccountModal isOpen={modalOpen.deleteAccount} handleClose={closeDeleteAccountModal}/>
       <PhotoContainer>
         <ProfilePhotoDisplay avatar={avatar}/>
-        <ActionDiv onClick={openModal}><Typography align='center' color='primary' variant='body1'>Edit Profile</Typography></ActionDiv>
+        <ActionDiv onClick={openProfileModal}><Typography align='center' color='primary' variant='body1'>Edit Profile</Typography></ActionDiv>
       </PhotoContainer>
       <div>
         <Typography variant='body2'>{`User Name: ${name}`}</Typography>
@@ -65,6 +70,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, m
         <StyledSectionHeader>Contact</StyledSectionHeader>
         <Typography variant='body2'>{email}</Typography>
       </div>
+      <Button variant='contained' onClick={openDeleteAccountModal}>Delete Account</Button>
     </UserInfoContainer>
   );
 };
