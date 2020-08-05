@@ -27,11 +27,11 @@ const RightSection: React.FC<RightSectionProps> = ({ favoriteAuthors, favoriteBo
     <StyledDiv>
       <>
         <SubSectionContainer>
-          <Typography variant='h4'>Favourite Genres</Typography>
+          <Typography variant='h4'>Favourite Genres:</Typography>
           <TagsSection tags={[...favoriteGenres]} singleQueryType={SingleQueryType.genre}/>
         </SubSectionContainer>
         <SubSectionContainer>
-          <Typography variant='h4'>Favourite Tags</Typography>
+          <Typography variant='h4'>Favourite Tags:</Typography>
           <TagsSection tagObjects={[...favoriteNextStoryTags]} singleQueryType={SingleQueryType.tag}/>
         </SubSectionContainer>
         <SubSectionContainer>
@@ -43,10 +43,10 @@ const RightSection: React.FC<RightSectionProps> = ({ favoriteAuthors, favoriteBo
           <TagsSection tags={favoriteDirectors} singleQueryType={SingleQueryType.moviePerson}/>
         </SubSectionContainer>
         <SubSectionContainer>
-          <RegWidthCarousel bookIds={favoriteBooks} bMSource='favorite' movieIds={favoriteMovies} title={`User's Favourite Books/Movies:`} updateMethod={setFavorites}/>
+          <RegWidthCarousel bookIds={favoriteBooks} bMSource='favorite' movieIds={favoriteMovies} title='Favourite Books/Movies:' updateMethod={setFavorites}/>
         </SubSectionContainer>
         <SubSectionContainer>
-          <RegWidthCarousel bMSource='later' title={`User's Read/Watched List`} bookIds={readLater} movieIds={watchLater} withSearchSelect updateMethod={setLater}/>
+          <RegWidthCarousel bMSource='later' title={`User's Read/Watched List`} bookIds={readLater} movieIds={watchLater} updateMethod={setLater}/>
         </SubSectionContainer>
       </>
     </StyledDiv>

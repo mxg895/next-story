@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const Profile = require('../models/profile');
+const ReviewRating = require('../models/reviewRating');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var { uuid } = require('uuidv4');
 
 /* GET users listing. */
 router.get('/:userId', function(req, res, next) {
-    console.log('getting userID');
     const userId = req.params.userId;
     Profile.findOne({ userId : userId }).select('-__v -encrypted')
         .then((user) => {
@@ -18,6 +18,22 @@ router.get('/:userId', function(req, res, next) {
             res.status(500);
         })
 });
+
+/* DELETE user's account */
+router.delete('/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const result = await Profile.deleteOne({ userId }, (err) => {
+    if (err) {
+      res.status(500).json(err);
+    }
+    ReviewRating.deleteMany({ userId }, (err) => {
+      if (err) {
+        res.status(500).json(err)
+      }
+    })
+  });
+  res.status(200).json(result);
+})
 
 router.get('/favoriteNSTags/:userId', function(req, res, next) {
     const userId = req.params.userId;
