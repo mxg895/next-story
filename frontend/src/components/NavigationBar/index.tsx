@@ -32,28 +32,13 @@ const Spacer = styled.div`
     flex: 1;
 `;
 
-const DesktopNavigationItems = styled(Hidden)`
-`;
-
 const SearchArea = styled.div`
     display: flex;
-`;
-
-const DesktopMenu = styled(Hidden)`
-`;
-
-const MobileMenu = styled(Hidden)`
-`;
-
-const DesktopNavigationTabs = styled(Tabs)`
 `;
 
 const SearchInputArea = styled(InputBase)`
     background-color: white;
     padding-left: 5px;
-`;
-
-const SearchButton = styled(Button)`
 `;
 
 const NavigationBar = () => {
@@ -165,10 +150,10 @@ const NavigationBar = () => {
                 <Logo href='/'>
                     Next Story
                 </Logo>
-                <DesktopNavigationItems
+                <Hidden
                     smDown
                 >
-                    <DesktopNavigationTabs
+                    <Tabs
                         variant='fullWidth'
                         value={ (page === 'tags' || page === 'explore') ? page : false }
                         aria-label='nav items tabs'
@@ -184,8 +169,8 @@ const NavigationBar = () => {
                             label='Explore'
                             value={'explore'}
                         />
-                    </DesktopNavigationTabs>
-                </DesktopNavigationItems>
+                    </Tabs>
+                </Hidden>
                 <Spacer/>
                 <SearchArea>
                     <SearchInputArea
@@ -194,12 +179,12 @@ const NavigationBar = () => {
                         onChange={handleSearchBarTextChange}
                         onKeyPress={handleKeyPress}
                     />
-                    <SearchButton onClick={handleSearch}>
+                    <Button onClick={handleSearch}>
                         <SearchIcon/>
-                    </SearchButton>
+                    </Button>
                 </SearchArea>
                 <Spacer/>
-                <DesktopMenu
+                <Hidden
                     smDown
                 >
                     <IconButton
@@ -221,8 +206,8 @@ const NavigationBar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                </DesktopMenu>
-                <MobileMenu
+                </Hidden>
+                <Hidden
                     mdUp
                 >
                     <IconButton
@@ -234,7 +219,7 @@ const NavigationBar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                </MobileMenu>
+                </Hidden>
             </Toolbar>
             {renderMobileMenu}
             {renderMenu}

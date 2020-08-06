@@ -14,9 +14,6 @@ import {
 } from '../../constants/homePageFilterConstants';
 import {changeSingleSearchPageFilter} from '../../actions/singleSearchPageFilterActions';
 
-const DeskTopFilters = styled(Tabs)`
-`;
-
 const DesktopFilter = (props: any) => {
     const { singleSearchPageFilter, isSearchPage } = props;
     const [storyType, setStoryType] = React.useState<string>('all');
@@ -48,7 +45,7 @@ const DesktopFilter = (props: any) => {
 
     return (
         <Hidden smDown>
-            <DeskTopFilters
+            <Tabs
                 value={storyType}
                 onChange={handleChange}
                 aria-label='home-page-filter'
@@ -69,7 +66,7 @@ const DesktopFilter = (props: any) => {
                     label='Books'
                     value={'books'}
                 />
-            </DeskTopFilters>
+            </Tabs>
         </Hidden>
     );
 };
