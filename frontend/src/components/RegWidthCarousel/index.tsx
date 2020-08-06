@@ -51,7 +51,7 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
         nextStoryTags: [],
         blurb: '',
         avgRating: 0}]);
-    // const [mediaData, setMediaData] = useState({ books: [], movies: [] } as CombinedMoviesBooksInfo);
+
     useEffect(() => {
         axios.get(`/users/userLists/${userId}`)
             .then((response: any) => {
@@ -78,7 +78,9 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
   const mediaCards = mediaData.map((cardData:CardData, index) => {
     return <MediaCard key={index} cardData={cardData} />;
   });
+
   const cards = [...mediaCards];
+
   return (
     <>
       <Typography variant='h4'>{title}</Typography>

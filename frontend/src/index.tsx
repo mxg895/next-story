@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -18,7 +17,6 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  // <React.StrictMode>
       <Provider store={store}>
         <MuiThemeProvider theme={theme}>
           <ThemeProvider theme={theme}>
@@ -28,7 +26,6 @@ ReactDOM.render(
           </ThemeProvider>
         </MuiThemeProvider>
       </Provider>,
-  // </React.StrictMode>,
   document.getElementById('root')
 );
 

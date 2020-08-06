@@ -10,9 +10,6 @@ import DeleteAccountModal from '../DeleteAccountModal';
 const UserInfoContainer = styled.div`
   flex: 0 1 auto;
   min-width: 300px;
-  /* height: 100vh; */
-  /* overflow-x: hidden; */
-  /* overflow-y: auto; */
   & > * {
     margin-bottom: 10px;
   }
@@ -41,7 +38,7 @@ const ActionDiv = styled.div`
   }
 `;
 
-const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, moviesCount, name/* , openModal */ }) => {
+const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, moviesCount, name }) => {
   const [modalOpen, setModalOpen] = useState({ editProfile: false, deleteAccount: false });
   const openProfileModal = () => setModalOpen({ ...modalOpen, editProfile: true });
   const closeProfileModal = () => setModalOpen({ ...modalOpen, editProfile: false });
