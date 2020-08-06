@@ -20,6 +20,7 @@ const TagFilter: React.FC = () => {
     const [hasMoreBookResults, setHasMoreBookResults] = useState<boolean>(true);
     const [allResults, setAllResults] = useState<Array<any>>([]);
     const [queryStatus, setQueryStatus] = useState<Boolean>(false);
+    const [hasSearched, setHasSearched] = useState<boolean>(false);
 
     useEffect(() => {
         axios.get('/nextStoryTags')
@@ -104,12 +105,13 @@ const TagFilter: React.FC = () => {
                 console.log(e);
             }
         }
-        if (movieData.length === 0) {
+        if (queryStartIndex + increaseIndexBy > mongoMovies.length) {
             setHasMoreMovieResults(false);
         }
-        if (bookData.length === 0) {
+        if (queryStartIndex + increaseIndexBy > mongoBooks.length) {
             setHasMoreBookResults(false);
         }
+        setHasSearched(true);
         return [movieData, bookData];
     }
 
@@ -129,9 +131,15 @@ const TagFilter: React.FC = () => {
                 );
             } else {
                 return (
-                    <p style={{textAlign: 'center'}}>
-                        <b>Sorry... We Haven't Found What You Are Looking For.</b>
-                    </p>
+                    <>{hasSearched ?
+                        <p style={{textAlign: 'center'}}>
+                            <b>Sorry... We Haven't Found What You Are Looking For.</b>
+                        </p>
+                        :
+                        <p style={{textAlign: 'center'}}>
+                            <b>Searching...</b>
+                        </p>
+                    }</>
                 );
             }
         }
@@ -218,6 +226,7 @@ const TagFilter: React.FC = () => {
                     } else if (!allSelectedTags || allSelectedTags.length === 0) {
                         alert('Please Specify The Tags For Your Story!');
                     } else {
+                        setHasSearched(false);
                         setAllResults([]);
                         setQueryStatus(true);
                         getResultsByTag();
