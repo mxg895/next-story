@@ -1,4 +1,4 @@
-import React/* , {ReactNode}  */from 'react';
+import React from 'react';
 import Container, { ContainerProps } from '@material-ui/core/Container';
 import styled from 'styled-components';
 
@@ -14,7 +14,6 @@ interface MarginContainerProps extends ContainerProps {
         | 'xl'
         | 'xs'
         | false;
-    // children: React.ReactNode;
 }
 
 const MarginContainer: React.FC<MarginContainerProps> = (props: MarginContainerProps) => {

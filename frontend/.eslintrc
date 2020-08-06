@@ -1,7 +1,6 @@
 // https://medium.com/@feralamillo/create-react-app-typescript-eslint-and-prettier-699277b0b913
 
 // wip -- might add/change more later on.
-// module.exports = {
   {
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint"],

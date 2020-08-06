@@ -35,7 +35,7 @@ const PopularMultiCardCarousel: React.FC = (props: any) => { //should take popul
         blurb: '',
         avgRating: 0}]);
     let mountedRef = useRef(true);
-    // let mountedRef2 = useRef(true);
+
     useEffect(() => {
         axios.get(`/thirdPartyMovieApi/tmdbMovies/popularMovies`)
             .then((response: any) => {

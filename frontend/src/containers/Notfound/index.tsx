@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import styled from 'styled-components';
 
-// height calculates taking into account the margins on the Container component
+// height calculated to take into account the margins on the Container component
 const CenteredDiv = styled.div`
     width: 100%;
     height: calc(100vh - 170px);

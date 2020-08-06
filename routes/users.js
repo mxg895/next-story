@@ -163,7 +163,6 @@ router.post('/signUp', function(req, res, next) {
     Profile.findOne({ email : email })
         .then((user) => {
             if (user && user.email === email) {
-                // res.status(400).send('User with this email exists');
                 res.status(400).json({ message: 'A user with this email exists' });
             } else {
                 if (textPass) {

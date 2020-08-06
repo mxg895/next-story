@@ -37,7 +37,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// path.join(__dirname, '../client/build/index.html')
 app.use(express.static(path.join(__dirname,'frontend/build')));
 
 // Anything that doesn't match the above, send back index.html
