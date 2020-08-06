@@ -224,7 +224,7 @@ export default function Login() {
                     <br/>
                     <Grid container>
                         <Grid item>
-                            <Link href='/signup' variant='body2'>
+                            <Link href='/signup' variant='body2' color='secondary'>
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>
@@ -241,7 +241,7 @@ export default function Login() {
                                 onLogoutSuccess={handleGoogleLogout}
                             />
                             :
-                            <Button color={'primary'} onClick={handleLogout} >
+                            <Button color={'secondary'} onClick={handleLogout} >
                                 Logout
                             </Button>
                         }
