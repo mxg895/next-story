@@ -18,7 +18,7 @@ const StyledCarousel = styled(Carousel)`
 
 interface RegWidthCarouselProps {
   bookIds?: string[];
-  bMSource: 'favorite' | 'later';
+  bMSource: 'favorite' | 'read' | 'later';
   movieIds?: string[];
   title?: string;
   withSearchSelect?: boolean;
@@ -38,7 +38,7 @@ const SearchSelect: React.FC = () => {
   );
 };
 
-const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, title, withSearchSelect, updateMethod }) => {
+const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, title, withSearchSelect, updateMethod, bMSource }) => {
     const sessionDataString = sessionStorage.getItem('NS-session-data');
     const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
     const userId = sessionDataObj.userId;
@@ -57,18 +57,17 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
             .then((response: any) => {
                 const data = response.data;
                 let finalData: any[] = [];
-                if(title?.includes('Favourite')){
+                if(bMSource.includes('favorite')){
                     finalData.push.apply(finalData, data.favoriteMoviesDetails);
                     finalData.push.apply(finalData, data.favoriteBooksDetails);
                 }
-                else{
+                else if (bMSource.includes('read')) {
                     finalData.push.apply(finalData, data.watchLaterDetails);
                     finalData.push.apply(finalData, data.readLaterDetails);
+                } else if (bMSource.includes('later')){
                     finalData.push.apply(finalData, data.booksReadDetails);
                     finalData.push.apply(finalData, data.moviesWatchedDetails);
                 }
-
-
                 setMediaData(finalData);
                 // setMediaData(data.favoriteMoviesDetails);
                 //setMediaData(data.favoriteBooksDetails);
