@@ -69,57 +69,16 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
                     finalData.push.apply(finalData, data.moviesWatchedDetails);
                 }
                 setMediaData(finalData);
-                // setMediaData(data.favoriteMoviesDetails);
-                //setMediaData(data.favoriteBooksDetails);
-               //  setMediaData(data.watchLaterDetails);
-               //  setMediaData(data.readLaterDetails);
-               //  setMediaData(data.booksReadDetails);
-               //  setMediaData(data.moviesWatchedDetails);
-               // setMediaData(data.watchLaterDetails);
             })
             .catch((error: any) => {
                 console.log(error);
             });
     }, []);
-  // const host = window.location.protocol + '//'+ window.location.host;
-  // const fetchBooksAndMovies = () => {
-  //   Axios.get(`${host}/multi/booksAndMovies`, {
-  //     params: { books: bookIds, movies: movieIds },
-  //     paramsSerializer: (params) => {
-  //       return qs.stringify(params);
-  //     }
-  //   })
-  //     .then((response)=> {
-  //       const data: CombinedMoviesBooksInfo = response.data;
-  //       updateMethod(data);
-  //       setMediaData(data);
-  //     })
-  //     .catch((err) => {
-  //       console.error('Error fetching books and movie information for media cards: ', err);
-  //   });
-  // };
-  //
-  // const fetchCallback = useCallback(fetchBooksAndMovies, [bookIds, movieIds]);
 
   const mediaCards = mediaData.map((cardData:CardData, index) => {
     return <MediaCard key={index} cardData={cardData} />;
   });
-
-  // const movieCards = mediaData.movies.map(({ movieId, avgRating, nextStoryTags }) => {
-  //   const transformedNSTags = nextStoryTags.map((tag) => {
-  //     return tag.tagName;
-  //   });
-  //   return <MediaCard key={movieId} cardData={{ ...mockCardData, avgRating, id: movieId, mediaType: MediaType.movie, nextStoryTags: transformedNSTags }} />;
-  // });
-
   const cards = [...mediaCards];
-
-  // useEffect(() => {
-  //   if(!!bookIds?.length || !!movieIds?.length) {
-  //     fetchCallback();
-  //   }
-  // }, [bookIds, movieIds, fetchCallback]);
-
   return (
     <>
       <Typography variant='h4'>{title}</Typography>
