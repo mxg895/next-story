@@ -46,7 +46,10 @@ const RightSection: React.FC<RightSectionProps> = ({ favoriteAuthors, favoriteBo
           <RegWidthCarousel bookIds={favoriteBooks} bMSource='favorite' movieIds={favoriteMovies} title='Favourite Books/Movies:' updateMethod={setFavorites}/>
         </SubSectionContainer>
         <SubSectionContainer>
-          <RegWidthCarousel bMSource='later' title={`User's Read/Watched List`} bookIds={readLater} movieIds={watchLater} updateMethod={setLater}/>
+          <RegWidthCarousel bMSource='read' title={`User's Read/Watched List`} bookIds={readLater} movieIds={watchLater} updateMethod={setLater}/>
+        </SubSectionContainer>
+        <SubSectionContainer>
+          <RegWidthCarousel bMSource='later' title={`User's Read/Watched Later List`} bookIds={readLater} movieIds={watchLater} updateMethod={setLater}/>
         </SubSectionContainer>
       </>
     </StyledDiv>

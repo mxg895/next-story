@@ -18,7 +18,7 @@ const StyledCarousel = styled(Carousel)`
 
 interface RegWidthCarouselProps {
   bookIds?: string[];
-  bMSource: 'favorite' | 'later';
+  bMSource: 'favorite' | 'read' | 'later';
   movieIds?: string[];
   title?: string;
   withSearchSelect?: boolean;
@@ -38,7 +38,7 @@ const SearchSelect: React.FC = () => {
   );
 };
 
-const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, title, withSearchSelect, updateMethod }) => {
+const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, title, withSearchSelect, updateMethod, bMSource }) => {
     const sessionDataString = sessionStorage.getItem('NS-session-data');
     const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
     const userId = sessionDataObj.userId;
@@ -57,70 +57,28 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
             .then((response: any) => {
                 const data = response.data;
                 let finalData: any[] = [];
-                if(title?.includes('Favourite')){
+                if(bMSource.includes('favorite')){
                     finalData.push.apply(finalData, data.favoriteMoviesDetails);
                     finalData.push.apply(finalData, data.favoriteBooksDetails);
                 }
-                else{
+                else if (bMSource.includes('read')) {
                     finalData.push.apply(finalData, data.watchLaterDetails);
                     finalData.push.apply(finalData, data.readLaterDetails);
+                } else if (bMSource.includes('later')){
                     finalData.push.apply(finalData, data.booksReadDetails);
                     finalData.push.apply(finalData, data.moviesWatchedDetails);
                 }
-
-
                 setMediaData(finalData);
-                // setMediaData(data.favoriteMoviesDetails);
-                //setMediaData(data.favoriteBooksDetails);
-               //  setMediaData(data.watchLaterDetails);
-               //  setMediaData(data.readLaterDetails);
-               //  setMediaData(data.booksReadDetails);
-               //  setMediaData(data.moviesWatchedDetails);
-               // setMediaData(data.watchLaterDetails);
             })
             .catch((error: any) => {
                 console.log(error);
             });
     }, []);
-  // const host = window.location.protocol + '//'+ window.location.host;
-  // const fetchBooksAndMovies = () => {
-  //   Axios.get(`${host}/multi/booksAndMovies`, {
-  //     params: { books: bookIds, movies: movieIds },
-  //     paramsSerializer: (params) => {
-  //       return qs.stringify(params);
-  //     }
-  //   })
-  //     .then((response)=> {
-  //       const data: CombinedMoviesBooksInfo = response.data;
-  //       updateMethod(data);
-  //       setMediaData(data);
-  //     })
-  //     .catch((err) => {
-  //       console.error('Error fetching books and movie information for media cards: ', err);
-  //   });
-  // };
-  //
-  // const fetchCallback = useCallback(fetchBooksAndMovies, [bookIds, movieIds]);
 
   const mediaCards = mediaData.map((cardData:CardData, index) => {
     return <MediaCard key={index} cardData={cardData} />;
   });
-
-  // const movieCards = mediaData.movies.map(({ movieId, avgRating, nextStoryTags }) => {
-  //   const transformedNSTags = nextStoryTags.map((tag) => {
-  //     return tag.tagName;
-  //   });
-  //   return <MediaCard key={movieId} cardData={{ ...mockCardData, avgRating, id: movieId, mediaType: MediaType.movie, nextStoryTags: transformedNSTags }} />;
-  // });
-
   const cards = [...mediaCards];
-
-  // useEffect(() => {
-  //   if(!!bookIds?.length || !!movieIds?.length) {
-  //     fetchCallback();
-  //   }
-  // }, [bookIds, movieIds, fetchCallback]);
-
   return (
     <>
       <Typography variant='h4'>{title}</Typography>
