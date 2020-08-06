@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from '../Container';
 import Typography from '@material-ui/core/Typography';
-import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import styled from 'styled-components';
+import BookAndMovie from '../../assets/BookAndMovie.png';
 
 // height calculates taking into account the margins on the Container component
 const CenteredDiv = styled.div`
@@ -18,7 +18,8 @@ const NotFound: React.FC = () => {
   return (
     <Container maxWidth='md'>
         <CenteredDiv>
-            <SentimentVeryDissatisfiedIcon style={{ fontSize: '100px', marginBottom: '20px' }}/>
+            <img src={BookAndMovie} style={{ height: '300px', marginBottom: '20px' }}/>
+            <Typography variant='h1'>404</Typography>
             <Typography variant='h1'>Page Not Found</Typography>
         </CenteredDiv>
     </Container>
