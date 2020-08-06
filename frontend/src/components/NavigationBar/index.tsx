@@ -180,7 +180,7 @@ const NavigationBar = () => {
                         onKeyPress={handleKeyPress}
                     />
                     <Button onClick={handleSearch}>
-                        <SearchIcon/>
+                        <SearchIcon style={{ color: 'white' }}/>
                     </Button>
                 </SearchArea>
                 <Spacer/>
