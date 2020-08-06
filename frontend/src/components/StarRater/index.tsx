@@ -62,12 +62,8 @@ const changeRating = (props: any, userId: string, userName: string, rating: numb
     if (!rating && !props.userHasReviewText) {
         axios.delete(host + `/reviewRatings`
             + `/${props.mediaType}/${props.mediaId}/${userId}`)
-            .then((res: any) => {
-                console.log('Successfully deleted the reviewRating', res);
-            })
-            .catch((err: any) => {
-                console.log(err);
-            });
+            .then((res: any) => {})
+            .catch((err: any) => {});
     } else {
         axios.put(host + '/reviewRatings/rating',
             {
@@ -76,12 +72,8 @@ const changeRating = (props: any, userId: string, userName: string, rating: numb
                 userId: userId,
                 rating: rating
             })
-            .then((res: any) => {
-                console.log('Successfully put the rating: ', res);
-            })
-            .catch((err: any) => {
-                console.log(err);
-            });
+            .then((res: any) => {})
+            .catch((err: any) => {});
     }
 };
 

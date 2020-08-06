@@ -37,9 +37,7 @@ const FavoritesDropDown = (props: FavoritesDropDownProps) => {
         axios.put(`/users/${favKey}/${encodedSubject}/${userId}`, {
             action: act
         }).then((response: any) => {
-            console.log(response);
         }).catch((error: any) => {
-            console.log('Error adding or removing favorite from dropdown', error);
         });
     };
     const handleMenuClose = () => {

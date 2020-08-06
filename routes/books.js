@@ -3,6 +3,7 @@ var router = express.Router();
 const Books = require('../models/book');
 const fetch = require('node-fetch');
 
+// NOTE: keeping backend console logs for errors to aid future development
 router.get('/:bookId', (req, res) => {
     const bookId = req.params.bookId;
     let book = {};
@@ -20,7 +21,6 @@ router.get('/:bookId', (req, res) => {
             book.people = foundItem.volumeInfo && foundItem.volumeInfo.authors;
             book.publishedDate = foundItem.volumeInfo && foundItem.volumeInfo.publishedDate;
             book.avgRating = foundItem.volumeInfo && foundItem.volumeInfo.averageRating;
-            console.log('Succeeded getting book from googleBooks:', book);
             res.status(200).json(book);
         }).catch((error) => console.log(error));
 });
@@ -28,7 +28,6 @@ router.get('/:bookId', (req, res) => {
 router.get('/tags/:bookId', (req, res) => {
     const bookId = req.params.bookId;
     Books.findOne({ bookId: bookId }).then(book => {
-        console.log('Got a book', book);
         const retBook = {
             bookId: bookId,
             nextStoryTags: book && book.nextStoryTags || []
@@ -50,7 +49,6 @@ router.put('/updateNextStoryTags/:bookId', (req, res) => {
     }
     Books.findOneAndUpdate(query, update, {upsert:true})
         .then(book => {
-            console.log('the updated book: ', book);
             res.status(200).json(book);
     }).catch((err) => {
         console.log('Error deleting a nextStoryTag from a book: ', err);
@@ -63,7 +61,6 @@ router.get('/withTag/:tagId', (req, res) => {
     Books.find({
         "nextStoryTags.tagId": tagId
     }).then(books => {
-        console.log('Got books', books, 'for tag', tagId);
         res.status(200).json(books);
     }).catch((err) => {
         console.log('Error fetching movies for tag: ', err);
@@ -76,7 +73,6 @@ router.get('/withTags/:tags', (req, res) => {
     Books.find({
         "nextStoryTags.tagId": { $all: tags}
     }).then(movies => {
-        console.log('Got books', movies);
         res.status(200).json(movies);
     }).catch((err) => {
         console.log('Error fetching books for tag: ', err);

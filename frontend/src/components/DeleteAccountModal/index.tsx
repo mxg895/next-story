@@ -48,9 +48,7 @@ const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({ isOpen, handleC
       }
       sessionStorage.clear();
       history.go(0);
-    } catch (error) {
-      console.error('Error deleting account: ', error);
-    }
+    } catch (error) {}
   };
 
   return (

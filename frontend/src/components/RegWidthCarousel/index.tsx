@@ -70,9 +70,7 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
                 }
                 setMediaData(finalData);
             })
-            .catch((error: any) => {
-                console.log(error);
-            });
+            .catch((error: any) => {});
     }, []);
 
   const mediaCards = mediaData.map((cardData:CardData, index) => {

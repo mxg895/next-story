@@ -30,9 +30,7 @@ const NextStoryTagsPage: React.FC = () => {
                 const tagData = res.data;
                 setAllTags(tagData);
             })
-            .catch((error: any) => {
-                console.log('Error getting all tags', error);
-            });
+            .catch((error: any) => {});
     }, []);
 
     useEffect(() => {
@@ -45,9 +43,7 @@ const NextStoryTagsPage: React.FC = () => {
                 const userFavTagIds = userFavTags.map((t: any) => t.tagId);
                 setUserFavTags(userFavTagIds);
             })
-            .catch((error: any) => {
-                console.log('Error getting all tags', error);
-            });
+            .catch((error: any) => {});
     }, []);
 
     const addOrRemoveTagFromFavorites = (tag: any, shouldRemove: boolean) => {
@@ -55,12 +51,8 @@ const NextStoryTagsPage: React.FC = () => {
         const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
         const userId = sessionDataObj?.userId;
         axios.put(`/users/favoriteNSTags/putToFavorites/${userId}/${shouldRemove}`, {tag: tag})
-            .then((res: any) => {
-                console.log(res.data);
-            })
-            .catch((error: any) => {
-                console.log('Error getting all tags', error);
-            });
+            .then((res: any) => {})
+            .catch((error: any) => {});
     };
 
     const goToSingleQuery = (tagId: string) => {

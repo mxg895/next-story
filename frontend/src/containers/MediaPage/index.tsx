@@ -166,9 +166,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     ref.current.numberSubscriptions--;
                 }
             })
-            .catch((error: any) => {
-                console.log('Error getting media', error);
-            });
+            .catch((error: any) => {});
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
@@ -189,9 +187,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     ref.current.numberSubscriptions--;
                 }
             })
-            .catch((error: any) => {
-                console.log('Error getting reviews', error);
-            });
+            .catch((error: any) => {});
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
@@ -241,9 +237,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     ref.current.numberSubscriptions--;
                 }
             })
-            .catch((error: any) => {
-                console.log('Error getting media', error);
-            });
+            .catch((error: any) => {});
     }, [userId, mediaType, id]);
 
     useEffect(() => {
@@ -265,9 +259,7 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     ref.current.numberSubscriptions--;
                 }
             })
-            .catch((error: any) => {
-                console.log('Error getting all story tags', error);
-            });
+            .catch((error: any) => {});
     }, [storyTags]);
 
     const updateMediaInDB = (tagsArray: any[]) => {
@@ -275,21 +267,14 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.put(`/${mediaRouteType}/updateNextStoryTags/${id}`,
             { tagsArray: tagsArray })
             .then((res: any) => {
-                console.log('updated tags for media', res.data);
             }).catch((err: any) => {
-                console.log('error setting tags for media', err);
             });
     };
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
-        console.log(mediaObject);
-        console.log('troll');
         const data = {action:action, mediaObject};
         axios.put(`/users/${key}/${mediaId}/${userId}`, data).then((response: any) => {
-            console.log(response);
-        }).catch((error: any) => {
-                console.log('Error getting reviews', error);
-        });
+        }).catch((error: any) => {});
     };
 
     const addOrRemoveWatchOrRead = (mediaId: string) => {

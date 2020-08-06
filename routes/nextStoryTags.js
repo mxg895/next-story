@@ -22,7 +22,6 @@ router.get('/:tagId', (req, res) => {
     const tagId = req.params.tagId;
     NextStoryTags.findById(tagId)
         .then(tag => {
-            console.log('got a tag', tag);
             res.status(200).json(tag);
         })
         .catch((err) => {

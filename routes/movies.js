@@ -5,6 +5,7 @@ const axios = require('axios');
 const baseUrl = 'https://api.themoviedb.org';
 const tmdbApiKey = process.env.TMDBAPI_URL;
 
+// NOTE: keeping backend console logs for errors to aid future development
 router.get('/:movieId', (req, res) => {
     const movieId = req.params.movieId;
     let movie = {};
@@ -53,7 +54,6 @@ router.get('/:movieId', (req, res) => {
 router.get('/tags/:movieId', (req, res) => {
     const movieId = req.params.movieId;
     Movies.findOne({ movieId: movieId }).then(movie => {
-        console.log('Got a movie', movie);
         const retMovie = {
             movieId: movieId,
             nextStoryTags: movie && movie.nextStoryTags || []
@@ -70,7 +70,6 @@ router.get('/withTag/:tagId', (req, res) => {
     Movies.find({
         "nextStoryTags.tagId": tagId
     }).then(movies => {
-        console.log('Got movies', movies, 'for tag', tagId);
         res.status(200).json(movies);
     }).catch((err) => {
         console.log('Error fetching movies for tag: ', err);
@@ -83,7 +82,6 @@ router.get('/withTags/:tags', (req, res) => {
     Movies.find({
         "nextStoryTags.tagId": { $all: tags}
     }).then(movies => {
-        console.log('Got movies', movies);
         res.status(200).json(movies);
     }).catch((err) => {
         console.log('Error fetching movies for tag: ', err);
@@ -101,7 +99,6 @@ router.put('/updateNextStoryTags/:movieId', (req, res) => {
     }
     Movies.findOneAndUpdate(query, update, {upsert:true})
         .then(movie => {
-            console.log('the updated movie: ', movie);
             res.status(200).json(movie);
     }).catch((err) => {
             console.log('Error deleting a nextStoryTag from a movie: ', err);

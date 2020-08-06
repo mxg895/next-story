@@ -49,15 +49,12 @@ const SingleSearchResultPage: React.FC = (props: any) => {
         try {
             const mongoMovieRes = await axios.get(`/movies/withTag/${query}`);
             mongoMovies = mongoMovieRes.data;
-        } catch (e) {
-            console.log('error fetching movies from mongo for tag', e);
-        }
+        } catch (e) {}
+
         try {
             const mongoBookRes = await axios.get(`/books/withTag/${query}`);
             mongoBooks = mongoBookRes.data;
-        } catch (e) {
-            console.log('error fetching books from mongo for tag', e);
-        }
+        } catch (e) {}
         return [mongoMovies, mongoBooks];
     }
 
@@ -82,9 +79,7 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 movieData.push(movieWithNextStoryTags);
                 setAllResults((allResults) => [...allResults, movieWithNextStoryTags]);
                 setMovieResults((movieResults) => [...movieResults, movieWithNextStoryTags]);
-            } catch (e) {
-                console.log(e);
-            }
+            } catch (e) {}
         }
         for(let i = queryStartIndex; i < bookEndIndex; i++){
             const bookId = mongoBooks[i].bookId;
@@ -101,9 +96,7 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 bookData.push(bookWithNextStoryTags);
                 setAllResults((allResults) => [...allResults, bookWithNextStoryTags]);
                 setBookResults((bookResults) => [...bookResults, bookWithNextStoryTags]);
-            } catch (e) {
-                console.log(e);
-            }
+            } catch (e) {}
         }
         if (movieData.length === 0) {
             setHasMoreMovieResults(false);
@@ -126,9 +119,7 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 setMovieResults((movieResults) => [...movieResults, ...movies]);
                 setAllResults((allResults) => [...allResults, ...movies]);
             }
-        } catch (e) {
-            console.log(e);
-        }
+        } catch (e) {}
         try {
             const bookRes = await axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`);
             books = bookRes.data;
@@ -138,9 +129,7 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 setBookResults((bookResults) => [...bookResults, ...books]);
                 setAllResults((allResults) => [...allResults, ...books]);
             }
-        } catch (e) {
-            console.log(e);
-        }
+        } catch (e) {}
         return [movies, books];
     }
 
@@ -149,20 +138,16 @@ const SingleSearchResultPage: React.FC = (props: any) => {
             case SingleQueryType.tag:
                 getMediaForTag().then((res) => {
                     const [mongoMovies, mongoBooks] = res;
-                    console.log('mongo movies and books:', res);
                     getFromThirdParty(mongoMovies, mongoBooks).then((res) => {
-                        const [movieData, bookData] = res;
-                    }).catch((e) => console.log(e));
-                }).catch((e) => console.log(e));
+                    }).catch((e) => {});
+                }).catch((e) => {});
                 break;
             case SingleQueryType.searchBar:
             case SingleQueryType.genre:
             case SingleQueryType.moviePerson:
             case SingleQueryType.bookPerson:
                 getFromThirdPartyForTagsAndPeople().then((res) => {
-                    const [movies, books] = res;
-                    console.log([movies, books]);
-                }).catch((e) => console.log(e));
+                }).catch((e) => {});
                 break;
             default:
                 break;

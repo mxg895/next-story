@@ -22,6 +22,7 @@ var app = express();
 // NOTE MUST CREATE A FILE CALLED '.env' AND ADD THE DATABASE_URI VALUE INTO IT
 const mongoDB = process.env.DATABASE_URI;
 
+// NOTE: console logs for connection to Mongoose and for db errors are kept to aid future development
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
