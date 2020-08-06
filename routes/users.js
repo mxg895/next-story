@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var { uuid } = require('uuidv4');
 
+// NOTE: keeping backend console logs for errors to aid future development
+
 /* GET users listing. */
 router.get('/:userId', function(req, res, next) {
     const userId = req.params.userId;
@@ -90,7 +92,6 @@ router.put('/favoriteNSTags/putToFavorites/:userId/:shouldRemove', (req, res) =>
                 }},
             { new:true, multi:true })
             .then(user => {
-                console.log('Success. Removed tag from user fav tags: ', user );
                 res.status(200).json(user.favoriteNextStoryTags);
             })
             .catch((err) => {
@@ -105,7 +106,6 @@ router.put('/favoriteNSTags/putToFavorites/:userId/:shouldRemove', (req, res) =>
                 }},
             { new:true, multi:true })
             .then(user => {
-                console.log('Success. Added to user fav tags: ', user);
                 res.status(200).json(user.favoriteNextStoryTags);
             })
             .catch((err) => {
@@ -132,7 +132,6 @@ router.put('/:key/:encodedSubject/:userId', (req, res) => {
             },
             { new:true, multi:true })
             .then(user => {
-                console.log('Success. Updated user info: ', user[key] );
                 res.status(200).json(user);
             })
             .catch((err) => {
@@ -148,7 +147,6 @@ router.put('/:key/:encodedSubject/:userId', (req, res) => {
                 }},
             { new:true, multi:true })
             .then(user => {
-                console.log('Success. Updated user info: ', user[key]);
                 res.status(200).json(user);
             })
             .catch((err) => {
@@ -258,7 +256,6 @@ router.get('/notGoogleLogin/:email/:textPass', function(req, res, next) {
         .then((user) => {
             if (user) {
                 const hash = user.encrypted;
-                console.log(user);
                 bcrypt.compare(textPass, hash, function(err, result) {
                     if (err) {
                         console.log('Could not check hash', err);
@@ -291,7 +288,6 @@ router.get('/googleLogin/:email', function(req, res, next) {
                     name: user.name,
                     userId: user.userId
                 }
-                console.log('USER', user);
                 res.status(200).json(userObj);
             }
             else {

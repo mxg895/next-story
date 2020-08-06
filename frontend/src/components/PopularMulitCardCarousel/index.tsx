@@ -43,18 +43,14 @@ const PopularMultiCardCarousel: React.FC = (props: any) => { //should take popul
                 if (!mountedRef.current) return null;
                 setMovieData(data);
             })
-            .catch((error: any) => {
-                console.log(error);
-            });
+            .catch((error: any) => {});
         axios.get(`/thirdPartyBookApi/googleBooks/popularBooks`)
             .then((response: any) => {
                 const data = response.data;
                 if (!mountedRef.current) return null;
                 setBookData(data);
             })
-            .catch((error: any) => {
-                console.log(error);
-            });
+            .catch((error: any) => {});
         if(bookData.length > 1 && movieData.length>1){
             return () => {
                 mountedRef.current = false;

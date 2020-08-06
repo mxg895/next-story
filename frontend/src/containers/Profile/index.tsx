@@ -21,9 +21,7 @@ const Profile: React.FC<ProfileProps> = ({ profile: { avatar, booksRead, email, 
       .then((response) => {
         setProfile(response.data);
       })
-      .catch((err) => {
-        console.log('Error fetching profile: ', err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(fetchProfile, []);

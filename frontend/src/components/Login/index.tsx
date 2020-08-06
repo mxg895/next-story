@@ -101,7 +101,6 @@ export default function Login() {
                 setLoginError(true);
                 const errorMsg = error.response?.data?.message || 'There was an error logging in';
                 setErrorMsg(errorMsg);
-                console.log('Error logging in', error);
             });
     };
 
@@ -135,14 +134,11 @@ export default function Login() {
                     setLoginError(true);
                     const errorMsg = error.response?.data?.message || 'There was an error logging in';
                     setErrorMsg(errorMsg);
-                    console.log('Error logging in', error);
                 });
         }
     };
 
     const onLoginFailure = (response: any) => {
-        console.log('on login Failure');
-        console.log('response: ', response);
         setLoginError(true);
         setErrorMsg('There was an error logging in');
     };

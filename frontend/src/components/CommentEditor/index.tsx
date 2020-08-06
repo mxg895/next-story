@@ -44,12 +44,8 @@ const CommentEditor: React.FC<any> = (props: any) => {
                         datePosted: now,
                         text: currentText
                     })
-                    .then((res: any) => {
-                        console.log(res);
-                    })
-                    .catch((err: any) => {
-                        console.log(err);
-                    });
+                    .then((res: any) => {})
+                    .catch((err: any) => {});
                 break;
             case CommentEditorAction.Edit:
                 const userId = editCommentProps.review.userId;
@@ -69,12 +65,8 @@ const CommentEditor: React.FC<any> = (props: any) => {
                         datePosted: now,
                         text: currentText
                     })
-                    .then((res: any) => {
-                        console.log(res);
-                    })
-                    .catch((err: any) => {
-                        console.log(err);
-                    });
+                    .then((res: any) => {})
+                    .catch((err: any) => {});
                 break;
             default:
                 return;

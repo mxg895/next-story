@@ -87,9 +87,7 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                     const mediaData = mediaRes.data;
                     setStoryTags(mediaData.nextStoryTags);
                 })
-                .catch((error: any) => {
-                    console.log('Error getting media', error);
-                });
+                .catch((error: any) => {});
         }
     }, [modalData, isOpen]);
 
@@ -101,9 +99,7 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                     const averageRatingData = mediaRes.data;
                     setAverageRating(averageRatingData.average);
                 })
-                .catch((error: any) => {
-                    console.log('Error getting media', error);
-                });
+                .catch((error: any) => {});
         }
     }, [modalData, isOpen]);
 

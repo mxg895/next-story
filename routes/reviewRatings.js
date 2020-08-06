@@ -2,12 +2,12 @@ var express = require('express');
 var router = express.Router();
 const ReviewRating = require('../models/reviewRating');
 
+// NOTE: keeping backend console logs for errors to aid future development
 router.get('/:mediaType/:mediaId', (req, res) => {
     const mediaType = req.params.mediaType;
     const mediaId = req.params.mediaId;
     ReviewRating.find({ mediaType: mediaType, id: mediaId })
         .then(reviews => {
-            console.log('Got reviews for a media', reviews);
             let sum = 0;
             let numberOfRatings = 0;
             reviews.forEach((r) => {
@@ -68,7 +68,6 @@ router.put('/review', (req, res) => {
             },
         { new: true, upsert: true })
         .then(reviewRating => {
-            console.log('Success. Updated or posted review: ', reviewRating);
             res.status(200).json(reviewRating);
         })
         .catch((err) => {
@@ -83,7 +82,6 @@ router.put('/rating', (req, res) => {
         { mediaType: mediaType, userId: userId, id: mediaId, rating: rating },
         { new: true, upsert: true })
         .then(reviewRating => {
-            console.log('Success. Updated or posted rating: ', reviewRating);
             res.status(200).json(reviewRating);
         })
         .catch((err) => {
@@ -96,7 +94,6 @@ router.delete('/:mediaType/:mediaId/:userId', (req, res) => {
     const { mediaId, mediaType, userId } = req.params;
     ReviewRating.deleteOne({ mediaType: mediaType, id: mediaId, userId: userId })
         .then(result => {
-            console.log('Success. Deleted reviewRating document, count:', result.deletedCount);
             res.status(200).json(result);
         })
         .catch((err) => {

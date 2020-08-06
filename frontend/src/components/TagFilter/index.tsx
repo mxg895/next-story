@@ -26,9 +26,7 @@ const TagFilter: React.FC = () => {
             .then((res: any) => {
                 setTags(res.data);
             })
-            .catch((error: any) => {
-                console.log(error);
-            });
+            .catch((error: any) => {});
     }, []);
 
     const getResultsByTag = async () => {
@@ -42,24 +40,18 @@ const TagFilter: React.FC = () => {
             try {
                 const movieRes = await axios.get(`/movies/withTags/${query}`);
                 movieList = movieRes.data;
-            } catch (e) {
-                console.log('error fetching movies from mongo for tag', e);
-            }
+            } catch (e) {}
         }
 
         if (isBookSelected) {
             try {
                 const bookRes = await axios.get(`/books/withTags/${query}`);
                 bookList = bookRes.data;
-            } catch (e) {
-                console.log('error fetching books from mongo for tag', e);
-            }
+            } catch (e) {}
         }
         try {
             await getFromThirdParty(movieList, bookList);
-        } catch (e) {
-            console.log(e);
-        }
+        } catch (e) {}
     };
 
     async function getFromThirdParty(mongoMovies: any[], mongoBooks: any[]) {
@@ -82,9 +74,7 @@ const TagFilter: React.FC = () => {
                 }
                 movieData.push(movieWithNextStoryTags);
                 setAllResults((allResults) => [...allResults, movieWithNextStoryTags]);
-            } catch (e) {
-                console.log(e);
-            }
+            } catch (e) {}
         }
         for(let i = queryStartIndex; i < bookEndIndex; i++){
             const bookId = mongoBooks[i].bookId;
@@ -100,9 +90,7 @@ const TagFilter: React.FC = () => {
                 }
                 bookData.push(bookWithNextStoryTags);
                 setAllResults((allResults) => [...allResults, bookWithNextStoryTags]);
-            } catch (e) {
-                console.log(e);
-            }
+            } catch (e) {}
         }
         if (movieData.length === 0) {
             setHasMoreMovieResults(false);

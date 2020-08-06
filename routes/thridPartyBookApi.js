@@ -27,7 +27,6 @@ router.get('/googleBooks/searchTen/:query', (req, res) => {
                 returnList.push(returnObject);
                 i++;
             }
-            console.log('Succeeded getting book from googleBooks:', returnList);
             res.status(200).json(returnList);
         })
         .catch((error) => console.log(error));
@@ -51,7 +50,6 @@ router.get('/googleBooks/searchOneById/:query', (req, res) => {
                     people: foundItem.volumeInfo && foundItem.volumeInfo.authors,
                     publishedDate: foundItem.volumeInfo && foundItem.volumeInfo.publishedDate
                 }
-                console.log('Succeeded getting book from googleBooks:', returnObject);
                 res.status(200).json(returnObject);
             } else {
                 res.status(404).json({ message: 'Book not found' });

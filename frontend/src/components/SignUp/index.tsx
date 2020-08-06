@@ -81,7 +81,6 @@ export default function SignUp() {
                 setSignUpError(true);
                 const errorMsg = error.response.data.message;
                 setErrorMsg(errorMsg);
-                console.log('Error signing up', error);
             });
     };
 
@@ -135,7 +134,6 @@ export default function SignUp() {
     };
 
     const onSignUpSuccess = (response: any) => {
-        console.log('response: ', response);
         setSignUpError(false);
         const googleName = response.profileObj.name;
         const googleEmail = response.profileObj.email;
@@ -149,8 +147,6 @@ export default function SignUp() {
     };
 
     const onSignUpFailure = (response: any) => {
-        console.log('onFailure');
-        console.log('response: ', response);
         setSignUpError(true);
     };
 

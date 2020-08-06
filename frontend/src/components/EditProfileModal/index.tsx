@@ -146,9 +146,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ aboutMe = '', photo
         const response = await axios.put(`${host}/users/edit/${id}`, { message: aboutMeText, avatar: avatarSrc });
         updateProfile(response.data);
         handleClose();
-      } catch (error) {
-        console.error('error submitting the updated profile: ', error);
-      }
+      } catch (error) {}
     }
   };
 

@@ -32,7 +32,6 @@ router.get('/tmdbMovies/searchTen/:query', (req, res) => {
                 i++;
             }
 
-            console.log('Succeeded getting movies from tmdbApi:', returnList);
             res.status(200).json(returnList);
         })
         .catch((error) => {
@@ -67,7 +66,6 @@ router.get('/tmdbMovies/searchOneById/:query', (req, res) => {
                         publishedDate: movie.release_date,
                         avgRating: movie.vote_average
                     }
-                    console.log('Succeeded getting book from googleBooks with id:', returnObject.id);
                     res.status(200).json(returnObject);
                 } else {
                     res.status(404).json({ message: 'Movie not found' });
@@ -116,7 +114,6 @@ router.get('/tmdbMovies/popularMovies', (req, res) => {
                 i++;
             }
 
-            console.log('Succeeded getting movies from tmdbApi:', returnList);
             res.status(200).json(returnList);
         })
         .catch((error) => {
@@ -160,7 +157,6 @@ router.get('/tmdbMovies/movieRecommendations', (req, res) => {
                 i++;
             }
 
-            console.log('Succeeded getting movies from tmdbApi:', returnList);
             res.status(200).json(returnList);
         })
         .catch((error) => {
