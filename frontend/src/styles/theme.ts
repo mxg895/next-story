@@ -1,6 +1,16 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: '#546ab8',
+            main: '#1c2a5e'
+        },
+        secondary: {
+            light: '#648dcc',
+            main: '#005ff0'
+        }
+    },
     typography: {
         h1: {
             fontSize: 32,
