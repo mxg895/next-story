@@ -6,20 +6,20 @@ Users can also add reviews and ratings and add our app specific tags.
 
 ### Clear statement of goals:
 - 3-5 minimal requirements (will definitely complete)
-  1. Users should be able to register for, log in to & log out of an account and have/be able to update a profile - DONE
-  1. Users should be able to search & filter books & movies of interest (search/explore page) - DONE
-  1. Users should be able to see a Home page with recommendations - DONE
-  1. Each book/movie should have a media page that displays more details about it - DONE
-  1. Set up a database - DONE
+  1. Users should be able to register for, log in to & log out of an account and have/be able to update a profile - DONE :heavy_check_mark:
+  1. Users should be able to search & filter books & movies of interest (search/explore page) - DONE :heavy_check_mark:
+  1. Users should be able to see a Home page with recommendations - DONE :heavy_check_mark:
+  1. Each book/movie should have a media page that displays more details about it - DONE :heavy_check_mark:
+  1. Set up a database - DONE :heavy_check_mark:
 
 - 3-7 "standard" requirements (will most likely complete)
-  1. Allow users to add and remove story tags from a movie or book - DONE
-  1. The website should be able to fetch its book/movie data via external API endpoints - DONE
-  1. Allow users to add a review & ratings (out of 5 starts) for a book/movie - DONE
-  1. Users should be able to add a book or movie to a personal 'Watch later' list - DONE
+  1. Allow users to add and remove story tags from a movie or book - DONE :heavy_check_mark:
+  1. The website should be able to fetch its book/movie data via external API endpoints - DONE :heavy_check_mark:
+  1. Allow users to add a review & ratings (out of 5 starts) for a book/movie - DONE :heavy_check_mark:
+  1. Users should be able to add a book or movie to a personal 'Watch later' list - DONE :heavy_check_mark:
 
 - 2-3 stretch requirements (plan to complete 1!)
-  1. Add Google login and sign up options - DONE
+  1. Add Google login and sign up options - DONE :heavy_check_mark:
   1. Users should be able to see information of ‘friends’ on the app - NOT DONE
   
 ### Description on how tech from Units 1-5 are used in the project
