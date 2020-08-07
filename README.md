@@ -20,7 +20,7 @@ Users can also add reviews and ratings and add our app specific tags.
 
 - 2-3 stretch requirements (plan to complete 1!)
   1. Add Google login and sign up options - DONE :heavy_check_mark:
-  1. Users should be able to see information of ‘friends’ on the app - NOT DONE
+  1. Users should be able to see information of ‘friends’ on the app - NOT DONE :x:
 
 ### Description on how tech from Units 1-5 are used in the project
 	1. HTML/CSS/Javascript
@@ -96,6 +96,11 @@ Users can also add reviews and ratings and add our app specific tags.
     - Continuously improving application by refactoring and fixing issues covering all aspects of the application
     allowing me to offer supports and guidance for each members
 ##### Michelle s5n0b:
+    - Set up basic ESLint rules & relevant commands
+    - Set up the basic structure of the `frontend` package (e.g. installed & set up packages such as Create-React-App, Redux, and Material-UI)
+    - Set up basic routing to different pages of the app with React-Router & made each page load lazily
+    - Implemented the UI of the profile page
+    - Created APIs for fetching, updating, and deleting a profile by id & connected them to the profile page
 ##### David q8j0b:
 
 
