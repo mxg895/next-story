@@ -15,6 +15,7 @@ const StyledCarousel = styled(Carousel)`
     margin-top: 20px;
 `;
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const PopularMultiCardCarousel: React.FC = (props: any) => { //should take popular/recommendation data as parameter
     const [movieData, setMovieData] = useState([{    title: '',
         id: '',
@@ -43,14 +44,18 @@ const PopularMultiCardCarousel: React.FC = (props: any) => { //should take popul
                 if (!mountedRef.current) return null;
                 setMovieData(data);
             })
-            .catch((error: any) => {});
+            .catch((error: any) => {
+                // console.log(error);
+            });
         axios.get(`/thirdPartyBookApi/googleBooks/popularBooks`)
             .then((response: any) => {
                 const data = response.data;
                 if (!mountedRef.current) return null;
                 setBookData(data);
             })
-            .catch((error: any) => {});
+            .catch((error: any) => {
+                // console.log(error);
+            });
         if(bookData.length > 1 && movieData.length>1){
             return () => {
                 mountedRef.current = false;

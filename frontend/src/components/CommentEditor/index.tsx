@@ -19,6 +19,7 @@ export enum CommentEditorAction {
 
 const host = window.location.protocol + '//'+ window.location.host;
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const CommentEditor: React.FC<any> = (props: any) => {
     const [currentText, setCurrentText] = useState(props.editCommentProps?.review.text || '');
 
@@ -44,8 +45,12 @@ const CommentEditor: React.FC<any> = (props: any) => {
                         datePosted: now,
                         text: currentText
                     })
-                    .then((res: any) => {})
-                    .catch((err: any) => {});
+                    .then((res: any) => {
+                        // console.log(res);
+                    })
+                    .catch((err: any) => {
+                        // console.log(err);
+                    });
                 break;
             case CommentEditorAction.Edit:
                 const userId = editCommentProps.review.userId;
@@ -65,8 +70,12 @@ const CommentEditor: React.FC<any> = (props: any) => {
                         datePosted: now,
                         text: currentText
                     })
-                    .then((res: any) => {})
-                    .catch((err: any) => {});
+                    .then((res: any) => {
+                        // console.log(res);
+                    })
+                    .catch((err: any) => {
+                        // console.log(err);
+                    });
                 break;
             default:
                 return;

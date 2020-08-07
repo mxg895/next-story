@@ -38,6 +38,7 @@ const SearchSelect: React.FC = () => {
   );
 };
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, title, withSearchSelect, updateMethod, bMSource }) => {
     const sessionDataString = sessionStorage.getItem('NS-session-data');
     const sessionDataObj = sessionDataString && JSON.parse(sessionDataString);
@@ -70,7 +71,9 @@ const RegWidthCarousel: React.FC<RegWidthCarouselProps> = ({ bookIds, movieIds, 
                 }
                 setMediaData(finalData);
             })
-            .catch((error: any) => {});
+            .catch((error: any) => {
+              // console.log(error);
+            });
     }, []);
 
   const mediaCards = mediaData.map((cardData:CardData, index) => {

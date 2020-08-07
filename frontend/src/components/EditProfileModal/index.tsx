@@ -72,6 +72,7 @@ interface EditProfileModalProps {
 
 const IMG_RATIO = 1;
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const EditProfileModal: React.FC<EditProfileModalProps> = ({ aboutMe = '', photo, isOpen, id, handleClose, updateProfile }) => {
   const host = window.location.protocol + '//'+ window.location.host;
 
@@ -146,7 +147,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ aboutMe = '', photo
         const response = await axios.put(`${host}/users/edit/${id}`, { message: aboutMeText, avatar: avatarSrc });
         updateProfile(response.data);
         handleClose();
-      } catch (error) {}
+      } catch (error) {
+        // console.error('error submitting the updated profile: ', error);
+      }
     }
   };
 

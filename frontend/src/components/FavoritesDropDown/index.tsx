@@ -11,6 +11,7 @@ interface FavoritesDropDownProps {
     userId: string;
 }
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const FavoritesDropDown = (props: FavoritesDropDownProps) => {
     const { allOptions, favoriteOptions, favKey, userId } = props;
     const [favs, setFavs] = useState<Array<string>>([]);
@@ -37,7 +38,9 @@ const FavoritesDropDown = (props: FavoritesDropDownProps) => {
         axios.put(`/users/${favKey}/${encodedSubject}/${userId}`, {
             action: act
         }).then((response: any) => {
+            // console.log(response);
         }).catch((error: any) => {
+            // console.log('Error adding or removing favorite from dropdown', error);
         });
     };
     const handleMenuClose = () => {

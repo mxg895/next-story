@@ -55,6 +55,7 @@ const StyledFormControl = styled(FormControl)`
     margin: 5px !important;
 `;
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const MediaPage: React.FC<{}> = (props: any) => {
     const [mediaType, id] = props.location.pathname.split('/').filter((o: string) => o);
     const [isForLater, setForLater] = useState(false);
@@ -166,7 +167,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     ref.current.numberSubscriptions--;
                 }
             })
-            .catch((error: any) => {});
+            .catch((error: any) => {
+                // console.log('Error getting media', error);
+            });
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
@@ -187,7 +190,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     ref.current.numberSubscriptions--;
                 }
             })
-            .catch((error: any) => {});
+            .catch((error: any) => {
+                // console.log('Error getting reviews', error);
+            });
     }, [props, id, mediaType, userId]);
 
     useEffect(() => {
@@ -237,7 +242,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     ref.current.numberSubscriptions--;
                 }
             })
-            .catch((error: any) => {});
+            .catch((error: any) => {
+                // console.log('Error getting media', error);
+            });
     }, [userId, mediaType, id]);
 
     useEffect(() => {
@@ -259,7 +266,9 @@ const MediaPage: React.FC<{}> = (props: any) => {
                     ref.current.numberSubscriptions--;
                 }
             })
-            .catch((error: any) => {});
+            .catch((error: any) => {
+                // console.log('Error getting all story tags', error);
+            });
     }, [storyTags]);
 
     const updateMediaInDB = (tagsArray: any[]) => {
@@ -267,14 +276,19 @@ const MediaPage: React.FC<{}> = (props: any) => {
         axios.put(`/${mediaRouteType}/updateNextStoryTags/${id}`,
             { tagsArray: tagsArray })
             .then((res: any) => {
+                // console.log('updated tags for media', res.data);
             }).catch((err: any) => {
+                // console.log('error setting tags for media', err);
             });
     };
 
     const addOrRemoveCall = (key: string, mediaId: string, action:string) => {
         const data = {action:action, mediaObject};
         axios.put(`/users/${key}/${mediaId}/${userId}`, data).then((response: any) => {
-        }).catch((error: any) => {});
+            // console.log(response);
+        }).catch((error: any) => {
+            // console.log('Error getting reviews', error);
+        });
     };
 
     const addOrRemoveWatchOrRead = (mediaId: string) => {

@@ -10,6 +10,7 @@ import { setProfile } from '../../actions/profileActions';
 import { Dispatch } from 'redux';
 import { ProfileState } from '../../constants/profileActionTypes';
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const Profile: React.FC<ProfileProps> = ({ profile: { avatar, booksRead, email, message, moviesWatched, name, ...rest }, setProfile }) => {
   const largeScreen = useMediaQuery('(min-width: 960px)');
   const host = window.location.protocol + '//'+ window.location.host;
@@ -21,7 +22,9 @@ const Profile: React.FC<ProfileProps> = ({ profile: { avatar, booksRead, email, 
       .then((response) => {
         setProfile(response.data);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        // console.log('Error fetching profile: ', err);
+      });
   };
 
   useEffect(fetchProfile, []);

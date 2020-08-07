@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 export default function Login() {
     const classes = useStyles();
     const [email, setEmail] = useState('');
@@ -101,6 +102,7 @@ export default function Login() {
                 setLoginError(true);
                 const errorMsg = error.response?.data?.message || 'There was an error logging in';
                 setErrorMsg(errorMsg);
+                // console.log('Error loggin in', error);
             });
     };
 
@@ -134,11 +136,13 @@ export default function Login() {
                     setLoginError(true);
                     const errorMsg = error.response?.data?.message || 'There was an error logging in';
                     setErrorMsg(errorMsg);
+                    // console.log('Error loggin in', error);
                 });
         }
     };
 
     const onLoginFailure = (response: any) => {
+        // console.log('response: ', response);
         setLoginError(true);
         setErrorMsg('There was an error logging in');
     };
