@@ -76,8 +76,8 @@ Users can also add reviews and ratings and add our app specific tags.
     - The incomplete stretch goal of being able to see ‘friend’ info on the app (such as their 
     reviews, ratings, favorited media, etc.) would be a great future addition, as it would create 
     a sense of community on the app and may contribute to keeping users using the app.
-    - Allow the explore page search results, as well as the home page recommendations to be related to books or movies a 
-      user has already watched/favorited, as well as their favorite genres
+    - Enchancing media suggestions (recommendation, popular, search and etc) reliability by leveraging specific user
+    details for customized results and group/all users details for universal results 
 
 ### List of contributions:
 ##### May i9y9a:
