@@ -57,13 +57,18 @@ const getIcon = (index: number, rating: number | undefined) => {
     }
 };
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const changeRating = (props: any, userId: string, userName: string, rating: number | undefined) => {
     props.changeRatingAction({ userId, userName, rating });
     if (!rating && !props.userHasReviewText) {
         axios.delete(host + `/reviewRatings`
             + `/${props.mediaType}/${props.mediaId}/${userId}`)
-            .then((res: any) => {})
-            .catch((err: any) => {});
+            .then((res: any) => {
+                // console.log('Successfully deleted the reviewRating', res);
+            })
+            .catch((err: any) => {
+                // console.log(err);
+            });
     } else {
         axios.put(host + '/reviewRatings/rating',
             {
@@ -72,8 +77,12 @@ const changeRating = (props: any, userId: string, userName: string, rating: numb
                 userId: userId,
                 rating: rating
             })
-            .then((res: any) => {})
-            .catch((err: any) => {});
+            .then((res: any) => {
+                // console.log('Successfully put the rating: ', res);
+            })
+            .catch((err: any) => {
+                // console.log(err);
+            });
     }
 };
 

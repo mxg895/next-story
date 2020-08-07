@@ -22,6 +22,7 @@ const getQueryTypeAndQuery = (locationSearch: string) => {
     return [queryType, query];
 };
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const SingleSearchResultPage: React.FC = (props: any) => {
     const searchUri = decodeURI(props.location.search);
     const {singleSearchPageFilter} = props;
@@ -49,12 +50,16 @@ const SingleSearchResultPage: React.FC = (props: any) => {
         try {
             const mongoMovieRes = await axios.get(`/movies/withTag/${query}`);
             mongoMovies = mongoMovieRes.data;
-        } catch (e) {}
+        } catch (e) {
+            // console.log('error fetching movies from mongo for tag', e);
+        }
 
         try {
             const mongoBookRes = await axios.get(`/books/withTag/${query}`);
             mongoBooks = mongoBookRes.data;
-        } catch (e) {}
+        } catch (e) {
+            // console.log('error fetching books from mongo for tag', e);
+        }
         return [mongoMovies, mongoBooks];
     }
 
@@ -79,7 +84,9 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 movieData.push(movieWithNextStoryTags);
                 setAllResults((allResults) => [...allResults, movieWithNextStoryTags]);
                 setMovieResults((movieResults) => [...movieResults, movieWithNextStoryTags]);
-            } catch (e) {}
+            } catch (e) {
+                // console.log(e);
+            }
         }
         for(let i = queryStartIndex; i < bookEndIndex; i++){
             const bookId = mongoBooks[i].bookId;
@@ -96,7 +103,9 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 bookData.push(bookWithNextStoryTags);
                 setAllResults((allResults) => [...allResults, bookWithNextStoryTags]);
                 setBookResults((bookResults) => [...bookResults, bookWithNextStoryTags]);
-            } catch (e) {}
+            } catch (e) {
+                // console.log(e);
+            }
         }
         if (movieData.length === 0) {
             setHasMoreMovieResults(false);
@@ -119,7 +128,9 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 setMovieResults((movieResults) => [...movieResults, ...movies]);
                 setAllResults((allResults) => [...allResults, ...movies]);
             }
-        } catch (e) {}
+        } catch (e) {
+            // console.log(e);
+        }
         try {
             const bookRes = await axios.get(`/thirdPartyBookApi/googleBooks/singleQuery/${queryType}/${query}/${queryStartIndex}/${increaseIndexBy}`);
             books = bookRes.data;
@@ -129,7 +140,9 @@ const SingleSearchResultPage: React.FC = (props: any) => {
                 setBookResults((bookResults) => [...bookResults, ...books]);
                 setAllResults((allResults) => [...allResults, ...books]);
             }
-        } catch (e) {}
+        } catch (e) {
+            // console.log(e);
+        }
         return [movies, books];
     }
 

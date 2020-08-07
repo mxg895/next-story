@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 export default function SignUp() {
     const classes = useStyles();
     const [signUpError, setSignUpError] = useState(false);
@@ -81,6 +82,7 @@ export default function SignUp() {
                 setSignUpError(true);
                 const errorMsg = error.response.data.message;
                 setErrorMsg(errorMsg);
+                // console.log('Error signing up', error);
             });
     };
 
@@ -147,6 +149,7 @@ export default function SignUp() {
     };
 
     const onSignUpFailure = (response: any) => {
+        // console.log('response: ', response);
         setSignUpError(true);
     };
 

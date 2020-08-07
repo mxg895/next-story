@@ -36,6 +36,7 @@ interface DeleteAccountModalProps {
   handleClose: () => void;
 }
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({ isOpen, handleClose, userId }) => {
   const history = useHistory();
   const host = window.location.protocol + '//'+ window.location.host;
@@ -48,7 +49,9 @@ const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({ isOpen, handleC
       }
       sessionStorage.clear();
       history.go(0);
-    } catch (error) {}
+    } catch (error) {
+      // console.error('Error deleting account: ', error);
+    }
   };
 
   return (

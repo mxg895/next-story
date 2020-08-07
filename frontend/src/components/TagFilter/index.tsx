@@ -9,6 +9,7 @@ const TypeSelector = styled.div`
     justify-content: space-between;
 `;
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const TagFilter: React.FC = () => {
     const [allTags, setTags] = useState<Array<any>>([]);
     const [isMovieSelected, selectMovie] = useState<Boolean>(false);
@@ -27,7 +28,9 @@ const TagFilter: React.FC = () => {
             .then((res: any) => {
                 setTags(res.data);
             })
-            .catch((error: any) => {});
+            .catch((error: any) => {
+                // console.log(error);
+            });
     }, []);
 
     const getResultsByTag = async () => {
@@ -41,18 +44,24 @@ const TagFilter: React.FC = () => {
             try {
                 const movieRes = await axios.get(`/movies/withTags/${query}`);
                 movieList = movieRes.data;
-            } catch (e) {}
+            } catch (e) {
+                // console.log('error fetching movies from mongo for tag', e);
+            }
         }
 
         if (isBookSelected) {
             try {
                 const bookRes = await axios.get(`/books/withTags/${query}`);
                 bookList = bookRes.data;
-            } catch (e) {}
+            } catch (e) {
+                // console.log('error fetching books from mongo for tag', e);
+            }
         }
         try {
             await getFromThirdParty(movieList, bookList);
-        } catch (e) {}
+        } catch (e) {
+            // console.log(e);
+        }
     };
 
     async function getFromThirdParty(mongoMovies: any[], mongoBooks: any[]) {
@@ -75,7 +84,9 @@ const TagFilter: React.FC = () => {
                 }
                 movieData.push(movieWithNextStoryTags);
                 setAllResults((allResults) => [...allResults, movieWithNextStoryTags]);
-            } catch (e) {}
+            } catch (e) {
+                // console.log(e);
+            }
         }
         for(let i = queryStartIndex; i < bookEndIndex; i++){
             const bookId = mongoBooks[i].bookId;
@@ -91,7 +102,9 @@ const TagFilter: React.FC = () => {
                 }
                 bookData.push(bookWithNextStoryTags);
                 setAllResults((allResults) => [...allResults, bookWithNextStoryTags]);
-            } catch (e) {}
+            } catch (e) {
+                // console.log(e);
+            }
         }
         if (queryStartIndex + increaseIndexBy > mongoMovies.length) {
             setHasMoreMovieResults(false);

@@ -68,6 +68,7 @@ const StyledDialogActions = styled(DialogActions)`
     }
 `;
 
+// NOTE: console logs are commented out but kept in code to aid future development & debugging
 const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
     const { isOpen, modalData, setModalOpen } = props;
     const history = useHistory();
@@ -87,7 +88,9 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                     const mediaData = mediaRes.data;
                     setStoryTags(mediaData.nextStoryTags);
                 })
-                .catch((error: any) => {});
+                .catch((error: any) => {
+                    // console.log('Error getting media', error);
+                });
         }
     }, [modalData, isOpen]);
 
@@ -99,7 +102,9 @@ const MediaModal: React.FC<MediaModalProps> = (props: MediaModalProps) => {
                     const averageRatingData = mediaRes.data;
                     setAverageRating(averageRatingData.average);
                 })
-                .catch((error: any) => {});
+                .catch((error: any) => {
+                    // console.log('Error getting media', error);
+                });
         }
     }, [modalData, isOpen]);
 
