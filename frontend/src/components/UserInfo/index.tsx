@@ -53,7 +53,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ avatar, about, email, booksCount, m
       <DeleteAccountModal isOpen={modalOpen.deleteAccount} handleClose={closeDeleteAccountModal}/>
       <PhotoContainer>
         <ProfilePhotoDisplay avatar={avatar}/>
-        <ActionDiv onClick={openProfileModal}><Typography align='center' color='primary' variant='body1'>Edit Profile</Typography></ActionDiv>
+        <ActionDiv onClick={openProfileModal}><Typography align='center' color='secondary' variant='body1'>Edit Profile</Typography></ActionDiv>
       </PhotoContainer>
       <div>
         <Typography variant='body2'>{`User Name: ${name}`}</Typography>
