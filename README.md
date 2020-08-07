@@ -91,6 +91,11 @@ Users can also add reviews and ratings and add our app specific tags.
 ##### Warren q6p0b:
 ##### Michelle s5n0b:
 ##### David q8j0b:
+    - Implemented resbonsive nevigation bar
+    - Implemented resbonsive movie/book filter
+    - Created method to query movies/books with multiple tags
+    - Created explore page
+    - Code reviews and bug fixes
 
 
 End of Final Project Report
