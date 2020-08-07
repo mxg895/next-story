@@ -24,39 +24,70 @@ Users can also add reviews and ratings and add our app specific tags.
   
 ### Description on how tech from Units 1-5 are used in the project
 	1. HTML/CSS/Javascript
-	- We used CSS to style React components and used JavaScript (and TypeScript) to provide functionalities and to allow the React frontend and the Express backend to send data back and forth.
-    - In terms of best practices, we made sure to use buttons when we needed buttons instead of divs with onClick functionality, and we also used TypeScript for stricter data types and maintainability
+	- We used CSS to style React components and used JavaScript (and TypeScript) to provide 
+	functionalities and to allow the React frontend and the Express backend to send data back and forth.
+    - In terms of best practices, we made sure to use buttons when we needed buttons instead of 
+    divs with onClick functionality, and we also used TypeScript for stricter data types and maintainability
 	
 	2. React, Redux, and the “Front End”
 	- We stuck to Redux state management structures
     - We used Axios with react middleware support to perform HTTP requests
-    - We extensively used Hooks (such as `useState` and `useEffect`) for seamless data mounting and updating in function components
+    - We extensively used Hooks (such as `useState` and `useEffect`) for seamless data mounting 
+    and updating in function components
 
 	3. NoSQL with MongoDB
 	- We used MongoDB to store tags, review/rating, and user profile data
-    - In terms of best practices, we used Mongoose to maintain a more solid data structure, broke up larger data objects into multiple documents in a collection instead of keeping them as one large MongoDB document, and made sure to encrypt all sensitive data in our database
+    - In terms of best practices, we used Mongoose to maintain a more solid data structure, 
+    broke up larger data objects into multiple documents in a collection instead of keeping them 
+    as one large MongoDB document, and made sure to encrypt all sensitive data in our database
 
 	4. NodeJS and other “Back Ends”
-	- Used Express as our service side and re-architected to embed client/frontend React app inside the Express backend 
+	- Used Express as our service side and re-architected to embed client/frontend React app 
+	inside the Express backend 
     - Configure to run both frontend and backend at the same time
-    - Services are clearly defined, there are no overlapping functions, and no coupling/dependency between classes
+    - Services are clearly defined, there are no overlapping functions, and no coupling/dependency 
+    between classes
 
 	5. Release Engineering
 	- We used a Procfile and restructured our app to work with Heroku deployment.
-    - Considering the scale of our project, we stuck to using a monorepo, and we kept a constant list of bugs and polish issues for QA that would be fixed before our deployments.
+    - Considering the scale of our project, we stuck to using a monorepo, and we kept a constant 
+    list of bugs and polish issues for QA that would be fixed before our deployments.
 	
 ### Above and Beyond functionality:
-    - We used 2 different 3rd party APIs and integrated them to work concurrently in our app. We used the TMDB API for the movies, and the Google Books API for books. As they both had different structures for querying their databases, we had to apply different techniques to get them to produce similar data to our frontend. For example, movie genres and book genres can both be searched by clicking a genre button from our frontend (this button is the same for both movies and books on the frontend), but the way in which the data is fetched from TMDB and Google Books for genres was very different, and we structured out backend code to reflect this. 
-    - We used Mongoose to structure our data stored in MongoDB in order to keep our data consistent and more maintainable in the future. 
-    - We also signed up our app in the Google developer console so that Google login/signup would work, and integrated this into the signup/login process along with non-Google login/sign up that utilized password encryption instead.
+    - We used 2 different 3rd party APIs and integrated them to work concurrently in our app. 
+    We used the TMDB API for the movies, and the Google Books API for books. As they both had 
+    different structures for querying their databases, we had to apply different techniques to 
+    get them to produce similar data to our frontend. For example, movie genres and book genres 
+    can both be searched by clicking a genre button from our frontend (this button is the same 
+    for both movies and books on the frontend), but the way in which the data is fetched from 
+    TMDB and Google Books for genres was very different, and we structured out backend code to 
+    reflect this. 
+    - We used Mongoose to structure our data stored in MongoDB in order to keep our data consistent 
+    and more maintainable in the future. 
+    - We also signed up our app in the Google developer console so that Google login/signup would 
+    work, and integrated this into the signup/login process along with non-Google login/sign up that 
+    utilized password encryption instead.
 
 ### Description of Next Steps: 
-    - Keeping media data (blurbs, titles, genres, authors/directors, images) in our own database in the future would decrease our calls to their third party apis as well as make it easier/faster for us to search for specific things (for example, searching the third party movie database by director requires two separate api calls).
-    - The incomplete stretch goal of being able to see ‘friend’ info on the app (such as their reviews, ratings, favorited media, etc.) would be a great future addition, as it would create a sense of community on the app and may contribute to keeping users using the app.
-    - Allow the explore page to prioritize search results that are related to books or movies a user has already watched/favorited, as well as their favorite genres
+    - Keeping media data (blurbs, titles, genres, authors/directors, images) in our own database 
+    in the future would decrease our calls to their third party apis as well as make it easier/faster 
+    for us to search for specific things (for example, searching the third party movie database 
+    by director requires two separate api calls).
+    - The incomplete stretch goal of being able to see ‘friend’ info on the app (such as their 
+    reviews, ratings, favorited media, etc.) would be a great future addition, as it would create 
+    a sense of community on the app and may contribute to keeping users using the app.
+    - Allow the explore page search results, as well as the home page recommendations to be related to books or movies a 
+      user has already watched/favorited, as well as their favorite genres
 
 ### List of contributions:
 ##### May i9y9a:
+    - Implemented search functionality for searching for books and movies by id, author, director, 
+    genre, title, and single tag, and utilized the infinite scroll / search result display
+    - Implemented much of the media page including review and rating functionality, adding tags, 
+    genres, authors/directors to favorites
+    - Miscellaneous tasks (such as polish and bug fixing (listed on the github issues page), 
+    hooking up signin/login functionality with Google and third party password encryption and 
+    session storage, created the tags page, protected routes, deployed the app)
 ##### Warren q6p0b:
 ##### Michelle s5n0b:
 ##### David q8j0b:
